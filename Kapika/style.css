@@ -1,0 +1,416 @@
+/* «Обертка» */
+#hpmdf-wrapper {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: -100%;
+    z-index: 2147483647;
+    touch-action: none;
+}
+#hpmdf-wrapper.hpmdf-landscape {
+    display: none;!important;
+}
+/* Попап (основное поле баннера) */
+#hpmdf-popup {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    display: none;
+    opacity: 0.0;
+    transition: opacity .4s ease-in;
+    -webkit-transition: opacity .4s ease-in;
+    -moz-transition: opacity .4s ease-in;
+    -ms-transition: opacity .4s ease-in;
+    -o-transition: opacity .4s ease-in;
+}
+
+#hpmdf-main-screen {
+    /*display: none;*/
+    height: 100%;
+    width: 100%;
+    background: url(./img/third_slide_bg.jpg) 50% 50% no-repeat;
+    background-size: cover;
+}
+
+#hpmdf-main-text {
+    background: url(./img/main_text.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    top: 19%;
+    left: 15%;
+    width: 54%;
+}
+
+#hpmdf-main-text::after {
+    content: "";
+    display: block;
+    padding-top: 29.32%;
+}
+
+#hpmdf-buttons-panel {
+    position: absolute;
+    height: 30%;
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    left: 10%;
+    top: 36%;
+}
+
+#hpmdf-button-party {
+    background: url(./img/party.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+}
+
+.hpmd-animate-button {
+    animation: pulse 1s linear;
+}
+
+#hpmdf-button-strol {
+    background: url(./img/strol.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+}
+
+#hpmdf-button-envy {
+    background: url(./img/envy.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+}
+
+#hpmdf-button-party::after,
+#hpmdf-button-strol::after,
+#hpmdf-button-envy::after {
+    content: "";
+    display: block;
+    padding-top: 23.82%;
+}
+
+#hpmdf-main-footer {
+    background: url(./img/main_logo.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 90%;
+    position: absolute;
+    bottom: 0;
+    left: 5%;
+}
+
+#hpmdf-main-footer::after {
+    content: "";
+    display: block;
+    padding-top: 40.59%;
+}
+
+.hpmdf-hide-carousel #hpmdf-carousel,
+.hpmdf-hide-carousel #hpmdf-controls {
+    display: none;
+}
+
+#hpmdf-clickarea {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    z-index: 3;
+    height: 44%;
+}
+
+.hpmdf-hide-carousel #hpmdf-clickarea {
+    height: 25%;
+}
+
+.hpmdf-bg-blue {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #005CB9;
+    opacity: 0.5;
+}
+
+.hpmdf-slide-footer {
+    background: url(./img/logo.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 80%;
+    position: absolute;
+    bottom: 1%;
+    left: 10%;
+}
+
+.hpmdf-slide-footer::after {
+    content: "";
+    display: block;
+    padding-top: 29.28%;
+}
+
+#hpmdf-controls {
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#hpmdf-carousel {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+#hpmdf-carousel.hpmdf-end{
+    justify-content: flex-end;
+}
+#hpmdf-slider {
+    /*position: relative;*/
+    display: flex;
+    height: 100%;
+    width: 300%;
+    flex-shrink: 0;
+    transition: all 0.5s;
+}
+
+.hpmdf-slide {
+    flex-basis: 33.3333%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative
+}
+
+/* Состояние попапа сразу после окончания загрузки */
+#hpmdf-popup.hpmdf-popup-steady {
+    display: block;
+}
+/* Состояние попапа после его проявления на экране */
+#hpmdf-popup.hpmdf-popup-ready {
+    opacity: 1.0;
+}
+
+/* Кнопка закрытия */
+#hpmdf-popup-close {
+    position: absolute;
+    /* Фиксируем кнопку в правом верхнем углу */
+    right: 0;
+    top: 0;
+    /* Размещаем кнопку над прочими элементами баннера */
+    z-index: 1000;
+    /* Картинка кнопки закрытия, по центру: */
+    background: url(./img/close.png) 50% 50% no-repeat;
+    /* Делаем размер иконки половиной от всего размера кнопки, так,
+     * чтобы область для клика была достаточно большой, чтобы в нее
+     * можно было уверенно попасть пальцем, но иконка не казалась  
+     * громадной:                                                  
+     */
+    -o-background-size: 50% auto;
+    background-size: 50% auto;
+}
+/* Размеры кнопки закрытия в портретной ориентации для смартфонов: */
+.hpmdf-mobile.hpmdf-portrait #hpmdf-popup-close {
+    /* Ширина = 20% ширины экрана */
+    width: 20%;
+    /* Высота = 20% ширины экрана */
+    padding-top: 20%;
+}
+
+/* Размеры кнопки закрытия в портретной ориентации для планшетов: */
+.hpmdf-tablet.hpmdf-portrait #hpmdf-popup-close {
+    /* Ширина = 13% ширины экрана */
+    width: 13%;
+    /* Высота = 13% ширины экрана */
+    padding-top: 13%;
+}
+
+.hpmdf-portrait #hpmdf-prev{
+    width: 13%;
+    position: absolute;
+    top: 46%;
+    background: url(./img/arrow_left.png) 50% 50% no-repeat;
+    background-size: 90% 90%;
+    left: 1%;
+}
+
+.hpmdf-portrait #hpmdf-next {
+    width: 13%;
+    position: absolute;
+    top: 46%;
+    background: url(./img/arrow_right.png) 50% 50% no-repeat;
+    background-size: 90% 90%;
+    right: 1%;
+}
+
+#hpmdf-prev::after,
+#hpmdf-next::after{
+    content: "";
+    display: block;
+    padding-top: 110.16%;
+}
+
+/* Фоновая картинка баннера в портретной ориентации для мобилки */
+.hpmdf-mobile.hpmdf-portrait .hpmdf-slide1 {
+    background: #000 url(./img/first_slide_bg.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide-content {
+    position: absolute;
+    top: 9%;
+    z-index: 1;
+    width: 69%;
+}
+
+
+.hpmdf-slide1 .hpmdf-slide-content {
+    background: url(./img/slide1_content_bg.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide2 .hpmdf-slide-content {
+    background: url(./img/slide2_content_bg.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide3 .hpmdf-slide-content {
+    background: url(./img/slide3_content_bg.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-shoes {
+    width: 41%;
+}
+
+.hpmdf-shoes1 {
+    position: absolute;
+    top: 22%;
+    left: 7%;
+}
+
+.hpmdf-shoes2 {
+    position: absolute;
+    top: 22%;
+    right: 7%;
+}
+
+.hpmdf-shoes3 {
+    position: absolute;
+    top: 49%;
+    left: 30%;
+}
+
+.hpmdf-slide1 .hpmdf-shoes1 {
+    background: url(./img/slide1_shoes1.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide1 .hpmdf-shoes2 {
+    background: url(./img/slide1_shoes2.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide1 .hpmdf-shoes3 {
+    background: url(./img/slide1_shoes3.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide2 .hpmdf-shoes1 {
+    background: url(./img/slide2_shoes1.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide2 .hpmdf-shoes2 {
+    background: url(./img/slide2_shoes2.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide2 .hpmdf-shoes3 {
+    background: url(./img/slide2_shoes3.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide3 .hpmdf-shoes1 {
+    background: url(./img/slide3_shoes1.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide3 .hpmdf-shoes2 {
+    background: url(./img/slide3_shoes2.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide3 .hpmdf-shoes3 {
+    background: url(./img/slide3_shoes3.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-shoes1::after,
+.hpmdf-shoes2::after,
+.hpmdf-shoes3::after {
+    content: "";
+    display: block;
+    padding-top: 100%;
+}
+
+
+
+
+.hpmdf-slide1 .hpmdf-slide-content::after,
+.hpmdf-slide2 .hpmdf-slide-content::after,
+.hpmdf-slide3 .hpmdf-slide-content::after {
+    content: "";
+    display: block;
+    padding-top: 162.01%;
+}
+
+/* Фоновая картинка баннера в портретной ориентации для планшета */
+.hpmdf-portrait .hpmdf-slide2 {
+    background: #000 url(./img/second_slide_bg.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+/* Фоновая картинка баннера в ландшафтной ориентации для планшета */
+.hpmdf-portrait .hpmdf-slide3 {
+    background: url(./img/third_slide_bg.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+@keyframes pulse {
+    0% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(1.2)
+    }
+    100% {
+        transform: scale(1)
+    }
+
+}

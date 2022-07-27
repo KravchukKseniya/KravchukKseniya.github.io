@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Fullscreen_carousel_adaptive</title>
+
+		<link href="./style.css" rel="stylesheet">
+		<script src="https://creatives.getintent.com/Lib.js"></script>
+	</head>
+	<body>
+		<section>
+			<!-- «Обертка». Сам элемент находится за пределами viewport,
+				 но нужен, чтобы передать дочерним элементам размеры
+				 «окна» браузера. -->
+			<div class="hpmdf-hide-carousel" id="hpmdf-wrapper">
+				<!-- Тело баннера -->
+				<div id="hpmdf-popup">
+					<div id="hpmdf-main-screen">
+						<div id="hpmdf-main-text"></div>
+						<div id="hpmdf-buttons-panel">
+							<div class="hpmdf-button" data-name="prazdnik" id="hpmdf-button-party"></div>
+							<div class="hpmdf-button" data-name="progulka" id="hpmdf-button-strol"></div>
+							<div class="hpmdf-button" data-name="zavist" id="hpmdf-button-envy"></div>
+						</div>
+						<div id="hpmdf-main-footer"></div>
+					</div>
+					<div id="hpmdf-carousel">
+						<div id="hpmdf-slider">
+							<section class="hpmdf-slide hpmdf-slide1">
+								<div class="hpmdf-bg-blue"></div>
+								<div class="hpmdf-slide-content">
+									<div class="hpmdf-shoes hpmdf-shoes1"></div>
+									<div class="hpmdf-shoes hpmdf-shoes2"></div>
+									<div class="hpmdf-shoes hpmdf-shoes3"></div>
+								</div>
+<!--								<div class="hpmdf-slide-footer"></div>-->
+							</section>
+							<section class="hpmdf-slide hpmdf-slide2">
+								<div class="hpmdf-bg-blue"></div>
+								<div class="hpmdf-slide-content">
+									<div class="hpmdf-shoes hpmdf-shoes1"></div>
+									<div class="hpmdf-shoes hpmdf-shoes2"></div>
+									<div class="hpmdf-shoes hpmdf-shoes3"></div></div>
+<!--								<div class="hpmdf-slide-footer"></div>-->
+							</section>
+							<section class="hpmdf-slide hpmdf-slide3">
+								<div class="hpmdf-bg-blue"></div>
+								<div class="hpmdf-slide-content">
+									<div class="hpmdf-shoes hpmdf-shoes1"></div>
+									<div class="hpmdf-shoes hpmdf-shoes2"></div>
+									<div class="hpmdf-shoes hpmdf-shoes3"></div></div>
+<!--								<div class="hpmdf-slide-footer"></div>-->
+							</section>
+						</div>
+					</div>
+					<div id="hpmdf-controls">
+						<div class="hpmdf-slide-footer"></div>
+						<!-- Кнопка переключения слайдов -->
+						<div id="hpmdf-prev"></div>
+						<div id="hpmdf-next"></div>
+					</div>
+					<div id="hpmdf-popup-close"></div>
+					<div id="hpmdf-clickarea"></div>
+				</div>
+			</div>
+		</section>
+
+		<script>var hpmd = {};</script>
+		<script src="./script.js" async="true"></script>
+
+	</body>
+</html>

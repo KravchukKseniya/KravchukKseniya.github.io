@@ -1,0 +1,21 @@
+{
+    "format": "fullscreen",
+    "subformat": "fullscreen",
+    "events": [
+        "hpmd.time-expanded",
+        "hpmd.close",
+        "hpmd.overlap",
+        "hpmd.loading"
+    ],
+    "language": "ru",
+    "targeting": {
+        "device_type": [
+            "mobile"
+        ],
+        "os": [
+            "iOS",
+            "Android",
+            "Windows"
+        ]
+    }
+}

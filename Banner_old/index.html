@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
-    <title>Title</title>
+    <title>Pancakes</title>
 </head>
 <body>
     <div id="hpmdf-wrapper">
@@ -1585,6 +1585,30 @@
             }, 2000);
         }
     });
+    document.querySelector('.hpmdf-pancake20').addEventListener('click', function(){
+        clearInterval(idTimerShake);
+            if (isStart) {
+                if (userScore === 0) {
+                    //событие "Пользователь играет"
+                    parent.postMessage('banner.event.1', '*');
+                }
+                pancakes[userScore].style.transform = 'translateX(-150%) scale(0.3)';
+                pancakes[userScore].style.opacity = '0';
+                setTimeout(function(){
+                    pancakes[userScore + 1].style.opacity = '1';
+                    userScore++;
+                }, 150);
+                if (userScore%2 === 1 && userScore <= 14) {
+                    userPlate.setAttribute('data-user-plate', counter);
+                    counter++;
+                }
+            }
+            idTimerShake = setInterval(function(){
+                shakePancake(userScore + 1)
+            }, 2000);
+    })
+
+    document.querySelector('.hpmdf-pan').addEventListener('click', function(){console.log('click')})
     hpmd.data.handleSwipe(document.querySelector('.hpmdf-link'), {
         	tap: function() {
         		parent.postMessage('banner.event.4', '*');

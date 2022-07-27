@@ -2,71 +2,256 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;500;900&display=swap" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/e69166a43c.js" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="style.css">
-	<title>HPMD</title>
+	<title>Portfolio</title>
 </head>
 <body>
-	<div>
-		<h1>HTML5 Banners</h1>
-		<h3>Mobile Banners</h3>
-			<div class="banner-cards">
-				<a class="banner-card-link" target="_blank" href="Banner_old/index.html">
-					<div class="banner-card">
-						<div class="banner-card-img banner-card-img-1"></div>
-						<span class="banner-card-text">Pancakes banner</span>
-					</div>
-				</a>
-
-				<a class="banner-card-link" target="_blank" href="исходники%20Adrenaline/index.html">
-					<div class="banner-card">
-						<div class="banner-card-img banner-card-img-2"></div>
-						<span class="banner-card-text">Adrenaline Rush</span>
-					</div>
-				</a>
-
+	<header>
+		<nav class="navbar fixed-top navbar-expand-lg bg-light">
+			<div class="container-fluid">
+			  <a class="navbar-brand" href="#"></a>
+			  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			  </button>
+			  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+				<ul class="navbar-nav mb-2 mb-lg-0 px-4">
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#about_me">About me</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#my_projects">My projects</a>
+				  </li>
+				  <li class="nav-item">
+					<a class="nav-link active" aria-current="page" href="#work_experience">Work experience</a>
+				  </li>
+				</ul>
+			  </div>
 			</div>
-
-		<h3>Desktop Banners</h3>
-			<div class="desktop-banner-cards">
-				<a class="desktop-banner-card-link" target="_blank" href="./new_formats/Auto_scroller/index.html">
-					<div class="desktop-banner-card">
-						<div class="desktop-banner-card-img desktop-banner-card-img-1"></div>
-						<span class="desktop-banner-card-text">Auto banner</span>
+		  </nav>
+	</header>
+	<div id="container">
+		<div class="d-flex align-items-center" id="about_me">
+			<div class="mx-auto d-flex flex-column" style="width: 80%">
+				<span class="greeting">Hi,</span>
+				<span class="greeting">I'm Kseniia,</span>
+				<span class="greeting">frontend developer</span>
+				<p style="color:--bs-gray-500">HTML | CSS | JavaScript</p>
+			
+				<img src="contacts.png" alt="" style="width: 390px;">
+			</div>
+		</div>
+		<div id="my_projects">
+			<div class="mx-auto" style="width: 80%">
+				<h1>Some of my projects</h1>
+				<div class="row row-cols-1 row-cols-md-3 g-4">
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img pancakes"></div>
+							<div class="card-body">
+								<h5 class="card-title">Let's bake pancakes</h5>
+								<p class="card-text">Mobile HTML5 banner</p>
+								<a href="Banner_old/iframe.html" target="_blank" class="btn btn-primary">Try it!</a>
+							</div>
+						</div>
 					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img adrenalin"></div>
+							<div class="card-body">
+							<h5 class="card-title">Adrenalin Rush</h5>
+							<p class="card-text">Mobile HTML5 banner</p>
+							<a href="./Adrenalin/iframe.html" target="_blank" class="btn btn-primary">Try it!</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img kapika"></div>
+							<div class="card-body">
+							<h5 class="card-title">Kapika</h5>
+							<p class="card-text">Mobile HTML5 banner</p>
+							<a href="./Kapika/iframe.html" target="_blank" class="btn btn-primary">Try it!</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img weleda"></div>
+							<div class="card-body">
+							<h5 class="card-title">Weleda</h5>
+							<p class="card-text">Mobile HTML5 banner</p>
+							<a href="./Weleda/iframe.html" target="_blank" class="btn btn-primary">Try it!</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img autobanner"></div>
+							<div class="card-body">
+							<h5 class="card-title">Test-drive</h5>
+							<p class="card-text">Desktop HTML5 banner</p>
+							<a href="./new_formats/Auto_scroller/index.html" target="_blank" class="btn btn-primary">See more</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img demostand"></div>
+							<div class="card-body">
+							<h5 class="card-title">Demo stand</h5>
+							<p class="card-text">Demo stand for testing</p>
+							<a href="demo-page/toggle_stand.html" target="_blank" class="btn btn-primary">See more</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img doublescreen"></div>
+							<div class="card-body">
+							<h5 class="card-title">Double Screen</h5>
+							<p class="card-text">Project's website</p>
+							<a href="website/index.html" target="_blank" class="btn btn-primary">See more</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img waxom"></div>
+							<div class="card-body">
+							<h5 class="card-title">Waxom</h5>
+							<p class="card-text">Website for portfolio</p>
+							<a href="Waxom/index.html" target="_blank" class="btn btn-primary">See more</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card" style="width: 18rem; overflow: hidden;">
+							<div class="custom-card-img interior"></div>
+							<div class="card-body">
+							<h5 class="card-title">Interior</h5>
+							<p class="card-text">Website for portfolio</p>
+							<a href="Interior/index.html" target="_blank" class="btn btn-primary">See more</a>
+							</div>
+						</div>
+					</div>	
+				</div>
+			</div>		
+		</div>
+		<div id="work_experience">
+			<div class="mx-auto d-flex flex-column" style="width: 80%">
+				<h1>Work experience</h1>
+				<p>Front end Developer with more than 3 years’ experience. I have been working with the most popular frontend technologies such as TypeScript, React, Angular and Vue. Participated in the projects developed by teams consisting of 5-7 members, actively working with Agile methodology, using Gitflow concept as a main way to track the code changes.</p>
+				<div class="accordion mb-3" id="accordionExample">
+					<div class="accordion-item">
+					  <h2 class="accordion-header" id="headingOne">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+						  Frontend Developer, Happy Monday -> Qvant /August 2019 - May 2022/
+						</button>
+					  </h2>
+					  <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+						<div class="accordion-body">
+							<p>The company has a few products for showing advertisement banners on the clients’ websites and video advertisement on billboards. The UI parts of these projects are based on Angular 12. Our team consisted of 4 developers including the team leader. I always was in touch with the backend and QA teams. Our team used Gitflow and Agile with 2-weeks sprints. Also participated in developing of a Vue.js application. </p>
+							<span>Responsibilities:</span>
+								<ul>
+									<li>To convert mobile and desktop advertising banners from Photoshop or Figma layouts to HTML representation using CSS and Vanilla JavaScript</li>
+									<li>To create templates for new formats of mobile and desktop banners</li>
+									<li>To develop company’s website using Bootstrap, Gulp</li>
+									<li>To develop and maintain Angular components library based on Nebular components</li>
+									<li>To develop new feature and fix bugs</li>
+									<li>To conduct code reviews</li>
+									<li>To attend daily and estimation meetings</li>
+									<li>To write and maintain projects’ documentation </li>
+									<li>To take a part in deployment</li> 
+								</ul>
+							<span>Personal results:</span>
+							<ul>
+								<li>Developed 60+ advertisement banners. There were both simple banners and complex (interactive, gaming banners) </li>
+								<li>Used modern HTML and CSS abilities like canvas, iframe, svg, sprite, animation </li>
+								<li>Developed new demo stand for banners</li>
+								<li>Used new technologies like Bootstrap, Gulp</li>
+								<li>Started working with Angular: routing, components, services, pipes</li>
+								<li>Promoted to Angular developer</li>
+								<li>Developed 15+ new Angular components from scratch</li>
+								<li>Completed 50+ merge requests with new features, bug fixes</li>
+								<li>Migrated 4 complex components from an existing Angular 12 application to a Vue.js application</li>
+								<li>Managed to successfully perform the project tasks remotely for 2 years (since the pandemic started till present)</li>
+							</ul>
+						</div>
+					  </div>
+					</div>
+					<div class="accordion-item">
+					  <h2 class="accordion-header" id="headingTwo">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+							Junior Frontend Developer, Real Farm /April 2019 - July 2019/
+						</button>
+					  </h2>
+					  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample" style="">
+						<div class="accordion-body">
+							<p>The product was a small start-up creating a Single Page Application for selling farm organic food online. It was my first commercial experience. Our team used React for application frontend part. </p>
+							<span>Responsibilities:</span>
+							<ul>
+								<li>To develop the UI part of SPA using React</li>
+								<li>To collaborate with the designer using Figma</li>
+								<li>To use GraphQL for making requests to the server</li>	
+							</ul>
+							<span>Personal results:</span>
+							<ul>
+								<li>Started working with React</li>
+								<li>Learned and successfully started to apply Gitflow concepts</li>
+								<li>Used modern ES6 features like arrow function, spreading, distraction, promises</li>
+								<li>Learned how to initialize new project and build it </li>
+								<li>Learned how to get data from server and display it on the frontend part</li>
+							</ul>
+						</div>
+					  </div>
+					</div>
+				  </div>
+				<a 
+				class="btn btn-primary m-4" 
+				style="width:250px" 
+				target="_blank" 
+				href="KseniiaKravchuk_Resume.pdf" 
+				role="button">
+					My Resume
 				</a>
 			</div>
+		</div>
+		</div>
 
-		<h1>Web sites</h1>
-			<div class="site-cards">
-				<a class="site-card-link" target="_blank" href="demo-page/toggle_stand.html">
-					<div class="site-card">
-						<div class="site-card-img site-card-img-1"></div>
-						<span class="site-card-text">Demo stand with toggle</span>
-					</div>
-				</a>
-
-				<a class="site-card-link" target="_blank" href="website/index.html">
-					<div class="site-card">
-						<div class="site-card-img site-card-img-2"></div>
-						<span class="site-card-text">Double screen</span>
-					</div>
-				</a>
-
-				<a class="site-card-link" target="_blank" href="Waxom/index.html">
-					<div class="site-card">
-						<div class="site-card-img site-card-img-3"></div>
-						<span class="site-card-text">Waxom</span>
-					</div>
-				</a>
-
-				<a class="site-card-link" target="_blank" href="Interior/index.html">
-					<div class="site-card">
-						<div class="site-card-img site-card-img-4"></div>
-						<span class="site-card-text">Interior</span>
-					</div>
-				</a>
-			</div>
+		
 	</div>
+
+	<footer class="d-flex align-items-center mt-5">
+		<div class="mx-auto d-flex justify-content-between align-items-center" style="width: 80%">
+			<div>
+				<i class="fa-regular fa-copyright"></i> Kseniia Kravchuk, 2022
+			</div>
+			<div>
+				<a class="fs-2 social-links-btn" target="_blank" href="https://www.linkedin.com/in/kseniya-kravchuk/">
+					<i class="fa-brands fa-linkedin-in"></i>
+				</a>
+				<a class="fs-2 social-links-btn"  target="_blank" href="https://github.com/KravchukKseniya">
+					<i class="fa-brands fa-github"></i>
+				</a>
+				<a class="fs-2 social-links-btn" target="_blank" href="https://www.instagram.com/dorovikova/">
+					<i class="fa-brands fa-instagram"></i>
+				</a>
+			</div>
+		</div>
+		
+	</footer>
+
 </body>
 </html>

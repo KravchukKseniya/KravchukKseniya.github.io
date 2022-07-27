@@ -1,0 +1,80 @@
+{
+    "language": "ru",
+    "format": "fullscreen",
+    "subformat": "fullscreen",
+    "targeting": {
+        "device_type": [],
+        "os": [
+            {
+                "os": "iOS",
+                "major": null,
+                "minor": null,
+                "revision": null
+            },
+            {
+                "os": "Android",
+                "major": null,
+                "minor": null,
+                "revision": null
+            },
+            {
+                "os": "Windows",
+                "major": null,
+                "minor": null,
+                "revision": null
+            }
+        ]
+    },
+    "events": [
+        {
+            "id": "hpmd.loading",
+            "title": "\u0412\u0440\u0435\u043c\u044f \u0437\u0430\u0433\u0440\u0443\u0437\u043a\u0438",
+            "type": "progressive",
+            "duration": 15
+        },
+        {
+            "id": "hpmd.overlap",
+            "title": "\u041f\u0440\u043e\u0446\u0435\u043d\u0442 \u043f\u0435\u0440\u0435\u043a\u0440\u044b\u0442\u0438\u044f \u0431\u0430\u043d\u043d\u0435\u0440\u0430",
+            "type": "progressive",
+            "unit": "percent",
+            "duration": 100
+        },
+        {
+            "id": "hpmd.close",
+            "title": "\u0417\u0430\u043a\u0440\u044b\u0442\u0438\u0435 \u0431\u0430\u043d\u043d\u0435\u0440\u0430",
+            "unit": "item"
+        },
+        {
+            "id": "hpmd-interaction",
+            "title": "\u0412\u0437\u0430\u0438\u043c\u043e\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0435"
+        },
+        {
+            "id": "hpmd-interaction-final",
+            "title": "\u041e\u0442\u043a\u0440\u044b\u0442\u0438\u0435 \u041a\u0412 \u043f\u043e\u0441\u043b\u0435 \u0432\u0437\u0430\u0438\u043c\u043e\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044f"
+        },
+        {
+            "id": "hpmd-auto-final",
+            "title": "\u041e\u0442\u043a\u0440\u044b\u0442\u0438\u0435 \u041a\u0412 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438"
+        },
+        {
+            "id": "hpmd-first-link",
+            "title": "\u041f\u0435\u0440\u0435\u0445\u043e\u0434 \u0441 \u043f\u0435\u0440\u0432\u043e\u0433\u043e \u044d\u043a\u0440\u0430\u043d\u0430"
+        },
+        {
+            "id": "hpmd.time-expanded",
+            "title": "\u0412\u0440\u0435\u043c\u044f \u0432 \u0431\u0430\u043d\u043d\u0435\u0440\u0435",
+            "type": "progressive"
+        }
+    ],
+    "links": [
+        {
+            "title": "\u041f\u0435\u0440\u0435\u0445\u043e\u0434 \u043f\u043e \u0441\u0441\u044b\u043b\u043a\u0435",
+            "url": "https:\/\/wcm-ru.frontend.weborama.fr\/fcgi-bin\/dispatch.fcgi?a.A=cl&a.si=6006&a.te=526&a.ra={RND}&g.lu=",
+            "click": true,
+            "main": true
+        }
+    ],
+    "pixels": [
+        "https:\/\/wcm-ru.frontend.weborama.fr\/fcgi-bin\/dispatch.fcgi?a.A=im&a.si=6006&a.te=526&a.he=1&a.wi=1&a.hr=p&a.ra={RND}"
+    ]
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <canvas id="hpmdf-arrows-canvas" width="1080" height="1880"></canvas>
+
+    <canvas id="hpmdf-smoke-canvas" width="1080" height="1880"></canvas>
+
+    <div id="hpmdf-shadow"></div>
+    <div id="hpmdf-final-text"></div>
+    <div id="hpmdf-can"></div>
+
+    <canvas id="hpmdf-canvas" width="1080" height="1880"></canvas>
+
+    <div id="hpmdf-popup-close"></div>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #hpmdf-arrows-canvas,
+        #hpmdf-smoke-canvas,
+        #hpmdf-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+        }
+
+        #hpmdf-smoke-canvas {
+            transform: scale(1.7) rotate(29deg) translate(4%, -5%);
+        }
+
+        #hpmdf-shadow {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: rgb(0,0,0);
+            opacity: 0.5;
+            transition: opacity .3s linear;
+        }
+
+        /* Кнопка закрытия */
+        #hpmdf-popup-close {
+            position: absolute;
+            /* Фиксируем кнопку в правом верхнем углу */
+            right: 0;
+            top: 0;
+            /* Размещаем кнопку над прочими элементами баннера */
+            z-index: 1000;
+            /* Картинка кнопки закрытия, по центру: */
+            background: url(../img/close.png) 50% 50% no-repeat;
+            /* Делаем размер иконки половиной от всего размера кнопки, так,
+             * чтобы область для клика была достаточно большой, чтобы в нее
+             * можно было уверенно попасть пальцем, но иконка не казалась
+             * громадной:
+             */
+            -o-background-size: 50% auto;
+            background-size: 50% auto;
+
+            /* Ширина = 20% ширины экрана */
+            width: 20%;
+            /* Высота = 20% ширины экрана */
+            padding-top: 20%;
+        }
+
+    </style>
+
+    <script src="logic.js"></script>
+    <script>
+        var canvas = document.getElementById('hpmdf-canvas');
+        window.addEventListener('load', function() {
+
+                // canvas.height = window.outerHeight * getPixelRatio();
+                // canvas.width = window.outerWidth * getPixelRatio();
+                initAction();
+                load();
+                run();
+            }
+
+        )
+
+    </script>
+</body>
+</html>

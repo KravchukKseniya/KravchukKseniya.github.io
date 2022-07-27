@@ -1,0 +1,1984 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><script type="text/javascript" src="./system/hpmd.js"></script></head><body data-format="fullscreen" data-lang="ru" data-sys-format="fullscreen" data-sys-subformat="fullscreen">
+
+<!-- == HTML =========================================================================================== -->
+
+<section>
+				<!-- «Обертка». Сам элемент находится за пределами viewport,
+				     но нужен, чтобы передать дочерним элементам размеры
+				     «окна» браузера. -->
+				<div id="hpmdf-wrapper">
+					<!-- Тело баннера -->
+					<div id="hpmdf-popup">
+						<!-- Кнопка закрытия -->
+						<div id="hpmdf-popup-close"></div>
+		
+						<!-- TODO: сюда добавляются все прочие элементы баннера -->
+						<!-- <canvas id="hpmdf-canvas"></canvas> -->
+						<div id="hpmdf-smoke-init"></div>
+						<iframe id="hpmdf-iframe" src="./banner/anim.html" frameborder="0"></iframe>
+						<div id="hpmdf-iframe-wrap"></div>
+						<!-- Элемент-пример. Назначьте ему новые стили, или удалите из кода и замените
+								новыми. -->
+		
+						<div id="hpmdf-first-page">
+							<div class="hpmdf-title"></div>
+							<div class="hpmdf-tap"></div>
+		
+							<div class="hpmdf-grad"></div>
+		
+							<div class="hpmdf-film-name"></div>
+							<div class="hpmdf-film-name-hint"></div>
+						</div>
+						<div id="hpmdf-pers-name"></div>
+						<div id="hpmdf-final">
+							<div class="hpmdf-final-title"></div>
+							<div class="hpmdf-final-text"></div>
+							<div class="hpmdf-final-btn"></div>
+						</div>
+		
+						<div class="hpmdf-visual"></div>
+						<div id="hpmdf-sixteen" data-text="1"></div>
+						<div id="hpmdf-bottom-hint" data-text="1"></div>
+		
+						<div id="hpmdf-first-part"></div>
+						<div id="hpmdf-final-part"></div>
+							
+						<!-- Кнопка-пример. Назначьте ей новые стили, или удалите ее из кода и замените
+								новыми элементами. -->
+						<div class="hpmdf-button"></div>
+					</div>
+				</div>
+</section>
+<!-- /HTML -->
+
+<!-- == CSS ============================================================================================ -->
+<style>
+				.hpmdf-landscape {
+					display: none!important;
+				}
+				.hpmdf-portrait #hpmdf-smoke-init {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					background: url('./banner/img/smoke-init.jpg') no-repeat 50% 50%;
+					background-size: cover;
+				}
+				#hpmdf-smoke-init.hpmdf-disable {
+					-webkit-transition: opacity .5s ease-in;
+					-moz-transition: opacity .5s ease-in;
+					transition: opacity .5s ease-in;
+					opacity: 0;
+				}
+				.hpmdf-portrait #hpmdf-first-part,
+				.hpmdf-portrait #hpmdf-final-part {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+				}
+				.hpmdf-portrait #hpmdf-final-part {
+					-ms-touch-action: none;
+					    touch-action: none;
+					pointer-events: none;
+				}
+				.hpmdf-portrait #hpmdf-final-part.hpmdf-active {
+					-ms-touch-action: auto;
+					    touch-action: auto;
+					pointer-events: auto;
+				}
+				.hpmdf-portrait #hpmdf-sixteen {
+					width: 20.92%;
+					height: 0%;
+					padding-bottom: 20.92%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+				}
+				#hpmdf-sixteen[data-text="1"] {
+					background: url('./banner/img/sixteen1.png') no-repeat 50% 50%;
+					-webkit-background-size: 58% auto;
+					   -moz-background-size: 58% auto;
+					        background-size: 58% auto;
+				}
+				#hpmdf-sixteen[data-text="2"] {
+					background: url('./banner/img/sixteen2.png') no-repeat 50% 50%;
+					-webkit-background-size: 58% auto;
+					   -moz-background-size: 58% auto;
+					        background-size: 58% auto;
+				}
+				.hpmdf-portrait #hpmdf-bottom-hint {
+					width: 36.38%;
+					height: 0%;
+					padding-bottom: 8.9%;
+					position: absolute;
+					bottom: 0%;
+					right: 0%;
+				}
+				#hpmdf-bottom-hint[data-text="1"] {
+					background: url('./banner/img/bottom-hint1.png') no-repeat 50% 50%;
+					-webkit-background-size: 86% auto;
+					   -moz-background-size: 86% auto;
+					        background-size: 86% auto;
+				}
+				#hpmdf-bottom-hint[data-text="2"] {
+					background: url('./banner/img/bottom-hint2.png') no-repeat 50% 50%;
+					-webkit-background-size: 86% auto;
+					   -moz-background-size: 86% auto;
+					        background-size: 86% auto;
+				}
+				.hpmdf-portrait .hpmdf-grad {
+					width: 100%;
+					height: 30%;
+					position: absolute;
+					bottom: 0%;
+					left: 0%;
+					background: url('./banner/img/grad.png') no-repeat 50% 0%;
+					-webkit-background-size: cover;
+					   -moz-background-size: cover;
+					        background-size: cover;
+				}
+				.hpmdf-portrait .hpmdf-film-name {
+					width: 44%;
+					height: 8%;
+					position: absolute;
+					top: 83.19%;
+					left: 28%;
+					background: url('./banner/img/film-name1.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				.hpmdf-portrait .hpmdf-film-name-hint {
+					width: 38.1%;
+					height: 1.1%;
+					position: absolute;
+					top: 92.92%;
+					left: 30.95%;
+					background: url('./banner/img/film-name-hint1.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				.hpmdf-portrait #hpmdf-pers-name {
+					width: 75%;
+					height: 29%;
+					position: absolute;
+					top: 23.72%;
+					left: 0%;
+					background: url('./banner/img/pers-name.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+					opacity: 0;
+					-ms-touch-action: none;
+					    touch-action: none;
+					pointer-events: none;
+				}
+				#hpmdf-pers-name.hpmdf-active {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					transition: opacity .4s ease-out;
+					opacity: 1;
+				}
+				#hpmdf-pers-name.hpmdf-active {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					transition: opacity .4s ease-out;
+					opacity: 1;
+		
+					-webkit-animation: resizeAnim 1s ease-out;
+		
+					   -moz-animation: resizeAnim 1s ease-out;
+		
+					        animation: resizeAnim 1s ease-out;
+				}
+		
+				@-webkit-keyframes resizeAnim {
+					0% {
+						-webkit-transform: scale(1);
+						        transform: scale(1);
+						-webkit-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+		
+					60% {
+						-webkit-transform: scale(1.5);
+						        transform: scale(1.5);
+						-webkit-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+					65% {
+						-webkit-transform: scale(1.5);
+						        transform: scale(1.5);
+						-webkit-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+					100% {
+						-webkit-transform: scale(1);
+						        transform: scale(1);
+						-webkit-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+				}
+		
+				@-moz-keyframes resizeAnim {
+					0% {
+						-moz-transform: scale(1);
+						     transform: scale(1);
+						-moz-transform-origin: 25% 50%;
+						     transform-origin: 25% 50%;
+					}
+		
+					60% {
+						-moz-transform: scale(1.5);
+						     transform: scale(1.5);
+						-moz-transform-origin: 25% 50%;
+						     transform-origin: 25% 50%;
+					}
+					65% {
+						-moz-transform: scale(1.5);
+						     transform: scale(1.5);
+						-moz-transform-origin: 25% 50%;
+						     transform-origin: 25% 50%;
+					}
+					100% {
+						-moz-transform: scale(1);
+						     transform: scale(1);
+						-moz-transform-origin: 25% 50%;
+						     transform-origin: 25% 50%;
+					}
+				}
+		
+				@keyframes resizeAnim {
+					0% {
+						-webkit-transform: scale(1);
+						   -moz-transform: scale(1);
+						        transform: scale(1);
+						-webkit-transform-origin: 25% 50%;
+						   -moz-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+		
+					60% {
+						-webkit-transform: scale(1.5);
+						   -moz-transform: scale(1.5);
+						        transform: scale(1.5);
+						-webkit-transform-origin: 25% 50%;
+						   -moz-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+					65% {
+						-webkit-transform: scale(1.5);
+						   -moz-transform: scale(1.5);
+						        transform: scale(1.5);
+						-webkit-transform-origin: 25% 50%;
+						   -moz-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+					100% {
+						-webkit-transform: scale(1);
+						   -moz-transform: scale(1);
+						        transform: scale(1);
+						-webkit-transform-origin: 25% 50%;
+						   -moz-transform-origin: 25% 50%;
+						        transform-origin: 25% 50%;
+					}
+				}
+		
+				.hpmdf-portrait #hpmdf-iframe-wrap {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+				}
+				.hpmdf-portrait #hpmdf-iframe {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					bottom: 0%;
+					left: 0%;
+					padding: 0%!important;
+					margin: 0%!important;
+				}
+				#hpmdf-iframe.hpmdf-disable {
+					-webkit-transition: opacity .5s ease-in;
+					-moz-transition: opacity .5s ease-in;
+					transition: opacity .5s ease-in;
+					opacity: 0;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+				}
+				.hpmdf-portrait #hpmdf-final {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					opacity: 0;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+				}
+				.hpmdf-portrait #hpmdf-final:before {
+					content: '';
+					display: block;
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					background: url('./banner/img/final.jpg') no-repeat 50% 20%;
+					-webkit-background-size: cover;
+					   -moz-background-size: cover;
+					        background-size: cover;
+				}
+				#hpmdf-final.hpmdf-active {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					transition: opacity .4s ease-out;
+					opacity: 1;
+					-ms-touch-action: auto;
+					touch-action: auto;
+					pointer-events: auto;
+				}
+				.hpmdf-portrait .hpmdf-final-title {
+					width: 80%;
+					height: 14%;
+					position: absolute;
+					top: 59.62%;
+					left: 10%;
+					background: url('./banner/img/film-name2.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				.hpmdf-portrait .hpmdf-final-btn {
+					width: 57%;
+					height: 7%;
+					position: absolute;
+					top: 85.37%;
+					left: 21.5%;
+					background: url('./banner/img/final-btn.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				.hpmdf-portrait .hpmdf-final-text {
+					width: 61%;
+					height: 7%;
+					position: absolute;
+					top: 76.61%;
+					left: 19.5%;
+					background: url('./banner/img/final-text.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				#hpmdf-final.hpmdf-active {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					transition: opacity .4s ease-out;
+					opacity: 1;
+					-ms-touch-action: auto;
+					touch-action: auto;
+					pointer-events: auto;
+				}
+				.hpmdf-portrait #hpmdf-first-page {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+				}
+				#hpmdf-first-page.hpmdf-disable {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					transition: opacity .4s ease-out;
+					opacity: 0;
+				}
+				.hpmdf-portrait .hpmdf-tap {
+					width: 18%;
+					height: 0%;
+					padding-bottom: 18%;
+					position: absolute;
+					top: 26.4%;
+					left: 41%;
+					background: url('./banner/img/tap.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+					-webkit-animation: shake .5s linear infinite;
+					   -moz-animation: shake .5s linear infinite;
+					        animation: shake .5s linear infinite;
+					-webkit-transform-origin: 50% 50%;
+					   -moz-transform-origin: 50% 50%;
+					    -ms-transform-origin: 50% 50%;
+					        transform-origin: 50% 50%;
+					-webkit-animation-fill-mode: forwards;
+					   -moz-animation-fill-mode: forwards;
+					        animation-fill-mode: forwards;
+				}
+				@keyframes shake {
+					8%, 41% {
+						-webkit-transform: translateX(-1%);
+						   -moz-transform: translateX(-1%);
+						        transform: translateX(-1%);
+					}
+					25%, 58% {
+						-webkit-transform: translateX(1%);
+						   -moz-transform: translateX(1%);
+						        transform: translateX(1%);
+					}
+					75% {
+						-webkit-transform: translateX(-.5%);
+						   -moz-transform: translateX(-.5%);
+						        transform: translateX(-.5%);
+					}
+					92% {
+						-webkit-transform: translateX(.5%);
+						   -moz-transform: translateX(.5%);
+						        transform: translateX(.5%);
+					}
+					0%, 100% {
+						-webkit-transform: translateX(0);
+						   -moz-transform: translateX(0);
+						        transform: translateX(0);
+					}
+				}
+				.hpmdf-portrait .hpmdf-title {
+					width: 65.84%;
+					height: 24.12%;
+					position: absolute;
+					top: 7.47%;
+					left: 17.08%;
+					background: url('./banner/img/title.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+					        background-size: contain;
+				}
+				/* «Обертка» */
+				#hpmdf-wrapper {
+					/* Прибита к верху экрана */
+					position: fixed;
+					
+					/* Сохраняем ширину и высоту для дочерних элементов */
+					width: 100%;
+					height: 100%;
+					
+					/* «Прибиваем» к верхней части экрана */
+					top: 0;
+					
+					/* Сдвигаем за пределы viewport, чтобы элемент-обертка не перекрывал
+					 * основной контент страницы */
+					left: -100%;
+					
+					/* Размещаем поверх всех элементов площадки */
+					z-index: 2147483647;
+					
+					/* Отключаем «проглатывание» pointer-событий в Windows Phone
+					 * для всех элементов баннера */
+					touch-action: none;
+				}
+				
+				/* Попап (основное поле баннера) */
+				#hpmdf-popup {
+					position: absolute;
+					
+					/* Сдвигаем назад в видимую область экрана */
+					left: 100%;
+					
+					/* Растягиваем на всю доступную область экрана */
+					top: 0;
+					width: 100%;
+					height: 100%;
+					
+					/* Скрываем лишнее.
+					 * 
+					 * Если какой-то из элементов будет выступать вправо или вниз,    
+					 * это может разрушить верстку площадки из-за неверного вычисления
+					 * браузером ширины контента.                                     
+					 * 
+					 * Чтобы избежать проблем, ограничиваем баннер областью попапа:
+					 */
+					overflow: hidden;
+					
+					/* Изначально скрываем фуллскрин, чтобы не показывать пользователю
+					 * не до конца загруженную графику:
+					 */
+					display: none;
+					
+					/* Анимация при появлении фуллскрина и ее изначальное состояние.
+					 * 
+					 * Примечание: если в баннере есть ресурсоемкие элементы,    
+					 * например, плейер YouTUBE, анимация может отображаться     
+					 * неустойчиво. Если возникла такая проблема, можно отключить
+					 * анимацию, удалив все transition ниже.                     
+					 */
+					opacity: 0.0;
+					transition: opacity .4s ease-in;
+					-webkit-transition: opacity .4s ease-in;
+					-moz-transition: opacity .4s ease-in;
+					-ms-transition: opacity .4s ease-in;
+					-o-transition: opacity .4s ease-in;
+				}
+				
+				/* Состояние попапа сразу после окончания загрузки */
+				#hpmdf-popup.hpmdf-popup-steady {
+					display: block;
+				}
+				/* Состояние попапа после его проявления на экране */
+				#hpmdf-popup.hpmdf-popup-ready {
+					opacity: 1.0;
+				}
+				
+				/* Кнопка закрытия */
+				#hpmdf-popup-close {
+					position: absolute;
+					/* Фиксируем кнопку в правом верхнем углу */
+					right: 0;
+					top: 0;
+					/* Размещаем кнопку над прочими элементами баннера */
+					z-index: 1000;
+					/* Картинка кнопки закрытия, по центру: */
+					background: url(./banner/img/close.png) 50% 50% no-repeat;
+					/* Делаем размер иконки половиной от всего размера кнопки, так,
+					 * чтобы область для клика была достаточно большой, чтобы в нее
+					 * можно было уверенно попасть пальцем, но иконка не казалась  
+					 * громадной:                                                  
+					 */
+					-o-background-size: 50% auto;
+					   background-size: 50% auto;
+				}
+				/* Размеры кнопки закрытия в портретной ориентации для смартфонов: */
+				.hpmdf-mobile.hpmdf-portrait #hpmdf-popup-close {
+					/* Ширина = 20% ширины экрана */
+					width: 20%;
+					/* Высота = 20% ширины экрана */
+					padding-top: 20%;
+				}
+				/* Размеры кнопки закрытия в ландшафтной ориентации для смартфонов: */
+				.hpmdf-mobile.hpmdf-landscape #hpmdf-popup-close {
+					/* Ширина = 12% ширины экрана */
+					width: 12%;
+					/* Высота = 12% ширины экрана */
+					padding-top: 12%;
+				}
+				/* Размеры кнопки закрытия в портретной ориентации для планшетов: */
+				.hpmdf-tablet.hpmdf-portrait #hpmdf-popup-close {
+					/* Ширина = 13% ширины экрана */
+					width: 13%;
+					/* Высота = 13% ширины экрана */
+					padding-top: 13%;
+				}
+				/* Размеры кнопки закрытия в ландшафтной ориентации для планшетов: */
+				.hpmdf-tablet.hpmdf-landscape #hpmdf-popup-close {
+					/* Ширина = 8% ширины экрана */
+					width: 8%;
+					/* Высота = 8% ширины экрана */
+					padding-top: 8%;
+				}
+				
+				/* Фоновая картинка баннера в портретной ориентации */
+				.hpmdf-portrait #hpmdf-popup {
+					background: #000 url(./banner/img/portrait.jpg) 100% 50% no-repeat;
+					-o-background-size: cover;
+					   background-size: cover;
+				}
+</style>
+<!-- /CSS -->
+
+<!-- == JS ============================================================================================= -->
+<script>_hpmd.testBanner(function () {
+				/**
+				 * Используем пространство имен hpmd.data для организации данных баннера.
+				 * Переменная hpmd гарантированно объявлена к моменту запуска баннера.   
+				 */
+				hpmd.data = {
+					
+					/**
+					 * ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+					 */
+					
+					/**
+					 * Определяет, является ли текущее устройство планшетом (не смартфоном)
+					 * 
+					 * @return bool
+					 */
+					isTablet: function () {
+						return hpmd.getSegment("device_type") == "tablet";
+					},
+					
+					/**
+					 * Определяет, находится ли устройство в портретной ориентации
+					 * 
+					 * В качестве аргумента dimensions можно передать объект с ключами
+					 * width и height, описывающих ширину и высоту viewport.          
+					 * 
+					 * @return bool
+					 */
+					isPortrait: function (dimensions) {
+						if (!dimensions) {
+							// если измерения не переданы,
+							// используем текущие размеры окна
+							dimensions = {
+								width: window.innerWidth,
+								height: window.innerHeight,
+							};
+						}
+						
+						// проверяем ориентацию
+						return dimensions.width < dimensions.height;
+					},
+					
+					/**
+					 * Управляется ли устройство iOS
+					 * 
+					 * @return bool
+					 */
+					isIOs: function () {
+						return hpmd.getSegment("os") == "iOS";
+					},
+				
+					/**
+					 * Управляется ли устройство Android
+					 * 
+					 * @return bool
+					 */
+					isAndroid: function () {
+						return hpmd.getSegment("os") == "Android";
+					},
+				
+					/**
+					 * Управляется ли устройство Windows Phone
+					 * 
+					 * @return bool
+					 */
+					isWP: function () {
+						return hpmd.getSegment("os") == "Windows";
+					},
+					
+					/**
+					 * Загружает список изображений в кэш браузера
+					 * и вызывает callback, когда загрузка завершена
+					 * 
+					 * @param string[] images Список URL загружаемых картинок
+					 * @param Function callback Функция обратного вызова по завершении загрузки
+					 */
+					preloadImages: function (images, callback) {
+						var loaded = 0, imageObjects = [];
+						var handler = function () {
+							loaded++;
+							if (loaded == images.length && !!callback) {
+								callback();
+							}
+						};
+						for (var i = 0; i < images.length; i++) {
+							imageObjects[i] = new Image();
+							imageObjects[i].onload = handler;
+							imageObjects[i].onerror = handler;
+							imageObjects[i].src = images[i];
+						}
+					},
+					
+					/**
+					 * Регистрирует обработчик события
+					 * 
+					 * @param DOMElement element DOM-элемент
+					 * @param string event Название события (напр., "touchstart"))
+					 * @param Function handler Обработчик события
+					 */
+					attachHandler: function (element, event, handler) {
+						if (hpmd.data.isWP()) {
+							switch (event) {
+								case "touchstart":
+									hpmd.data.attachHandler(element, 'MSPointerDown', handler);
+									hpmd.data.attachHandler(element, 'pointerdown', handler);
+									break;
+								case "touchmove":
+									hpmd.data.attachHandler(element, 'MSPointerMove', handler);
+									hpmd.data.attachHandler(element, 'pointermove', handler);
+									break;
+								case "touchend":
+									hpmd.data.attachHandler(element, 'MSPointerUp', handler);
+									hpmd.data.attachHandler(element, 'pointerup', handler);
+									break;
+								case "touchcancel":
+									hpmd.data.attachHandler(element, 'MSPointerCancel', handler);
+									hpmd.data.attachHandler(element, 'pointercancel', handler);
+									break;
+							}
+						}
+						
+						element.addEventListener(event, handler, false);
+					},
+				
+					/**
+					 * Удаляет обработчик события
+					 * 
+					 * @param DOMElement element DOM-элемент
+					 * @param string event Название события (напр., "touchstart"))
+					 * @param Function handler Обработчик события
+					 */
+					detachHandler: function (element, event, handler) {
+						if (hpmd.data.isWP()) {
+							switch (event) {
+								case "touchstart":
+									hpmd.data.detachHandler(element, 'MSPointerDown', handler);
+									hpmd.data.detachHandler(element, 'pointerdown', handler);
+									break;
+								case "touchmove":
+									hpmd.data.detachHandler(element, 'MSPointerMove', handler);
+									hpmd.data.detachHandler(element, 'pointermove', handler);
+									break;
+								case "touchend":
+									hpmd.data.detachHandler(element, 'MSPointerUp', handler);
+									hpmd.data.detachHandler(element, 'pointerup', handler);
+									break;
+								case "touchcancel":
+									hpmd.data.detachHandler(element, 'MSPointerCancel', handler);
+									hpmd.data.detachHandler(element, 'pointercancel', handler);
+									break;
+							}
+						}
+						
+						element.removeEventListener(event, handler, false);
+					},
+				
+					/**
+					 * Обрабатывает жесты пользователя
+					 * 
+					 * Эта функция служит для обработки свайпов в четырех направлениях
+					 * (влево, вправо, вверх, вниз) и «тапа» по любому элементу.
+					 * 
+					 * В качестве первого аргумента передается DOM-элемент;
+					 * в качестве второго аргумента передается объект, содержащий
+					 * некоторые (или все) из следующих ключей:
+					 * - left
+					 * - right
+					 * - down
+					 * - up
+					 * - tap
+					 * 
+					 * Значения ключей должны быть функциями.
+					 * 
+					 * При обнаружении свайпа в определенном направлении вызывается
+					 * соответствующая функция; в качестве аргументов ей передается
+					 * экземпляр события touchend и ссылка на исходный DOM-элемент.
+					 * 
+					 * Например:
+					 * hpmd.data.handleSwipe(document.getElementById('hpmdf-my-node'), {
+					 *    up: function () {
+					 *       alert("Swipe up!");
+					 *    },
+					 *    down: function () {
+					 *       alert("Swipe down!");
+					 *    },
+					 *    tap: function (event, element) {
+					 *       alert("Tapped on " + element + "!");
+					 *    },
+					 * });
+					 * 
+					 * @param DOMElement element
+					 * @param object handlers
+					 */
+					handleSwipe: function(element, handlers) {
+						var x, y;
+						
+						hpmd.data.attachHandler(element, 'touchstart', function (event) {
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							
+							x = touch.pageX;
+							y = touch.pageY;
+							event.preventDefault();
+							
+							if (!!event.stopPropagation) {
+								event.stopPropagation();
+								event.cancelBubble = true;
+							}
+						});
+						hpmd.data.attachHandler(element, 'touchend', function (event) {
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							var direction = hpmd.data.calcSwipeDirection(touch.pageX - x, touch.pageY - y);
+							if (!!handlers[direction]) {
+								handlers[direction](event, element);
+							}
+							
+							if (!!event.stopPropagation) {
+								event.stopPropagation();
+								event.cancelBubble = true;
+							}
+						});
+					},
+				
+					/**
+					 * Отключает скролл на странице.
+					 */
+					disableScroll: function () {
+						// Чтобы отключить скролл, «давим» все события touchmove и touchend.
+						hpmd.data.attachHandler(document, 'touchmove', hpmd.data.cancelEvent);
+						hpmd.data.attachHandler(document, 'touchend', hpmd.data.cancelEvent);
+					},
+				
+					/**
+					 * Восстанавливает скролл на странице.
+					 */
+					enableScroll: function () {
+						// Удаляем обработчик событий touchmove и touchend, подавляющий их.
+						hpmd.data.detachHandler(document, 'touchmove', hpmd.data.cancelEvent);
+						hpmd.data.detachHandler(document, 'touchend', hpmd.data.cancelEvent);
+					},
+				
+					/**
+					 * «Отменяет» событие.
+					 * 
+					 * Используется в качестве обработчика события,
+					 * обработки которого нужно избежать (например,
+					 * запрет скролла)..)
+					 */
+					cancelEvent: function (event) {
+						event.preventDefault();
+					},
+					
+					// ///////////////////////////////////////////////
+				
+					// ///////////////////////////////////////////////
+				
+					/**
+					 * ВНУТРЕННИЕ ФУНКЦИИ
+					 */
+					
+					/**
+					 * Список DOM-элементов, принадлежащих баннеру
+					 * 
+					 * @var object of DOMElement
+					 */
+					nodes: {},
+				
+					/**
+					 * Определяет направление свайпа по смещению
+					 * точки прикосновения
+					 * 
+					 * Смещение вправо и вниз ― положительное,
+					 * влево и вверх ― отрицательное.
+					 * 
+					 * @param number deltax Смещение в пикселях по горизонтали вправо
+					 * @param number deltay Смещение в пикселях по вертикали вниз
+					 * 
+					 * @return string "tap", "left", "right", "up", "down"
+					 */
+					calcSwipeDirection: function (deltax, deltay) {
+						if (deltax == 0) {
+							if (deltay == 0) {
+								// смещения нет, произошел тап
+								return "tap";
+							} else {
+								// смещение есть, зададим deltay равным единице,
+								// чтобы избежать деления на ноль
+								deltay = 1;
+							}
+						}
+						if (Math.abs(deltax) < 10 && Math.abs(deltay) < 10) {
+							// смещение меньше 10 пикселей, произошел тап
+							return "tap";
+						}
+						if (Math.abs(deltay / deltax) > .5) {
+							// наклон кривой к горизонтали больше 45°,
+							// это вертикальный свайп,
+							if (deltay < 0) {
+								// смещение вверх
+								return "up";
+							} else {
+								// смещение вниз
+								return "down";
+							}
+						} else {
+							// наклон кривой к горизонтали меньше 45°,
+							// это горизонтальный свайп,
+							if (deltax < 0) {
+								// смещение влево
+								return "left";
+							} else {
+								// смещение вправо
+								return "right";
+							}
+						}
+					},
+				
+					/**
+					 * Обрабатывает DOM-элементы, принадлежащий баннеру.
+					 * 
+					 * Если ID имеет префикс "hpmdf-", сохраняет ссылку на элемент в объекте          
+					 * hpmd.data.nodes для быстрого доступа; ключом является ID элемента без префикса.
+					 * 
+					 * После завершения функция рекурсивно обрабатывает все дочерние элементы.
+					 * 
+					 * @param DOMElement node
+					 */
+					processNode: function (node) {
+						// Проверяем ID.
+						var attribute;
+						if (!!node.getAttribute && !!(attribute = node.getAttribute('id')) && attribute.indexOf('hpmdf-') === 0) {
+							// Нашли префикс "hpmdf-", сохраняем на будущее.
+							hpmd.data.nodes[attribute.substring(6, 1000)] = node;
+						}
+						
+						// Обрабатываем дочерние элементы.
+						for (var i = 0; i < node.children.length; i++) {
+							hpmd.data.processNode(node.children[i]);
+						}
+					},
+					EasingFunctions: {
+						// no easing, no acceleration
+						linear: function (t) { return t },
+						// accelerating from zero velocity
+						easeInQuad: function (t) { return t*t },
+						// decelerating to zero velocity
+						easeOutQuad: function (t) { return t*(2-t) },
+						// acceleration until halfway, then deceleration
+						easeInOutQuad: function (t) { return t<.5 ? 2*t*t : -1+(4-2*t)*t },
+						// accelerating from zero velocity 
+						easeInCubic: function (t) { return t*t*t },
+						// decelerating to zero velocity 
+						easeOutCubic: function (t) { return (--t)*t*t+1 },
+						// acceleration until halfway, then deceleration 
+						easeInOutCubic: function (t) { return t<.5 ? 4*t*t*t : (t-1)*(2*t-2)*(2*t-2)+1 },
+						// accelerating from zero velocity 
+						easeInQuart: function (t) { return t*t*t*t },
+						// decelerating to zero velocity 
+						easeOutQuart: function (t) { return 1-(--t)*t*t*t },
+						// acceleration until halfway, then deceleration
+						easeInOutQuart: function (t) { return t<.5 ? 8*t*t*t*t : 1-8*(--t)*t*t*t },
+						// accelerating from zero velocity
+						easeInQuint: function (t) { return t*t*t*t*t },
+						// decelerating to zero velocity
+						easeOutQuint: function (t) { return 1+(--t)*t*t*t*t },
+						// acceleration until halfway, then deceleration 
+						easeInOutQuint: function (t) { return t<.5 ? 16*t*t*t*t*t : 1+16*(--t)*t*t*t*t }
+					},
+					createAnimation: function() {
+						function assign(target) {
+							var slice = Array.prototype.slice;
+							var sources = slice.call(arguments, 1);
+		
+							for (var i = 0; i < sources.length; i++) {
+								for (var key in sources[i]) {
+									if (sources[i].hasOwnProperty(key)) {
+										target[key] = sources[i][key];
+									}
+								}
+							}
+		
+							return target;
+						}
+		
+						function Timeline(config) {
+							this.config = {
+								duration: 1000,
+								delay: 0,
+								onUpdate: function() {},
+								onFinish: function() {},
+								easingFn: function(x) { return x; }
+							}
+		
+							assign(this.config, config);
+		
+							this.state = {
+								startTime: null,
+								currentTime: 0,
+								progress: 0,
+								isFinished: false
+							}
+		
+							this.update = function() {
+								if (this.state.isFinished) return;
+		
+								if (this.state.startTime === null) {
+									this.state.startTime = Date.now();
+								}
+		
+								this.state.currentTime = Date.now() - this.state.startTime;
+								this.state.progress = this.state.currentTime < this.config.delay ? 0 : (this.state.currentTime - this.config.delay) / this.config.duration;
+		
+								if (this.state.progress >= 1) {
+									this.state.isFinished = true;
+									this.config.onUpdate(1);
+									this.config.onFinish();
+								} else if (this.state.progress > 0 && this.state.progress < 1) {
+									this.config.onUpdate(this.config.easingFn(this.state.progress));
+								}
+							}
+						}
+		
+						function Animation() {
+							var self = this;
+		
+							this._timelines = [];
+							this.timelines = [];
+		
+							this.rid = null;
+							this.isPlaying = false;
+		
+							this._render = function() {
+								if (self.isPlaying) self.rid = requestAnimationFrame(self._render);
+		
+								self.timelines = self.timelines.filter(function(timeline) {
+									timeline.update();
+									return !timeline.state.isFinished;
+								});
+		
+								if (self.timelines.length === 0) {
+									self.isPlaying = false;
+								}
+							}
+						}
+		
+						Animation.prototype.addTimeline = function(config) {
+							this._timelines.push(new Timeline(config));
+						}
+		
+						Animation.prototype.start = function() {
+							this.timelines = this._timelines;
+							this.isPlaying = true;
+							this.rid = requestAnimationFrame(this._render);
+						}
+		
+						Animation.prototype.stop = function() {
+							this.isPlaying = false;
+							cancelAnimationFrame(this.rid);
+						}
+		
+						return new Animation();
+					},
+					isClosed: false,
+					isInteraction: false,
+					initShake: function(config) {
+		
+						var slice = Array.prototype.slice;
+						var state = {
+							page: 1,
+							isBlock: false
+						}
+		
+						function Shake(options) {
+							//feature detect
+							this.hasDeviceMotion = 'ondevicemotion' in window;
+
+							this.options = {
+								threshold: 5, //default velocity threshold for shake to register
+								timeout: 1 //default interval between events
+							};
+		
+							this.options.threshold = options.threshold || 5;
+							this.options.timeout = options.timeout || 1;
+		
+							if (typeof options === 'object') {
+								for (var i in options) {
+									if (options.hasOwnProperty(i)) {
+										this.options[i] = options[i];
+									}
+								}
+							}
+		
+							//use date to prevent multiple shakes firing
+							this.lastTime = new Date();
+		
+							//accelerometer values
+							this.lastX = null;
+							this.lastY = null;
+							this.lastZ = null;
+		
+							this.listeners = [];
+						}
+		
+						Shake.prototype.observe = function (listener) {
+							this.listeners.push(listener);
+						};
+		
+						//reset timer values
+						Shake.prototype.reset = function () {
+							this.lastTime = new Date();
+							this.lastX = null;
+							this.lastY = null;
+							this.lastZ = null;
+						};
+		
+						//start listening for devicemotion
+						Shake.prototype.start = function () {
+							this.reset();
+							// if (this.hasDeviceMotion) {
+							// 	window.addEventListener('devicemotion', this.devicemotion, false);
+							// }
+							this.devicemotion = this.devicemotion.bind(this)
+							window.addEventListener('deviceorientation', this.devicemotion, false);
+						};
+		
+						//stop listening for devicemotion
+						Shake.prototype.stop = function () {
+							// if (this.hasDeviceMotion) {
+							// 	window.removeEventListener('devicemotion', this.devicemotion, false);
+							// }
+							window.removeEventListener('deviceorientation', this.devicemotion, false);
+							this.reset();
+						};
+		
+						//calculates if shake did occur
+						Shake.prototype.devicemotion = function (e) {
+							var current = e;
+							var currentTime;
+							var timeDifference;
+							var deltaX = 0;
+							var deltaY = 0;
+							var deltaZ = 0;
+		
+							if ((this.lastX === null) && (this.lastY === null) && (this.lastZ === null)) {
+								this.lastX = current.alpha;
+								this.lastY = current.beta;
+								this.lastZ = current.gamma;
+								return;
+							}
+		
+							deltaX = Math.abs(this.lastX - current.alpha);
+							deltaY = Math.abs(this.lastY - current.beta);
+							deltaZ = Math.abs(this.lastZ - current.gamma);
+		
+							if (
+								((deltaX > this.options.threshold) && (deltaY > this.options.threshold * 0.5)) || 
+								((deltaX > this.options.threshold) && (deltaZ > this.options.threshold * 0.5)) || 
+								((deltaY > this.options.threshold) && (deltaZ > this.options.threshold * 0.5)) ||
+								((deltaX > this.options.threshold * 0.5) && (deltaY > this.options.threshold)) || 
+								((deltaX > this.options.threshold * 0.5) && (deltaZ > this.options.threshold)) || 
+								((deltaY > this.options.threshold * 0.5) && (deltaZ > this.options.threshold))
+							) {
+								//calculate time in milliseconds since last shake registered
+								currentTime = new Date();
+								timeDifference = currentTime.getTime() - this.lastTime.getTime();
+		
+								if (timeDifference > this.options.timeout) {
+									// window.dispatchEvent(this.event);
+									this.listeners.forEach(function(listener) {
+										listener('shake');
+									})
+									this.lastTime = new Date();
+								}
+							}
+		
+							this.lastX = current.alpha;
+							this.lastY = current.beta;
+							this.lastZ = current.gamma;
+						};
+		
+		
+		
+						//event handler
+						Shake.prototype.handleEvent = function (e) {
+							if (typeof (this[e.type]) === 'function') {
+								return this[e.type](e);
+							}
+						};
+		
+						return new Shake(config);
+					},
+					getAbsoluteBoundingRect: function getAbsoluteBoundingRect(el) {
+						var doc  = document,
+							win  = window,
+							body = doc.body,
+		
+							// pageXOffset and pageYOffset work everywhere except IE <9.
+							offsetX = win.pageXOffset !== undefined ? win.pageXOffset :
+								(doc.documentElement || body.parentNode || body).scrollLeft,
+							offsetY = win.pageYOffset !== undefined ? win.pageYOffset :
+								(doc.documentElement || body.parentNode || body).scrollTop,
+		
+							rect = el.getBoundingClientRect();
+		
+						if (el !== body) {
+							var parent = el.parentNode;
+		
+							// The element's rect will be affected by the scroll positions of
+							// *all* of its scrollable parents, not just the window, so we have
+							// to walk up the tree and collect every scroll offset. Good times.
+							while (parent !== body && parent !== null) {
+								if (parent.scrollLeft) offsetX += parent.scrollLeft;
+								if (parent.scrollTop)  offsetY += parent.scrollTop;
+								parent = parent.parentNode;
+							}
+						}
+		
+						return {
+							bottom: rect.bottom + offsetY,
+							height: rect.height,
+							left  : rect.left + offsetX,
+							right : rect.right + offsetX,
+							top   : rect.top + offsetY,
+							width : rect.width
+						};
+					},
+					viewIID: null,
+					checkViewability: function(prefix, callback) {
+						function has(item, value) {
+							return item.indexOf(value) > -1;
+						}
+						function isDOMElement(elem) {
+							return elem instanceof Element
+						}
+						function def(value) {
+							return value !== undefined && value !== null;
+						}
+						function findOverlapElems(elem) {
+							var coords;
+		
+							coords = { 
+								w: window.innerWidth, 
+								h: window.innerHeight, 
+								x: 0, 
+								y: 0
+							};
+		
+							function collectElems(acc, coord, index) {
+								var item = isOverlap(
+									elem,
+									coord.x,
+									coord.y
+								);
+		
+								return (
+									item.overlap && 
+									isDOMElement(item.elem) && 
+									!has(acc, item.elem)
+								) ? acc.concat(item.elem) : acc;
+							}
+							
+							return generateGrid(5, coords).reduce(collectElems, []);
+						}
+		
+						function getOverlapPersantage(elems) {
+							var elems = findOverlapElems(hpmd.data.nodes.popup);
+							function getSize(rectX, rectW, innWidth) {
+								rectW = ((rectW + rectX) > innWidth) ? innWidth : rectW;
+								return rectX < 0 ? 
+									rectW + rectX : 
+									(rectX + rectW > innerWidth) ? 
+										rectW - (rectX + rectW - innWidth) :
+										rectW;
+							}
+		
+							function getIntersectingRectangle(r1, r2) {
+								var x = Math.max(r1.left, r2.left),
+									y = Math.max(r1.top, r2.top),
+									w = Math.min(r1.left + r1.width,  r2.left + r2.width)  - x,
+									h = Math.min(r1.top  + r1.height, r2.top  + r2.height) - y;
+		
+								return {
+									x: x,
+									y: y,
+									w: w,
+									h: h
+								};
+							};
+		
+							return elems.reduce(function(acc, elem) {
+								var rect1 = hpmd.data.getAbsoluteBoundingRect(elem);
+								var rect2 = hpmd.data.getAbsoluteBoundingRect(
+									hpmd.data.nodes.popup
+								);
+		
+								var elemCoord3 = getIntersectingRectangle(
+									rect1, 
+									rect2
+								);
+		
+								var p1 = elemCoord3.w * elemCoord3.h;
+								var p2 = rect2.width * rect2.height;
+								var percent = Math.round(((p1 / p2) || 0) * 100);
+		
+								return acc + percent;
+							}, 0);
+						}
+						function generateGrid(num, coords) {
+							var x = coords.x;
+							var y = coords.y;
+							var width  = coords.w;
+							var height = coords.h;
+							var grid = [];
+							var coord = {};
+		
+							for (var j = 0; j <= num; j++) {
+								for (var i = 0; i <= num; i++) {
+									coord = {
+										x: Math.round(width  / num * i + x + ((i === 0) ? 2 : -2)),
+										y: Math.round(height / num * j + y + ((j === 0) ? 2 : -2))
+									}
+									grid.push(coord);
+								}
+							}
+		
+							return grid;
+						}
+						function assign(target) {
+							var slice = Array.prototype.slice;
+							var sources = slice.call(arguments, 1);
+		
+							for (var i = 0; i < sources.length; i++) {
+								for (var key in sources[i]) {
+									if (sources[i].hasOwnProperty(key)) {
+										target[key] = sources[i][key];
+									}
+								}
+							}
+		
+							return target;
+						}
+						function isOverlap(elem, x, y) {
+							var returnValue = {
+								overlap: false,
+								elem: null
+							}
+		
+							if (!isDOMElement(elem)) 
+								return returnValue;
+		
+							try {
+								var rect = hpmd.data.getAbsoluteBoundingRect(elem);
+								var htmlElem = document.documentElement;
+								var screenWidth  = htmlElem.clientWidth  || window.innerWidth;
+								var screenHeight = htmlElem.clientHeight || window.innerHeight;
+								var sizesSum = elem.offsetWidth + elem.offsetHeight + rect.height + rect.width;
+								var elemCenter = {
+									x: x || rect.left + elem.offsetWidth  / 2,
+									y: y || rect.top  + elem.offsetHeight / 2
+								};
+								var pointContainer = document.elementFromPoint(elemCenter.x, elemCenter.y);
+								var pointContainer2 = pointContainer;
+		
+								var style = getComputedStyle(elem);
+		
+								if (style.display === 'none')
+									return returnValue;
+		
+								if (style.visibility !== 'visible')
+									return returnValue;
+		
+								if (style.opacity < 0.1)
+									return returnValue;
+		
+								if (sizesSum === 0)
+									return returnValue;
+		
+								if (elemCenter.x < 0)
+									return returnValue;
+		
+								if (elemCenter.x > screenWidth)
+									return returnValue;
+		
+								if (elemCenter.y < 0)
+									return returnValue;
+		
+								if (elemCenter.y > screenHeight)
+									return returnValue;
+		
+								do {
+									if (pointContainer === elem) {
+										return assign(
+											returnValue,
+											{ overlap: true }
+										);
+									}
+								} 
+								while (pointContainer = pointContainer.parentNode);
+		
+								return assign(
+									returnValue,
+									{
+										overlap: true,
+										elem:  (
+											def(pointContainer2) && 
+											!has(pointContainer2.className, prefix) &&
+											!has(pointContainer2.id, prefix)
+										) ? pointContainer2 : null
+									}
+								);
+		
+							} catch(e) {
+								return returnValue;
+							}
+						}
+		
+						hpmd.data.viewIID = setInterval(function() {
+							var percent = getOverlapPersantage(
+								findOverlapElems(hpmd.data.nodes.popup)
+							) || 0;
+		
+							percent = percent > 100 ? 100 : percent;
+		
+							if (percent > 0) {
+								callback(percent);
+							}			
+						}, 1000);
+					},
+					bannerIsOpened: false,
+					/**
+					 * Выводит баннер на экран
+					 */
+					openBanner: function () {
+						/* TODO: добавьте сюда все, что должно быть сделано   
+						 * при выводе фуллскрина и может быть сделано, пока он
+						 * все еще находится в display: none.                 
+						 * 
+						 * Если HTML-код фуллскрина создается динамически, это
+						 * следует делать здесь.
+						 */
+						
+						// Скролл на ноль пикселей скрывает смарт-баннер на iOS.
+						window.scrollBy(0, 0);
+						
+						// Сохраняем время раскрытия (для дальнейшего вызова hpmd.time-expanded).
+						hpmd.data.openedAt = new Date();
+						
+						// Выводим фуллскрин на экран (на этом этапе он полностью прозрачен).)
+						hpmd.data.nodes.popup.className = 'hpmdf-popup-steady';
+						
+						// Теперь, когда подготовительая работа проведена, нужно        
+						// дать возможность браузеру отреагировать на window.scrollBy.  
+						// Для этого устанавливаем нулевой таумаут и выходим из функции.
+						// 
+						// Браузеру Google Chrome на Android требуется дополнительное  
+						// время на загрузку картинок из кэша, поэтому для этой системы
+						// вместо нулевого таймаута используем задержку в 100 мс.      
+						setTimeout(function () {
+							// Пересчитываем размеры элементов баннера перед его показом.
+							hpmd.data.forceCheckLayout();
+							
+							/* TODO: если из-за того, что элемент был в состоянии display: none,     
+							 * не удалось выполнить какие-либо действия над ним (например, определить
+							 * истинные размеры элемента), добавьте необходимые действия сюда.
+							 */
+							 
+							// Полностью отключаем скролл на странице.
+							hpmd.data.disableScroll();
+							
+							// Проявляем фуллскрин на экране.
+							hpmd.data.nodes.popup.className = 'hpmdf-popup-steady hpmdf-popup-ready';
+								
+							// Ждем завершения анимации.
+							setTimeout(function () {
+								/* TODO: добавьте сюда все, что должно быть сделано
+								 * после полного появления фуллскрина на экране.   
+								 * 
+								 * Например, на этом этапе могут быть запущены программные
+								 * анимации или ресурсоемкие процедуры.
+								 */
+								var isLaunched = false;
+								var shakeEvent = hpmd.data.initShake({
+									threshold: 7,
+									timeout: 100
+								});
+
+								shakeEvent.start()
+
+								hpmd.data.handleSwipe(document.querySelector('#hpmdf-first-part'), {
+									tap: function () {
+										if (!isLaunched) {
+											isLaunched = true;
+											hpmd.data.nodes['first-page'].classList.add('hpmdf-disable');
+											hpmd.trackEvent('hpmd-interaction');
+											hpmd.data.isInteraction = true;
+											startAnim();
+										}
+									}
+								});
+
+								// shakeEvent.observe(function(event) {
+								// 	if (!isLaunched) {
+								// 		isLaunched = true;
+								// 		hpmd.data.nodes['first-page'].classList.add('hpmdf-disable');
+								// 		hpmd.trackEvent('hpmd-interaction');
+								// 		hpmd.data.isInteraction = true;
+								// 		startAnim();
+								// 		shakeEvent.stop();
+								// 	}
+								// });
+
+
+		
+								// shakeEvent.start();
+		
+		
+								var gamma = null;
+		
+								var tid = null;
+		
+								// window.addEventListener('deviceorientation', function(event) {
+								// 	if (!hpmd.data.isPortrait() || isRotating) return;
+		
+								// 	if (gamma === null) {
+								// 		gamma = event.gamma;
+								// 	}
+		
+								// 	if (event.gamma >= gamma + 3 || event.gamma <= gamma - 3) {
+								// 		clearTimeout(tid);
+								// 		gamma = event.gamma;
+		
+								// 		tid = setTimeout(function() {
+								// 			if (!isLaunched) {
+								// 				isLaunched = true;
+								// 				hpmd.data.nodes['first-page'].classList.add('hpmdf-disable');
+								// 				hpmd.trackEvent('hpmd-interaction');
+								// 				hpmd.data.isInteraction = true;
+								// 				// startAnim();
+								// 				shakeEvent.stop();
+								// 			}
+								// 		}, 20);
+								// 	}
+								// });
+		
+		
+		
+								var anim1 = hpmd.data.createAnimation();
+		
+								function setTransform(node, properties) {
+									node.style.WebkitTransform = properties;
+									node.style.MozTransform = properties;
+									node.style.OTransform = properties;
+									node.style.transform = properties;
+								}
+		
+								function startAnim() {
+									isLaunched = true;
+									setTimeout(function() {
+										hpmd.data.nodes['smoke-init'].classList.add('hpmdf-disable');
+									}, 2500);
+									
+									hpmd.data.nodes['iframe'].contentWindow.postMessage(JSON.stringify({
+										name: 'hpmd',
+										action: 'start-anim2',
+										data: {
+											width: window.innerWidth,
+											height: window.innerHeight
+										}
+									}), '*');
+								}
+		
+								// setTimeout(function() {
+								// 	if (!isLaunched) {
+								// 		isLaunched = true;
+		
+								// 		hpmd.data.nodes['first-page'].classList.add('hpmdf-disable');
+		
+								// 		setTimeout(function() {
+								// 		hpmd.data.nodes['smoke-init'].classList.add('hpmdf-disable');
+								// 	}, 2500);
+								// 		hpmd.data.nodes['iframe'].contentWindow.postMessage(JSON.stringify({
+								// 			name: 'hpmd',
+								// 			action: 'start-anim2',
+								// 			data: {
+								// 				width: window.innerWidth,
+								// 				height: window.innerHeight
+								// 			}
+								// 		}), '*');
+								// 	}
+								// }, 4000);
+		
+								hpmd.data.checkViewability('hpmdf', function(percent) {
+									console.log(percent);
+									hpmd.trackEvent('hpmd.overlap', {
+										weight: percent
+									});
+									clearInterval(hpmd.data.viewIID);
+								});
+								
+							}, 600);
+						}, hpmd.data.isIOs() || hpmd.data.isWP() ? 0 : 100);
+					},
+					
+					/**
+					 * Закрывает баннер
+					 */
+					closeBanner: function () {
+						// Регистрируем время просмотра баннера.
+						if (!!hpmd.data.openedAt) {
+							hpmd.trackEvent("hpmd.close");
+							hpmd.trackEvent("hpmd.time-expanded", { weight: Math.round(((new Date()) - hpmd.data.openedAt) / 1000) });
+						}
+		
+		
+						hpmd.data.isClosed = true;
+						clearInterval(hpmd.data.viewIID);
+						
+						// Восстанавливаем скролл на странице.
+						hpmd.data.enableScroll();
+						
+						// Скрываем фуллскрин...
+						hpmd.data.nodes.popup.className = 'hpmdf-popup-steady';
+						
+						// ...и ждем завершения анимации.
+						setTimeout(function () {
+							// После завершения анимации сообщаем системе о закрытии баннера.
+							hpmd.events.fire("close");
+						}, 600);
+					},
+				
+					/**
+					 * Полностью убирает все элементы баннера со страницы.
+					 */
+					destroy: function () {
+						/* Отключите здесь любые обработчики событий,      
+						 * которые были включены при запуске или в процессе
+						 * работы баннера.                                 
+						 */
+						
+						// На случай, если скролл в данный момент отключен,
+						// пробуем включить его.                           
+						hpmd.data.enableScroll();
+						
+						// Отключаем слежение за размерами экрана и ориентацией
+						if (!!hpmd.data.watchLayoutInterval) {
+							clearInterval(hpmd.data.watchLayoutInterval);
+						}
+						
+						// Удаляем все HTML-элементы баннера.
+						for (var k in hpmd.data.nodes) {
+							if (hpmd.data.nodes.hasOwnProperty(k)) {
+								try {
+									hpmd.data.nodes[k].parentNode.removeChild(hpmd.data.nodes[k]);
+								} catch (e) {}
+							}
+						}
+					},
+				
+					watchLayoutInterval: null,
+				
+					/**
+					 * Запускает слежение за размерами «окна» браузера
+					 * 
+					 * Результатом выполнения этой функции будет отслеживание               
+					 * изменений в размерах окна браузера и вызов hpmd.data.onViewportUpdate
+					 * при обнаружении изменений.                                           
+					 */
+					watchLayout: function () {
+						// Проверяем размер окна по событию scroll (при скролле может быть показана
+						// или скрыта панель навигации браузера).
+						hpmd.data.attachHandler(window, 'scroll', hpmd.data.checkLayout);
+						// Проверяем размер окна, если браузер был так добр, что сообщил нам об изменениях.
+						hpmd.data.attachHandler(window, 'resize', hpmd.data.checkLayout);
+						// Проверяем размер окна при смене ориентации.
+						hpmd.data.attachHandler(window, 'orientationchange', function () {
+							// iOS сначала меняет ориентацию, а затем обновляет размеры 
+							// панели навигации, поэтому первое вычисление даст неверные
+							// результаты. Проверяем еще раз через 150 мс, когда все    
+							// утрясется.
+							var updated = false;
+							if (!hpmd.data.checkOrientation()) {
+								updated = hpmd.data.checkLayout();
+							} else {
+								updated = true;
+							}
+							if (updated && hpmd.data.isIOs() && !hpmd.data.bannerOpened) {
+								hpmd.data.nodes.wrapper.style.visibility = 'hidden';
+								setTimeout(function() {
+									hpmd.data.nodes.wrapper.style.visibility = '';
+									
+									// window.innerWidth и window.innerHeight остаются старыми в iOS,    
+									// даже если фактически размеры изменились; обновляются они только   
+									// после скролла. Для получения актуальных значений имитируем скролл.
+									// (Это действие сгенерирует событие scroll, в котором пойдет
+									// дальнейшая обработка ситуации.)
+									window.scrollBy(0, 0);
+								}, 150);
+							}
+						});
+						// Проверяем размер окна при завершении прикосновения. Жест зума может
+						// изменять размер окна, не генерируя событий resize и scroll.        
+						hpmd.data.attachHandler(document, 'touchend', hpmd.data.checkLayoutEnd);
+						hpmd.data.attachHandler(document, 'touchcancel', hpmd.data.checkLayoutEnd);
+						// Перепроверяем размер окна по факту загрузки страницы.
+						hpmd.data.attachHandler(window, 'load', hpmd.data.checkLayout);
+						// Перепроверяем размер окна по факту загрузки DOM; в этот момент браузер
+						// уже должен определиться с текущим масштабом страницы.
+						hpmd.data.attachHandler(document, 'DOMContentLoaded', hpmd.data.checkLayout);
+						
+						// В некоторых случаях - например, при «тапе» на панели навигации браузера -   
+						// нам не везет, и никаких событий не вызывается. Проверяем три раза в секунду,
+						// не изменился ли размер окна.                                                .)
+						hpmd.data.watchLayoutInterval = setInterval(hpmd.data.checkLayout, 330);
+						
+						// 500 мс, как правило, достаточно для обработки таблицы стилей площадки
+						// и определения масштаба страницы, так что по истечении этого времени  
+						// попробуем еще раз проверить размер окна.                             
+						setTimeout(hpmd.data.forceCheckLayout, 500);
+					},
+				
+					/**
+					 * Проверяет размеры окна браузера при завершении или отмене касания
+					 */
+					checkLayoutEnd: function (event) {
+						// Делаем проверку, только если все касания завершены;    
+						// в противном случае жест еще не закончен.               
+						// Проверка `!event.touches` для событий на Windows Phone.
+						if (!event.touches || event.touches.length <= 0) {
+							setTimeout(function() {
+								hpmd.data.forceCheckLayout();
+							}, 0);
+						}
+					},
+				
+					/**
+					 * Последние зарегистрированные параметры окна браузера
+					 */
+					lastLayout: {
+						width: null,
+						height: null,
+						orientation: null,
+					},
+				
+					/**
+					 * Проверяет, не изменилась ли ориентация; если изменилась,
+					 * обновляет верстку в соответствии с новыми размерами.
+					 * 
+					 * @return bool True в случае наличия изменений.
+					 */
+					checkOrientation: function () {
+						if (hpmd.data.lastLayout.orientation != window.orientation) {
+							hpmd.data.forceCheckLayout();
+							return true;
+						}
+						return false;
+					},
+				
+					/**
+					 * Проверяет, не изменились ли размеры окна браузера.
+					 * Если изменились, обновляет верстку в соответствии
+					 * с новыми размерами.
+					 * 
+					 * @return bool True в случае наличия изменений.
+					 */
+					checkLayout: function () {
+						if (hpmd.data.lastLayout.width != window.innerWidth || hpmd.data.lastLayout.height != window.innerHeight) {
+							hpmd.data.forceCheckLayout();
+							return true;
+						}
+						return false;
+					},
+				
+					/**
+					 * Сохраняет новые размеры окна браузера и запускает
+					 * процедуру обновления верстки.
+					 */
+					forceCheckLayout: function () {
+						if (hpmd.data.isPortrait()) {
+							hpmd.data.nodes.wrapper.classList.add('hpmdf-portrait');
+							hpmd.data.nodes.wrapper.classList.remove('hpmdf-landscape');
+						} else {
+							hpmd.data.nodes.wrapper.classList.remove('hpmdf-portrait');
+							hpmd.data.nodes.wrapper.classList.add('hpmdf-landscape');
+						}
+						hpmd.data.lastLayout = {
+							width: window.innerWidth,
+							height: window.innerHeight,
+							orientation: window.orientation,
+						};
+						hpmd.data.updateLayout();
+					},
+				
+					/**
+					 * Флаг повторного обновления, workaround для бага в iOS 7.
+					 * @var bool
+					 */
+					secondLayoutUpdate: false,
+					/**
+					 * Запускает процедуру обновления верстки.
+					 */
+					updateLayout: function () {
+						// Workaround для бага в iOS 7, см. выше.
+						if (hpmd.data.secondLayoutUpdate || !hpmd.data.isIOs()) {
+							hpmd.data.nodes.wrapper.style.visibility = 'visible';
+						}
+						hpmd.data.secondLayoutUpdate = true;
+						
+						// Запускаем пользовательскую функцию пересчета верстки.
+						hpmd.data.onViewportUpdate();
+						
+						if (hpmd.data.bannerOpened) {
+							// Заставляем браузер перерисовать верстку фуллскрина
+							// и внешний вид панели навигации с изменениями.
+							window.scrollBy(0, 0);
+						}
+					},
+				
+					/**
+					 * Инициализирует баннер
+					 */
+					init: function () {
+						// Обрабатываем все HTML-элементы баннера, начиная с корневого ― #hpmdf-wrapper.
+						hpmd.data.processNode(document.getElementById('hpmdf-wrapper'));
+						
+						// Кнопка закрытия обязательно должна находиться в исходном коде,  
+						// т.к. в противном случае при сбое фуллскрин нельзя будет закрыть.
+						if (!hpmd.data.nodes['popup-close']) {
+							window.console && console.log("[HPMD Framework] There's a problem with your banner layout; it should include #hpmdf-popup-close element.");
+						} else {
+							// Обрабатываем закрытие баннера при нажатии на кнопку.
+							hpmd.data.handleSwipe(hpmd.data.nodes['popup-close'], {
+								tap: hpmd.data.closeBanner
+							});
+							
+							// Для отладки на десктопе также привязывамся к событию click.
+							hpmd.data.attachHandler(hpmd.data.nodes['popup-close'], 'click', hpmd.data.closeBanner);
+						}
+						
+						// Не позволяем событию touchstart выйти за пределы баннера.
+						hpmd.data.attachHandler(hpmd.data.nodes.wrapper, 'touchstart', function (event) {
+							event.stopPropagation();
+						});
+						
+						// Определяем тип устройства
+						hpmd.data.nodes.wrapper.classList.add('hpmdf-' + hpmd.getSegment("device_type"));
+						
+						// Начинаем наблюдение за размерами окна браузера.
+						// Эта функция вызовет hpmd.data.onViewportUpdate 
+						// через 330 мс.
+						hpmd.data.watchLayout();
+					},
+				
+					/**
+					 * Функция для перестройки верстки под изменившиеся размеры
+					 * окна браузера.                                          
+					 * 
+					 * Эта функция вызывается каждый раз, когда изменяются размеры    
+					 * окна браузера в пикселях. Если вам необходимо вычислять размеры
+					 * или расположение каких-либо элементов верстки динамически,     
+					 * поместите вычисления в эту функцию.                            
+					 */
+					onViewportUpdate: function () {
+						
+					},
+				
+				};
+				
+				/* Инициализируем баннер */
+				hpmd.data.init();
+				
+				/**
+				 * Составляем список картинок, нужных для отображения         
+				 * первого экрана баннера, в зависимости от текущей ориентации
+				 */
+				var images;
+				if (hpmd.data.isPortrait()) {
+					// портретная ориентация
+					images = [
+						// кнопка закрытия
+						"./banner/img/close.png",
+						
+						// // фоновое изображение
+						"./banner/img/portrait.jpg",
+						"./banner/img/smoke-init.jpg",
+						"./banner/img/tap.png",
+						"./banner/img/title.png",
+						"./banner/img/vol1.png"
+					];
+				} else {
+					// ландшафтная ориентация
+					images = [
+						// кнопка закрытия
+						"./banner/img/close.png",
+						
+						// // фоновое изображение
+						"./banner/img/portrait.jpg",
+						"./banner/img/smoke-init.jpg",
+						"./banner/img/tap.png",
+						"./banner/img/title.png",
+						"./banner/img/vol1.png"
+					];
+				}
+		
+				var startTime = Date.now();
+		
+				window.addEventListener('message', function(event) {
+					var data = event.data;
+					var pixelRatio = window.devicePixelRatio || 1;
+		
+					try {
+						data = JSON.parse(event.data);
+		
+						if (data.name === 'hpmd') {
+							switch (data.action) {
+								case 'page-loaded':
+									hpmd.data.nodes['iframe'].contentWindow.postMessage(JSON.stringify({
+										name: 'hpmd',
+										action: 'start-anim',
+										data: {
+											width: window.innerWidth,
+											height: window.innerHeight
+										}
+									}), '*');
+									hpmd.data.preloadImages(images, function () {
+										setTimeout(function() {
+											hpmd.data.openBanner();
+										}, 500)
+										/**
+										 * После того, как картинки загрузились, отображаем
+										 * баннер на экране:
+										 */
+										
+										
+		
+										var preloadTime = Math.ceil((Date.now() - startTime) / 1000 + 0.01);
+					
+										hpmd.trackEvent('hpmd.loading', {
+											weight: preloadTime
+										});
+									});
+									break;
+								case 'final':
+									hpmd.data.nodes['iframe'].classList.add('hpmdf-disable');
+									setTimeout(function() {
+										hpmd.data.nodes['pers-name'].classList.add('hpmdf-active');
+									}, 510);
+									setTimeout(function() {
+										if (hpmd.data.isInteraction) {
+											hpmd.trackEvent('hpmd-interaction-final');
+										} else {
+											hpmd.trackEvent('hpmd-auto-final');
+										}
+										hpmd.data.nodes['final'].classList.add('hpmdf-active');
+										hpmd.data.nodes['final-part'].classList.add('hpmdf-active');
+										hpmd.data.nodes['sixteen'].setAttribute('data-text', 2);
+										hpmd.data.nodes['bottom-hint'].setAttribute('data-text', 2);
+									}, 2000);
+									break;
+							}
+						}
+					} catch (e) {}
+				});
+				
+				/**
+				 * Запускаем предварительную загрузку картинок
+				 */
+				
+				
+				/* КОД-ПРИМЕР
+				 * 
+				 * Вам может быть необходимо удалить или обновить этот код.
+				 * 
+				 * Открываем кликовую ссылку при нажатии на кнопку (элемент
+				 * .hpmdf-button).
+				 */
+
+				hpmd.data.handleSwipe(document.querySelector('#hpmdf-final-part'), {
+					tap: function () {
+						hpmd.data.closeBanner();
+						hpmd.link();
+					}
+				});
+});</script>
+<!-- /JS -->
+<!-- =================================================================================================== -->
+
+</body></html>

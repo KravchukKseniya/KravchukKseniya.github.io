@@ -1,0 +1,290 @@
+/* «Обертка» */
+#hpmdf-wrapper {
+    /* Прибита к верху экрана */
+    position: fixed;
+
+    /* Сохраняем ширину и высоту для дочерних элементов */
+    width: 100%;
+    height: 100%;
+
+    /* «Прибиваем» к верхней части экрана */
+    top: 0;
+
+    /* Сдвигаем за пределы viewport, чтобы элемент-обертка не перекрывал
+     * основной контент страницы */
+    left: -100%;
+
+    /* Размещаем поверх всех элементов площадки */
+    z-index: 2147483647;
+
+    /* Отключаем «проглатывание» pointer-событий в Windows Phone
+     * для всех элементов баннера */
+    touch-action: none;
+}
+/* Попап (основное поле баннера) */
+#hpmdf-popup {
+    position: absolute;
+
+    /* Сдвигаем назад в видимую область экрана */
+    left: 100%;
+
+    /* Растягиваем на всю доступную область экрана */
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Скрываем лишнее.
+     * 
+     * Если какой-то из элементов будет выступать вправо или вниз,    
+     * это может разрушить верстку площадки из-за неверного вычисления
+     * браузером ширины контента.                                     
+     * 
+     * Чтобы избежать проблем, ограничиваем баннер областью попапа:
+     */
+    overflow: hidden;
+
+    /* Изначально скрываем фуллскрин, чтобы не показывать пользователю
+     * не до конца загруженную графику:
+     */
+    display: none;
+
+    /* Анимация при появлении фуллскрина и ее изначальное состояние.
+     * 
+     * Примечание: если в баннере есть ресурсоемкие элементы,    
+     * например, плейер YouTUBE, анимация может отображаться     
+     * неустойчиво. Если возникла такая проблема, можно отключить
+     * анимацию, удалив все transition ниже.                     
+     */
+    opacity: 0.0;
+    transition: opacity .4s ease-in;
+    -webkit-transition: opacity .4s ease-in;
+    -moz-transition: opacity .4s ease-in;
+    -ms-transition: opacity .4s ease-in;
+    -o-transition: opacity .4s ease-in;
+}
+
+#hpmdf-controls {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+#hpmdf-carousel {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+#hpmdf-carousel.hpmdf-end{
+    justify-content: flex-end;
+}
+#hpmdf-slider {
+    /*position: relative;*/
+    display: flex;
+    height: 100%;
+    width: 500%;
+    flex-shrink: 0;
+    transition: all 0.5s;
+}
+
+.hpmdf-slide {
+    flex-basis: 20%;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative
+}
+
+/* Состояние попапа сразу после окончания загрузки */
+#hpmdf-popup.hpmdf-popup-steady {
+    display: block;
+}
+/* Состояние попапа после его проявления на экране */
+#hpmdf-popup.hpmdf-popup-ready {
+    opacity: 1.0;
+}
+
+/* Кнопка закрытия */
+#hpmdf-popup-close {
+    position: absolute;
+    /* Фиксируем кнопку в правом верхнем углу */
+    right: 0;
+    top: 0;
+    /* Размещаем кнопку над прочими элементами баннера */
+    z-index: 1000;
+    /* Картинка кнопки закрытия, по центру: */
+    background: url(./img/close.png) 50% 50% no-repeat;
+    /* Делаем размер иконки половиной от всего размера кнопки, так,
+     * чтобы область для клика была достаточно большой, чтобы в нее
+     * можно было уверенно попасть пальцем, но иконка не казалась  
+     * громадной:                                                  
+     */
+    -o-background-size: 50% auto;
+    background-size: 50% auto;
+}
+/* Размеры кнопки закрытия в портретной ориентации для смартфонов: */
+.hpmdf-portrait #hpmdf-popup-close {
+    /* Ширина = 20% ширины экрана */
+    width: 20%;
+    /* Высота = 20% ширины экрана */
+    padding-top: 20%;
+}
+
+.hpmdf-portrait #hpmdf-prev,
+.hpmdf-portrait #hpmdf-next {
+    width: 11%;
+    position: absolute;
+    top: 44%;
+    background: url(./img/arrow_left.png) 50% 50% no-repeat;
+    background-size: 50% 50%;
+}
+
+.hpmdf-portrait #hpmdf-prev {
+    left: 1%;
+}
+
+.hpmdf-portrait #hpmdf-next {
+    right: 1%;
+    transform: rotate(180deg);
+}
+
+#hpmdf-prev::after,
+#hpmdf-next::after{
+    content: "";
+    display: block;
+    padding-top: 182.76%;
+}
+
+.hpmdf-filter {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Фоновая картинка баннера в портретной ориентации для мобилки */
+.hpmdf-portrait .hpmdf-slide1 {
+    background: #000 url(./img/slide1.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-portrait .hpmdf-slide2 {
+    background: #000 url(./img/slide2.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-portrait .hpmdf-slide3 {
+    background: #000 url(./img/slide3.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-portrait .hpmdf-slide4 {
+    background: #000 url(./img/slide4.jpg) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+
+.hpmdf-logo {
+    background: url(./img/logo.png) 50% 50% no-repeat;
+    background-size: cover;
+}
+
+.hpmdf-logo::after {
+    content: "";
+    display: block;
+    padding-top: 88.95%;
+}
+
+.hpmdf-portrait .hpmdf-logo {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 54%;
+}
+
+.hpmdf-portrait .hpmdf-legal {
+    background: url(./img/legal2.png) 50% 50% no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom: 1%;
+    left: 5%;
+    width: 90%;
+}
+
+.hpmdf-portrait .hpmdf-legal::after {
+    content: "";
+    display: block;
+    /*padding-top: 8.82%;*/
+    padding-top: 7.58%;
+}
+
+.hpmdf-slide1 .hpmdf-text {
+    background: url(./img/slide1_content.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide2 .hpmdf-text {
+    background: url(./img/slide2_content.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide3 .hpmdf-text {
+    background: url(./img/slide3_content.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-slide4 .hpmdf-text {
+    background: url(./img/slide4_content.png) 50% 50% no-repeat;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.hpmdf-text::after {
+    content: "";
+    display: block;
+    padding-top: 36.48%;
+}
+
+.hpmdf-portrait .hpmdf-text {
+    position: absolute;
+    top: 20%;
+    left: 0%;
+    width: 100%;
+}
+
+/* Кнопка */
+.hpmdf-button {
+    /* Изображение кнопки и его расположение */
+    background: url(./img/button.png) 50% 50% no-repeat;
+    /* Растягиваем изображение на всю площадь элемента без обрезания */
+    background-size: contain;
+}
+
+.hpmdf-button::after {
+    content: "";
+    display: block;
+    padding-top: 24.73%;
+}
+/* Кнопка в портретной ориентации */
+.hpmdf-portrait .hpmdf-button {
+    width: 60%;
+    position: absolute;
+    left: 20%;
+    bottom: 6%;
+}
+
+

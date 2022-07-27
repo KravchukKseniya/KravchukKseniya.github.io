@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <canvas id="hpmdf-smoke-canvas" width="1080" height="1880"></canvas>
+
+    <canvas id="hpmdf-canvas" width="1080" height="1880"></canvas>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #hpmdf-smoke-canvas,
+        #hpmdf-canvas {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+        }
+
+        #hpmdf-smoke-canvas {
+            transform: scale(1.7) rotate(29deg) translate(4%, -5%);
+        }
+    </style>
+
+    <script src="logic.js"></script>
+    <script>
+        var canvas = document.getElementById('hpmdf-canvas');
+        window.addEventListener('load', function() {
+
+                // canvas.height = window.outerHeight * getPixelRatio();
+                // canvas.width = window.outerWidth * getPixelRatio();
+                initAction();
+                load();
+                run();
+            }
+
+        )
+
+    </script>
+</body>
+</html>

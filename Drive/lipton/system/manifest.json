@@ -1,0 +1,78 @@
+{
+    "language": "ru",
+    "format": "teaser",
+    "subformat": "swipe",
+    "targeting": {
+        "device_type": [
+            "mobile"
+        ],
+        "os": [
+            {
+                "os": "iOS",
+                "major": null,
+                "minor": null,
+                "revision": null
+            },
+            {
+                "os": "Android",
+                "major": null,
+                "minor": null,
+                "revision": null
+            },
+            {
+                "os": "Windows",
+                "major": null,
+                "minor": null,
+                "revision": null
+            }
+        ]
+    },
+    "events": [
+        {
+            "id": "hpmd.expand",
+            "title": "\u0420\u0430\u0441\u043a\u0440\u044b\u0442\u0438\u0435 \u0431\u0430\u043d\u043d\u0435\u0440\u0430",
+            "unit": "item",
+            "click": true
+        },
+        {
+            "id": "hpmd.close",
+            "title": "\u0417\u0430\u043a\u0440\u044b\u0442\u0438\u0435 \u0440\u0430\u0441\u0445\u043b\u043e\u043f\u0430",
+            "unit": "item"
+        },
+        {
+            "id": "hpmd.collapse",
+            "title": "\u0421\u0432\u043e\u0440\u0430\u0447\u0438\u0432\u0430\u043d\u0438\u0435 \u0442\u0438\u0437\u0435\u0440\u0430",
+            "unit": "item"
+        },
+        {
+            "id": "start-game",
+            "title": "\u041f\u043e\u043b\u044c\u0437\u043e\u0432\u0430\u0442\u0435\u043b\u044c \u043d\u0430\u0447\u0430\u043b \u0438\u0433\u0440\u0430\u0442\u044c"
+        },
+        {
+            "id": "show-final",
+            "title": "\u041f\u043e\u043a\u0430\u0437 \u0444\u0438\u043d\u0430\u043b\u044c\u043d\u043e\u0433\u043e \u0432\u0438\u0436\u0443\u0430\u043b\u0430"
+        },
+        {
+            "id": "overlap-percent",
+            "title": "\u041f\u0440\u043e\u0446\u0435\u043d\u0442 \u043f\u0435\u0440\u0435\u043a\u0440\u044b\u0442\u0438\u044f \u0431\u0430\u043d\u043d\u0435\u0440\u0430",
+            "type": "progressive",
+            "duration": 100
+        },
+        {
+            "id": "hpmd.time-expanded",
+            "title": "\u0412\u0440\u0435\u043c\u044f \u0432 \u0431\u0430\u043d\u043d\u0435\u0440\u0435",
+            "type": "progressive"
+        }
+    ],
+    "links": [
+        {
+            "title": "\u041f\u0435\u0440\u0435\u0445\u043e\u0434 \u043f\u043e \u0441\u0441\u044b\u043b\u043a\u0435",
+            "url": "https:\/\/ad.doubleclick.net\/ddm\/trackclk\/N336603.2069514HPMDMOBILENETWORK\/B21677553.235581168;dc_trk_aid=433063630;dc_trk_cid=105677602;dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=",
+            "main": true
+        }
+    ],
+    "pixels": [
+        "https:\/\/ad.doubleclick.net\/ddm\/trackimp\/N336603.2069514HPMDMOBILENETWORK\/B21677553.235581168;dc_trk_aid=433063630;dc_trk_cid=105677602;ord={RND};dc_lat=;dc_rdid=;tag_for_child_directed_treatment=;tfua=?",
+        "https:\/\/www.tns-counter.ru\/V13a****omd_ru\/ru\/UTF-8\/tmsec=omd_cid1031178-posid1475285\/{RND}"
+    ]
+}

@@ -1,0 +1,2885 @@
+<!DOCTYPE html><html><head><meta charset="utf-8" /><script type="text/javascript" src="./system/hpmd.js"></script></head><body data-format="swipe" data-lang="ru" data-sys-format="teaser" data-sys-subformat="swipe">
+
+<!-- == HTML =========================================================================================== -->
+<section>
+				<!-- «Растяжка» снизу. Этот элемент подкладывается в конец
+					 тела страницы и делается равным тизеру по высоте,
+					 чтобы тизер не перекрывал подвал страницы -->
+				<div id="hpmd-stretch"></div>
+				<!-- «Обертка». Сам элемент находится за пределами viewport,
+					 но нужен, чтобы передать дочерним элементам размеры
+					 «окна» браузера. -->
+				<div id="hpmd-wrapper">
+					<!-- Расхлоп -->
+					<div id="hpmd-popup">
+						<div id="hpmd-inv"></div>
+						<!-- Заглушка.
+								Этот элемент «выдвигается» из-под тизера при свайпе
+								вверх; остальные элементы появляются после полного
+								раскрытия баннера. -->
+						<div id="hpmd-splash">
+							<!-- Кнопка закрытия -->
+							<div id="hpmd-popup-close"></div>
+							
+							<!-- TODO: сюда добавляются элементы заглушки -->
+							
+							<!-- Элемент-пример. Назначьте ему новые стили, или удалите из кода и замените
+									новыми. -->
+							<div class="hpmd-visual"></div>
+						</div>
+						<!-- Расхлоп -->
+						<div id="hpmd-popup-contents">
+							<!-- TODO: сюда добавляются элементы расхлопа -->
+							<canvas id="hpmd-canvas"></canvas>
+							<div id="hpmd-start-screen">
+								<div class="hpmd-bubble1"></div>
+								<div class="hpmd-bubble2"></div>
+								<div class="hpmd-bubble3"></div>
+		
+								<div class="hpmd-hand"></div>
+							</div>
+							<div id="hpmd-bubble4"></div>
+							<div id="hpmd-bottle"></div>
+							<div id="hpmd-final" class="hpmd-hide">
+								<div class="hpmd-final-title"></div>
+								<div class="hpmd-final-btn"></div>
+							</div>
+							<!-- Кнопка-пример. Назначьте ей новые стили, или удалите ее из кода и замените
+									новыми элементами. -->
+							<div class="hpmd-button"></div>
+						</div>
+					</div>
+					
+					<!-- Тизер -->
+					<div id="hpmd-teaser" class="hpmd-teaser">
+						<!-- «Ярлычок» -->
+						<div id="hpmd-handle">
+							<!-- Вы можете использовать макет http://misc.hpmdnetwork.ru/template/swipe/handle.psd,
+									чтобы кастомизировать ярлычок -->
+							<div class="hpmd-arrow"></div>
+							<div class="hpmd-arrow"></div>
+						</div>
+					</div>
+					
+				</div>
+</section>
+<!-- /HTML -->
+
+<!-- == CSS ============================================================================================ -->
+<style>
+				.hpmd-landscape {
+					display: none!important;
+				}
+				.hpmd-portrait .hpmd-final-title {
+					width: 65.2%;
+					height: 19.5%;
+					position: absolute;
+					top: 3.26%;
+					left: 17.4%;
+					background: url('./banner/img/final-title.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+				}
+				.hpmd-portrait .hpmd-final-btn {
+					width: 49.5%;
+					height: 6.75%;
+					position: absolute;
+					top: 79.12%;
+					left: 25.25%;
+					background: url('./banner/img/final-btn.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+				}
+				.hpmd-portrait  #hpmd-final {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					
+					opacity: 1;
+					-webkit-transition: opacity .5s ease-out;
+					-o-transition: opacity .5s ease-out;
+					-moz-transition: opacity .5s ease-out;
+					transition: opacity .5s ease-out;
+					background: url('./banner/img/final.jpg') no-repeat 50% 50%;
+					-webkit-background-size: cover;
+					   -moz-background-size: cover;
+						 -o-background-size: cover;
+							background-size: cover;
+				}
+				#hpmd-final.hpmd-hide {
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+					opacity: 0;
+				}
+				#hpmd-final.hpmd-touch {
+					-ms-touch-action: auto!important;
+					touch-action: auto!important;
+					pointer-events: auto!important;
+				}
+				.hpmd-portrait #hpmd-bubble4 {
+					width: 44.53%;
+					height: 27%;
+					position: absolute;
+					top: 6%;
+					left: 5.527%;
+					background: url('./banner/img/bubble4.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+					opacity: 0;
+					-webkit-transition: opacity .6s ease-in;
+					-moz-transition: opacity .6s ease-in;
+					-ms-transition: opacity .6s ease-in;
+					-o-transition: opacity .6s ease-in;
+				}
+				/*.hpmd-portrait #hpmd-bottle {
+					width: 24.4%;
+					height: 49.25%;
+					position: absolute;
+					top: 25.37%;
+					left: 37.8%;
+					background: url('./banner/img/bottle.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+					opacity: 0;
+					-webkit-transition: opacity .6s ease-in;
+					-moz-transition: opacity .6s ease-in;
+					-ms-transition: opacity .6s ease-in;
+					-o-transition: opacity .6s ease-in;
+				}*/
+				#hpmd-bubble4.hpmd-active,
+				#hpmd-bottle.hpmd-active {
+					-webkit-transition: opacity .4s ease-out;
+					-moz-transition: opacity .4s ease-out;
+					-ms-transition: opacity .4s ease-out;
+					-o-transition: opacity .4s ease-out;
+					opacity: 1;
+				}
+				.hpmd-portrait .hpmd-hand {
+					width: 6%;
+					height: 4%;
+					position: absolute;
+					top: 87.55%;
+					left: 47.12%;
+					background: url('./banner/img/hand.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+					-webkit-animation-name: tap;
+					   -moz-animation-name: tap;
+						 -o-animation-name: tap;
+							animation-name: tap;
+					-webkit-animation-duration: 1s;
+					   -moz-animation-duration: 1s;
+						 -o-animation-duration: 1s;
+							animation-duration: 1s;
+					-webkit-animation-iteration-count: infinite;
+					   -moz-animation-iteration-count: infinite;
+						 -o-animation-iteration-count: infinite;
+							animation-iteration-count: infinite;
+					-webkit-transform-origin: 50% 100%;
+					   -moz-transform-origin: 50% 100%;
+						-ms-transform-origin: 50% 100%;
+						 -o-transform-origin: 50% 100%;
+							transform-origin: 50% 100%;
+				}
+				@-webkit-keyframes tap {
+					0% {
+						-webkit-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+					
+					60% {
+						-webkit-transform: translateY(-1%) scale(0.8);
+								transform: translateY(-1%) scale(0.8);
+					}
+					
+					70% {
+						-webkit-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+					100% {
+						-webkit-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+				}
+				@-moz-keyframes tap {
+					0% {
+						-moz-transform: translateY(0) scale(1);
+							 transform: translateY(0) scale(1);
+					}
+					
+					60% {
+						-moz-transform: translateY(-1%) scale(0.8);
+							 transform: translateY(-1%) scale(0.8);
+					}
+					
+					70% {
+						-moz-transform: translateY(0) scale(1);
+							 transform: translateY(0) scale(1);
+					}
+					100% {
+						-moz-transform: translateY(0) scale(1);
+							 transform: translateY(0) scale(1);
+					}
+				}
+				@-o-keyframes tap {
+					0% {
+						-o-transform: translateY(0) scale(1);
+						   transform: translateY(0) scale(1);
+					}
+					
+					60% {
+						-o-transform: translateY(-1%) scale(0.8);
+						   transform: translateY(-1%) scale(0.8);
+					}
+					
+					70% {
+						-o-transform: translateY(0) scale(1);
+						   transform: translateY(0) scale(1);
+					}
+					100% {
+						-o-transform: translateY(0) scale(1);
+						   transform: translateY(0) scale(1);
+					}
+				}
+				@keyframes tap {
+					0% {
+						-webkit-transform: translateY(0) scale(1);
+						   -moz-transform: translateY(0) scale(1);
+							 -o-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+					
+					60% {
+						-webkit-transform: translateY(-1%) scale(0.8);
+						   -moz-transform: translateY(-1%) scale(0.8);
+							 -o-transform: translateY(-1%) scale(0.8);
+								transform: translateY(-1%) scale(0.8);
+					}
+					
+					70% {
+						-webkit-transform: translateY(0) scale(1);
+						   -moz-transform: translateY(0) scale(1);
+							 -o-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+					100% {
+						-webkit-transform: translateY(0) scale(1);
+						   -moz-transform: translateY(0) scale(1);
+							 -o-transform: translateY(0) scale(1);
+								transform: translateY(0) scale(1);
+					}
+				}
+				.hpmd-portrait #hpmd-start-screen {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					-ms-touch-action: none;
+					touch-action: none;
+					pointer-events: none;
+				}
+				#hpmd-start-screen.hpmd-hide {
+					-webkit-transition: opacity .3s ease, visibility .3s ease;
+					-o-transition: opacity .3s ease, visibility .3s ease;
+					-moz-transition: opacity .3s ease, visibility .3s ease;
+					transition: opacity .3s ease, visibility .3s ease;
+					opacity: 0;
+					visibility: hidden;
+				}
+				.hpmd-portrait .hpmd-bubble1 {
+					width: 34.12%;
+					height: 13.21%;
+					position: absolute;
+					top: 49.18%;
+					left: 6.45%;
+					background: url('./banner/img/bubble1.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+				}
+				.hpmd-portrait .hpmd-bubble2 {
+					width: 24.89%;
+					height: 14.17%;
+					position: absolute;
+					top: 49.78%;
+					left: 63.51%;
+					background: url('./banner/img/bubble2.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+				}
+				.hpmd-portrait .hpmd-bubble3 {
+					width: 33.32%;
+					height: 10.8%;
+					position: absolute;
+					top: 71.47%;
+					left: 62.046%;
+					background: url('./banner/img/bubble3.png') no-repeat 50% 50%;
+					-webkit-background-size: contain;
+					   -moz-background-size: contain;
+						 -o-background-size: contain;
+							background-size: contain;
+				}
+		
+				#hpmd-inv {
+					display: none!important;
+				}
+				.hpmd-portrait #hpmd-canvas {
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0%;
+					left: 0%;
+					opacity: 1;
+				}
+				#hpmd-canvas.hpmd-hide {
+					-webkit-transition: opacity .3s ease;
+					-moz-transition: opacity .3s ease;
+					-ms-transition: opacity .3s ease;
+					-o-transition: opacity .3s ease;
+					opacity: 0;
+				}
+				/* «Обертка» */
+				#hpmd-wrapper {
+					/* Прибита к низу экрана */
+					position: fixed;
+					
+					/* Сохраняем ширину и высоту для дочерних элементов */
+					width: 100%;
+					height: 100%;
+					
+					/* «Прибиваем» к нижней части экрана */
+					bottom: 0;
+					
+					/* Сдвигаем за пределы viewport, чтобы элемент-обертка не перекрывал
+					 * основной контент страницы */
+					left: -100%;
+					
+					/* Размещаем поверх всех элементов площадки */
+					z-index: 2147483647;
+					
+					/* Отключаем «проглатывание» pointer-событий в Windows Phone
+					 * для всех элементов баннера */
+					-ms-touch-action: none;
+					touch-action: none;
+				}
+				
+				/* Тизер */
+				#hpmd-teaser {
+					position: absolute;
+					
+					/* Сдвигаем в видимую область экрана */
+					left: 100%;
+					
+					/* Прибиваем к нижней границе экрана */
+					bottom: 0;
+					
+					/* Растягиваем на всю ширину экрана */
+					width: 100%;
+					
+					/* Размещаем выше расхлопа */
+					z-index: 10000;
+					
+					/* Анимации появления и исчезновения */
+					transition: bottom .3s, opacity .3s, -webkit-transform .3s;
+					-moz-transition: bottom .3s, opacity .3s, transform .3s, -moz-transform .3s;
+					transition: bottom .3s, opacity .3s, transform .3s;
+					transition: bottom .3s, opacity .3s, transform .3s, -webkit-transform .3s, -moz-transform .3s, -o-transform .3s;
+					-webkit-transition: bottom .3s, opacity .3s, -webkit-transform .3s;
+					-moz-transition: bottom .3s, opacity .3s, -moz-transform .3s;
+					-ms-transition: bottom .3s, opacity .3s, -ms-transform .3s;
+					-o-transition: bottom .3s, opacity .3s, -o-transform .3s;
+				}
+				
+				/* Анимация сворачивания тизера */
+				#hpmd-teaser.hpmd-close {
+					/* При сворачивании тизер уходит в прозрачность и исчезает
+					 * за нижней границей экрана: */
+					opacity: 0.0;
+					transform: translate(0, 100%);
+					-webkit-transform: translate(0, 100%);
+					-moz-transform: translate(0, 100%);
+					-ms-transform: translate(0, 100%);
+					-o-transform: translate(0, 100%);
+				}
+				
+				/* Расхлоп */
+				#hpmd-popup {
+					position: absolute;
+					
+					/* Сдвигаем в видимую область экрана */
+					left: 100%;
+					
+					/* Прибиваем к нижней границе экрана */
+					bottom: 0;
+					
+					/* Растягиваем на всю ширину экрана */
+					width: 100%;
+					
+					/* Изначальное состояние расхлопа: */
+					height: 0;
+					
+					/* Фоновая заливка на случай, если расхлоп был вытянут
+					 * более чем на высоту экрана: */
+					background: #000;
+				}
+				
+				/* Заглушка */
+				#hpmd-splash {
+					/* Растягиваем на весь размер родительского элемента */
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					
+					/* Скрываем лишнее.
+					 * 
+					 * Если какой-то из элементов будет выступать вправо или вниз,
+					 * это может разрушить верстку площадки из-за неверного вычисления
+					 * браузером ширины контента.
+					 * 
+					 * Чтобы избежать проблем, ограничиваем баннер областью попапа:
+					 */
+					overflow: hidden;
+				}
+				
+				/* Кнопка закрытия */
+				#hpmd-popup-close {
+					/* Анимация и начальное состояние кнопки: */
+					opacity: 0.0;
+					transition: opacity .6s;
+					-webkit-transition: opacity .6s;
+					-moz-transition: opacity .6s;
+					-ms-transition: opacity .6s;
+					-o-transition: opacity .6s;
+					
+					/* Прибиваем кнопку к правому верхнему углу: */
+					position: absolute;
+					right: 0;
+					top: 0;
+					
+					/* Располагаем кнопку над прочими элементами баннера: */
+					z-index: 1000;
+					
+					/* Картинка кнопки закрытия, по центру: */
+					background: url(./banner/img/close.png) 50% 50% no-repeat;
+					/* Делаем размер иконки половиной от всего размера кнопки, так,
+					 * чтобы область для клика была достаточно большой, чтобы в нее
+					 * можно было уверенно попасть пальцем, но иконка не казалась
+					 * громадной:
+					 */
+					background-size: 50% auto;
+				}
+				#hpmd-popup-close.hpmd-show {
+					/* Анимация появления кнопки при раскрытии расхлопа */
+					opacity: 1.0;
+				}
+				
+				/* Основное содержимое расхлопа */
+				#hpmd-popup-contents {
+					/* Растягиваем на весь размер родительского элемента: */
+					position: absolute;
+					left: 0;
+					top: 0;
+					width: 100%;
+					height: 100%;
+					
+					/* Запрещаем выход элементов за пределы расхлопа: */
+					overflow: hidden;
+				}
+				
+				/* Анимация и начальное состояние расхлопа */
+				#hpmd-popup {
+					opacity: 0.0;
+					-o-transition: bottom .3s, height .6s ease, opacity .6s ease-in;
+					-moz-transition: bottom .3s, height .6s ease, opacity .6s ease-in;
+					transition: bottom .3s, height .6s ease, opacity .6s ease-in;
+					-webkit-transition: bottom .3s, height .6s ease, opacity .6s ease-in;
+					-moz-transition: height .6s ease, opacity .6s ease-in;
+					-ms-transition: height .6s ease, opacity .6s ease-in;
+					-o-transition: height .6s ease, opacity .6s ease-in;
+				}
+				/* Отключение анимации, когда пользователь взаимодействует с тизером */
+				#hpmd-popup.hpmd-no-transition {
+					transition: none;
+					-webkit-transition: none;
+					-moz-transition: none;
+					-ms-transition: none;
+					-o-transition: none;
+					opacity: 1.0;
+				}
+				/* Полностью раскрытое состояние расхлопа */
+				#hpmd-popup.hpmd-open {
+					opacity: 1.0;
+					height: 100%;
+				}
+				
+				/* Скрытое состояние тизера */
+				#hpmd-teaser.hpmd-hide {
+					opacity: 0.0;
+				}
+				
+				/* Скрываем основное содержимое расхлопа, чтобы избежать
+				 * загрузки всей графики расхлопа, когда на экране
+				 * только тизер: */
+				#hpmd-popup-contents {
+					display: none;
+				}
+				
+				/* «Ярлычок» тизера */
+				#hpmd-handle {
+					/* Растягиваем на всю ширину тизера */
+					position: absolute;
+					left: 0;
+					right: 0;
+					
+					/* Сдвигаем элемент снизу на высоту тизера:
+					 * делаем так, чтобы элемент начинался там,
+					 * где кончается тизер */
+					bottom: 100%;
+					
+					/* Делаем так, чтобы элемент кончался на 24% выше
+					 * верхней границы тизера. В сочетании с предыдущим
+					 * правилом это определяет высоту ярлычка ― 24%
+					 * высоты тизера */
+					top: -45%;
+					
+					/* Задаем фоновую картинку и центрируем ее */
+					background: url(./banner/img/handle.png) 50% 50% no-repeat;
+					/* Растягиваем фоновую картинку на всю высоту элемента */
+					-o-background-size: auto 100%;
+					   background-size: auto 100%;
+		
+					-webkit-transform: translate3d(0%, 45%, 0);
+					-moz-transform: translate3d(0%, 45%, 0);
+					transform: translate3d(0%, 45%, 0);
+				}
+				
+				/* Анимация стрелочек в ярлычке */
+				@-moz-keyframes hpmd-arrowkf {
+					from {
+						-moz-transform: translateY(0);
+							 transform: translateY(0);
+					}
+					50% {
+						-moz-transform: translateY(30%);
+							 transform: translateY(30%);
+					}
+					to {
+						-moz-transform: translateY(0);
+							 transform: translateY(0);
+					}
+				}
+				@keyframes hpmd-arrowkf {
+					from {
+						-webkit-transform: translateY(0);
+						   -moz-transform: translateY(0);
+							 -o-transform: translateY(0);
+								transform: translateY(0);
+					}
+					50% {
+						-webkit-transform: translateY(30%);
+						   -moz-transform: translateY(30%);
+							 -o-transform: translateY(30%);
+								transform: translateY(30%);
+					}
+					to {
+						-webkit-transform: translateY(0);
+						   -moz-transform: translateY(0);
+							 -o-transform: translateY(0);
+								transform: translateY(0);
+					}
+				}
+				@-webkit-keyframes hpmd-arrowkf {
+					from {
+						-webkit-transform: translateY(0);
+					}
+					50% {
+						-webkit-transform: translateY(30%);
+					}
+					to {
+						-webkit-transform: translateY(0);
+					}
+				}
+				@-o-keyframes hpmd-arrowkf {
+					from {
+						-o-transform: translateY(0);
+					}
+					50% {
+						-o-transform: translateY(30%);
+					}
+					to {
+						-o-transform: translateY(0);
+					}
+				}
+				/* Стрелочки в ярлычке */
+				#hpmd-handle .hpmd-arrow {
+					position: absolute;
+					width: 100%;
+					height: 20%;
+					top: 37%;
+					left: 0;
+					background: url(./banner/img/handle-arrow.png) 37.4% 50% no-repeat;
+					-o-background-size: contain;
+					   background-size: contain;
+					-moz-transform-origin: 50% 50%;
+						 transform-origin: 50% 50%;
+					-webkit-transform-origin: 50% 50%;
+					-ms-transform-origin: 50% 50%;
+					-o-transform-origin: 50% 50%;
+					-moz-animation: hpmd-arrowkf 1s ease-in-out infinite;
+						 animation: hpmd-arrowkf 1s ease-in-out infinite;
+					-webkit-animation: hpmd-arrowkf 1s ease-in-out infinite;
+					-ms-animation: hpmd-arrowkf 1s ease-in-out infinite;
+					-o-animation: hpmd-arrowkf 1s ease-in-out infinite;
+				}
+				#hpmd-handle .hpmd-arrow+.hpmd-arrow {
+					background-position: 62.8% 50%;
+				}
+				/* Стрелочки в ярлычке в ландшафтной ориентации */
+				.hpmd-landscape #hpmd-handle .hpmd-arrow {
+					background-position: 44% 50%;
+				}
+				.hpmd-landscape #hpmd-handle .hpmd-arrow+.hpmd-arrow {
+					background-position: 56.1% 50%;
+				}
+				
+				/* Высота тизера и изображение в нем в портретной ориентации */
+				.hpmd-portrait #hpmd-teaser {
+					/* Высота = 22.2% ширины экрана */
+					padding-top: 22.2%;
+					
+					/* Задаем фоновую картинку, центрируем ее по горизонтали и растягиваем
+					 * на все доступное место. */
+					background: url(./banner/img/teaser-portrait.jpg) 50% 50% no-repeat;
+					/* заставляем фоновую картинку «застелить» весь элемент.
+					 * Если картинка не соответствует пропорциям, она будет обрезана
+					 * либо снизу, либо слева и справа. */
+					background-size: cover;
+				}
+				/* Размер и изображение тизера в ландшафтной ориентации */
+				.hpmd-landscape #hpmd-teaser {
+					/* Высота = 8.85% ширины экрана */
+					padding-top: 8.85%;
+					
+					/* Задаем фоновую картинку, центрируем ее по горизонтали и растягиваем
+					 * на все доступное место. */
+					background: url(./banner/img/teaser-landscape.png) 50% 50% no-repeat;
+					/* заставляем фоновую картинку «застелить» весь элемент.
+					 * Если картинка не соответствует пропорциям, она будет обрезана
+					 * либо снизу, либо слева и справа. */
+					background-size: cover;
+				}
+				
+				
+				/* Фоновая картинка заглушки в портретной ориентации */
+				.hpmd-portrait #hpmd-splash {
+					background: #000 url(./banner/img/portrait.jpg) 50% 50% no-repeat;
+					-o-background-size: cover;
+					   background-size: cover;
+				}
+				/* Фоновая картинка заглушки в ландшафтной ориентации */
+				.hpmd-landscape #hpmd-splash {
+					background: #000 url(./banner/img/landscape.jpg) 50% 50% no-repeat;
+					-o-background-size: cover;
+					   background-size: cover;
+				}
+				
+				/* Размеры кнопки закрытия в портретной ориентации: */
+				.hpmd-portrait #hpmd-popup-close {
+					/* Ширина = 20% ширины экрана */
+					width: 20%;
+					/* Высота = 20% ширины экрана */
+					padding-top: 20%;
+				}
+				/* Размеры кнопки закрытия в ландшафтной ориентации: */
+				.hpmd-landscape #hpmd-popup-close {
+					/* Ширина = 12% ширины экрана */
+					width: 12%;
+					/* Высота = 12% ширины экрана */
+					padding-top: 12%;
+				}
+</style>
+<!-- /CSS -->
+
+<!-- == JS ============================================================================================= -->
+<script>_hpmd.testBanner(function () {
+				/**
+				 * Используем пространство имен hpmd.data для организации баннера.
+				 * Переменная hpmd гарантированно объявлена к моменту запуска баннера.
+				 */
+				hpmd.data = {
+					
+					/**
+					 * ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ
+					 */
+					
+					/**
+					 * Определяет, находится ли устройство в портретной ориентации
+					 * 
+					 * В качестве аргумента dimensions можно передать объект с ключами
+					 * width и height, описывающих ширину и высоту viewport.
+					 * 
+					 * @return bool
+					 */
+					isPortrait: function (dimensions) {
+						if (!dimensions) {
+							// если измерения не переданы,
+							// используем текущие размеры окна
+							dimensions = {
+								width: window.innerWidth,
+								height: window.innerHeight,
+							};
+						}
+						
+						// проверяем ориентацию
+						return dimensions.width < dimensions.height;
+					},
+					
+					/**
+					 * Управляется ли устройство iOS
+					 * 
+					 * @return bool
+					 */
+					isIOs: function () {
+						return hpmd.getSegment("os") == "iOS";
+					},
+				
+					/**
+					 * Управляется ли устройство Android
+					 * 
+					 * @return bool
+					 */
+					isAndroid: function () {
+						return hpmd.getSegment("os") == "Android";
+					},
+				
+					/**
+					 * Управляется ли устройство Windows Phone
+					 * 
+					 * @return bool
+					 */
+					isWP: function () {
+						return hpmd.getSegment("os") == "Windows";
+					},
+				
+					/**
+					 * Загружает список изображений в кэш браузера
+					 * и вызывает callback, когда загрузка завершена
+					 * 
+					 * @param string[] images Список URL загружаемых картинок
+					 * @param Function callback Функция обратного вызова по завершении загрузки
+					 */
+					preloadImages: function (images, callback) {
+						var loaded = 0, imageObjects = [];
+						var handler = function () {
+							loaded++;
+							if (loaded == images.length && !!callback) {
+								callback();
+							}
+						};
+						for (var i = 0; i < images.length; i++) {
+							imageObjects[i] = new Image();
+							imageObjects[i].onload = handler;
+							imageObjects[i].onerror = handler;
+							imageObjects[i].src = images[i];
+						}
+					},
+					
+					/**
+					 * Регистрирует обработчик события
+					 * 
+					 * @param DOMElement element DOM-элемент
+					 * @param string event Название события (напр., "touchstart"))
+					 * @param Function handler Обработчик события
+					 */
+					attachHandler: function (element, event, handler) {
+						if (hpmd.data.isWP()) {
+							switch (event) {
+								case "touchstart":
+									hpmd.data.attachHandler(element, 'MSPointerDown', handler);
+									hpmd.data.attachHandler(element, 'pointerdown', handler);
+									break;
+								case "touchmove":
+									hpmd.data.attachHandler(element, 'MSPointerMove', handler);
+									hpmd.data.attachHandler(element, 'pointermove', handler);
+									break;
+								case "touchend":
+									hpmd.data.attachHandler(element, 'MSPointerUp', handler);
+									hpmd.data.attachHandler(element, 'pointerup', handler);
+									break;
+								case "touchcancel":
+									hpmd.data.attachHandler(element, 'MSPointerCancel', handler);
+									hpmd.data.attachHandler(element, 'pointercancel', handler);
+									break;
+							}
+						}
+						
+						element.addEventListener(event, handler, false);
+					},
+				
+					/**
+					 * Удаляет обработчик события
+					 * 
+					 * @param DOMElement element DOM-элемент
+					 * @param string event Название события (напр., "touchstart"))
+					 * @param Function handler Обработчик события
+					 */
+					detachHandler: function (element, event, handler) {
+						if (hpmd.data.isWP()) {
+							switch (event) {
+								case "touchstart":
+									hpmd.data.detachHandler(element, 'MSPointerDown', handler);
+									hpmd.data.detachHandler(element, 'pointerdown', handler);
+									break;
+								case "touchmove":
+									hpmd.data.detachHandler(element, 'MSPointerMove', handler);
+									hpmd.data.detachHandler(element, 'pointermove', handler);
+									break;
+								case "touchend":
+									hpmd.data.detachHandler(element, 'MSPointerUp', handler);
+									hpmd.data.detachHandler(element, 'pointerup', handler);
+									break;
+								case "touchcancel":
+									hpmd.data.detachHandler(element, 'MSPointerCancel', handler);
+									hpmd.data.detachHandler(element, 'pointercancel', handler);
+									break;
+							}
+						}
+						
+						element.removeEventListener(event, handler, false);
+					},
+				
+					/**
+					 * Обрабатывает жесты пользователя
+					 * 
+					 * Эта функция служит для обработки свайпов в четырех направлениях
+					 * (влево, вправо, вверх, вниз) и «тапа» по любому элементу.
+					 * 
+					 * В качестве первого аргумента передается DOM-элемент;
+					 * в качестве второго аргумента передается объект, содержащий
+					 * некоторые (или все) из следующих ключей:
+					 * - left
+					 * - right
+					 * - down
+					 * - up
+					 * - tap
+					 * 
+					 * Значения ключей должны быть функциями.
+					 * 
+					 * При обнаружении свайпа в определенном направлении вызывается
+					 * соответствующая функция; в качестве аргументов ей передается
+					 * экземпляр события touchend и ссылка на исходный DOM-элемент.
+					 * 
+					 * Например:
+					 * hpmd.data.handleSwipe(document.getElementById('hpmd-my-node'), {
+					 *    up: function () {
+					 *       alert("Swipe up!");
+					 *    },
+					 *    down: function () {
+					 *       alert("Swipe down!");
+					 *    },
+					 *    tap: function (event, element) {
+					 *       alert("Tapped on " + element + "!");
+					 *    },
+					 * });
+					 * 
+					 * @param DOMElement element
+					 * @param object handlers
+					 */
+					handleSwipe: function(element, handlers) {
+						var x, y;
+						
+						hpmd.data.attachHandler(element, 'touchstart', function (event) {
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							
+							x = touch.pageX;
+							y = touch.pageY;
+							event.preventDefault();
+							
+							if (!!event.stopPropagation) {
+								event.stopPropagation();
+								event.cancelBubble = true;
+							}
+						});
+						hpmd.data.attachHandler(element, 'touchend', function (event) {
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							var direction = hpmd.data.calcSwipeDirection(touch.pageX - x, touch.pageY - y);
+							if (!!handlers[direction]) {
+								handlers[direction](event, element);
+							}
+							
+							if (!!event.stopPropagation) {
+								event.stopPropagation();
+								event.cancelBubble = true;
+							}
+						});
+					},
+				
+					/**
+					 * Отключает скролл на странице.
+					 */
+					disableScroll: function () {
+						// Чтобы отключить скролл, «давим» все события touchmove и touchend.
+						hpmd.data.attachHandler(document, 'touchmove', hpmd.data.cancelEvent);
+						hpmd.data.attachHandler(document, 'touchend', hpmd.data.cancelEvent);
+					},
+				
+					/**
+					 * Восстанавливает скролл на странице.
+					 */
+					enableScroll: function () {
+						// Удаляем обработчик событий touchmove и touchend, подавляющий их.
+						hpmd.data.detachHandler(document, 'touchmove', hpmd.data.cancelEvent);
+						hpmd.data.detachHandler(document, 'touchend', hpmd.data.cancelEvent);
+					},
+				
+					/**
+					 * «Отменяет» событие.
+					 * 
+					 * Используется в качестве обработчика события,
+					 * обработки которого нужно избежать (например,
+					 * запрет скролла)..)
+					 */
+					cancelEvent: function (event) {
+						event.preventDefault();
+					},
+					
+					
+					// ///////////////////////////////////////////////
+				
+					/**
+					 * СОСТОЯНИЕ ИНТЕРФЕЙСА БАННЕРА
+					 */
+					
+					/**
+					 * Выполняется ли закрытие баннера
+					 * (флаг установлен, если происходит анимация закрытия)
+					 * 
+					 * @var bool
+					 */
+					bannerClosing: false,
+					/**
+					 * Раскрыт ли фуллскрин
+					 * 
+					 * @var bool
+					 */
+					bannerOpened: false,
+					/**
+					 * Свернут ли тизер
+					 * 
+					 * @var bool
+					 */
+					bannerMinimized: false,
+				
+					
+					// ///////////////////////////////////////////////
+				
+					/**
+					 * ВНУТРЕННИЕ ФУНКЦИИ
+					 */
+					
+					/**
+					 * Список DOM-элементов, принадлежащих баннеру
+					 * 
+					 * @var object of DOMElement
+					 */
+					nodes: {},
+				
+					/**
+					 * Возвращает расстояние от верха страницы до верхней
+					 * границы тизера в пикселях (для использования вместе
+					 * с pageY, полученным от touch-события)
+					 * 
+					 * @return int
+					 */
+					getTeaserOffset: function () {
+						var offset = 0, node = hpmd.data.nodes.teaser;
+						while (node) {
+							offset += node.offsetTop;
+							node = node.offsetParent;
+						}
+						return offset;
+					},
+				
+					/**
+					 * Определяет направление свайпа по смещению
+					 * точки прикосновения
+					 * 
+					 * Смещение вправо и вниз ― положительное,
+					 * влево и вверх ― отрицательное.
+					 * 
+					 * @param number deltax Смещение в пикселях по горизонтали вправо
+					 * @param number deltay Смещение в пикселях по вертикали вниз
+					 * 
+					 * @return string "tap", "left", "right", "up", "down"
+					 */
+					calcSwipeDirection: function (deltax, deltay) {
+						if (deltax == 0) {
+							if (deltay == 0) {
+								// смещения нет, произошел тап
+								return "tap";
+							} else {
+								// смещение есть, зададим deltay равным единице,
+								// чтобы избежать деления на ноль
+								deltay = 1;
+							}
+						}
+						if (Math.abs(deltax) < 10 && Math.abs(deltay) < 10) {
+							// смещение меньше 10 пикселей, произошел тап
+							return "tap";
+						}
+						if (Math.abs(deltay / deltax) > .5) {
+							// наклон кривой к горизонтали больше 45°,
+							// это вертикальный свайп,
+							if (deltay < 0) {
+								// смещение вверх
+								return "up";
+							} else {
+								// смещение вниз
+								return "down";
+							}
+						} else {
+							// наклон кривой к горизонтали меньше 45°,
+							// это горизонтальный свайп,
+							if (deltax < 0) {
+								// смещение влево
+								return "left";
+							} else {
+								// смещение вправо
+								return "right";
+							}
+						}
+					},
+				
+					/**
+					 * Обрабатывает DOM-элемент тизера
+					 * 
+					 * Устанавливает все необходимые обработчики событий
+					 * для обработки взаимодействия пользователя с тизером.
+					 * 
+					 * @param DOMElement node
+					 */
+					processTeaserNode: function (node) {
+						var offsetY, deltaY, startX, startY, progress;
+						
+						/**
+						 * Обработчик события touchstart / pointerdown
+						 */
+						var handlerStart = function (event) {
+							if (hpmd.data.bannerOpened || hpmd.data.nodes.teaser.getBoundingClientRect().bottom < window.innerHeight * 0.9) {
+								// Залетело «шальное» событие при открытом баннере,
+								// игнорируем его
+								return;
+							}
+							if (hpmd.data.isWP()) {
+								// Включаем pointer capture на Windows Phone.
+								// Без этого событие pointerup не генерируется,
+								// если пользователь «отпустил» прикосновение
+								// за пределами исходного элемента.
+								node.setPointerCapture(event.pointerId);
+							}
+							
+							// event.changedTouches для события touchstart,
+							// event для события pointerdown
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							
+							// Вычисляем, в какой точке относительно тизера
+							// начался жест.
+							startX = touch.pageX;
+							startY = touch.pageY;
+							offsetY = hpmd.data.getTeaserOffset();
+							if (startY < offsetY) {
+								deltaY = offsetY - startY;
+							} else {
+								deltaY = 0;
+							}
+							
+							// Отключаем CSS3-анимации фуллскрина, чтобы его движение
+							// вслед за «пальцем» не тормозило.
+							hpmd.data.nodes.popup.className = 'hpmd-no-transition';
+							
+							// Отключем обработку события остальными элементами и браузером.
+							event.preventDefault();
+							event.stopPropagation();
+						};
+						
+						/**
+						 * Обработчик события touchmove / pointermove
+						 */
+						var handlerMove = function (event) {
+							if (hpmd.data.bannerOpened) {
+								// Залетело «шальное» событие при открытом баннере,
+								// игнорируем его
+								return;
+							}
+							
+							// event.changedTouches для события touchstart,
+							// event для события pointerdown
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							
+							// Смотрим, на какую долю высоты окна сместилось прикосновение
+							progress = (startY - touch.pageY) / window.innerHeight;
+				
+							if (progress < 0) {
+								// Указатель сместился вниз.
+								// Чтобы не задавать отрицательную высоту и не ловить баги в iOS,
+								// возвращаем все в исходное состояние.
+								hpmd.data.rollbackPopup();
+							} else if (progress < 1.0) {
+								// «Открываем» фуллскрин на то же самое расстояние, на которое
+								// был смещен палец.
+								hpmd.data.nodes.popup.style.height = (startY - touch.pageY + hpmd.data.nodes.teaser.offsetHeight) + 'px';
+							}
+				
+							// Отключем обработку события остальными элементами и браузером.
+							event.preventDefault();
+							event.stopPropagation();
+						};
+						
+						var handlerCancel = function (event) {
+							if (hpmd.data.bannerOpened) {
+								// Залетело «шальное» событие при открытом баннере,
+								// игнорируем его
+								return;
+							}
+							
+							// Слишком много пальцев, палец за пределами экрана,
+							// либо аппаратный сбой. Возвращаем все на место.
+							hpmd.data.rollbackPopup();
+				
+							// Отключем обработку события остальными элементами и браузером.
+							event.preventDefault();
+							event.stopPropagation();
+						};
+						
+						var handlerEnd = function (event) {
+							if (hpmd.data.bannerOpened) {
+								// Залетело «шальное» событие при открытом баннере,
+								// игнорируем его
+								return;
+							}
+							
+							// event.changedTouches для события touchend,
+							// event для события pointerup
+							var touch = !!event.changedTouches ? event.changedTouches[0] : event;
+							
+							// Определяем, в каком направлении в итоге сместился палец
+							var direction = hpmd.data.calcSwipeDirection(touch.pageX - startX, touch.pageY - startY);
+							
+							if (direction == "down") {
+								// Вниз? Возвращаем все назад...
+								hpmd.data.rollbackPopup();
+								// ...и сворачиваем тизер.
+								hpmd.data.collapseTeaser(true);
+							} else if (progress > .4 || direction == "tap") {
+								// Тап, либо палец продвинулся больше чем на 60% экрана.
+								// Разворачиваем фуллскрин.
+								hpmd.data.openBanner();
+							} else {
+								// Произошло что-то другое (например, свайп вбок),
+								// возвращаем все на место.
+								hpmd.data.rollbackPopup();
+							}
+				
+							// Отключем обработку события остальными элементами и браузером.
+							event.preventDefault();
+							event.stopPropagation();
+						};
+						
+						// Регистрируем обработчики.
+						hpmd.data.attachHandler(node, 'touchstart', handlerStart);
+						hpmd.data.attachHandler(node, 'touchmove', handlerMove);
+						hpmd.data.attachHandler(node, 'touchcancel', handlerCancel);
+						hpmd.data.attachHandler(node, 'touchend', handlerEnd);
+					},
+				
+					/**
+					 * Обрабатывает DOM-элемент, принадлежащий баннеру.
+					 * 
+					 * Если ID имеет префикс "hpmd-", сохраняет ссылку на элемент в объекте
+					 * hpmd.data.nodes для быстрого доступа; ключом является ID элемента без префикса.
+					 * 
+					 * Элементы с классом "hpmd-teaser" считаются тизерами; им присваиваются
+					 * необходимые обработчики ошибок.
+					 * 
+					 * После завершения функция рекурсивно обрабатывает все дочерние элементы.
+					 * 
+					 * @param DOMElement node
+					 */
+					processNode: function (node) {
+						// Проверяем ID.
+						var attribute;
+						if (!!node.getAttribute && !!(attribute = node.getAttribute('id')) && attribute.indexOf('hpmd-') === 0) {
+							// Нашли префикс "hpmd-", сохраняем на будущее.
+							hpmd.data.nodes[attribute.substring(5, 1000)] = node;
+						}
+						
+						// Проверяем тизерные элементы.
+						if (/(^|\s)hpmd-teaser($|\s)/.exec(node.className)) {
+							// Нашли класс "hpmd-teaser", регистрируем нужные обработчики.
+							hpmd.data.processTeaserNode(node);
+						}
+						
+						// Обрабатываем дочерние элементы.
+						for (var i = 0; i < node.children.length; i++) {
+							hpmd.data.processNode(node.children[i]);
+						}
+					},
+				
+					/**
+					 * Возвращает фуллскрин в исходное, свернутое состояние.
+					 */
+					rollbackPopup: function () {
+						hpmd.data.nodes.popup.style.height = '';
+						hpmd.data.nodes.popup.className = '';
+					},
+					canvasImages: [
+						{ src: './banner/img/canvas/sprite.png' },
+						{ src: './banner/img/canvas/gift.png' }
+					],
+					bgNum: 1,
+					preloadCanvasImages: function(images, callback) {
+						var loaded = 0;
+						var canvas = document.createElement("canvas"),
+							ctx = canvas.getContext("2d");
+						var handler = function (img, i) {
+							ctx.clearRect(0, 0, canvas.width, canvas.height);
+							canvas.width = img.width;
+							canvas.height = img.height;
+							ctx.clearRect(0, 0, canvas.width, canvas.height);
+							ctx.drawImage( img, 0, 0 );
+							hpmd.data.canvasImages[i].img = document.createElement('img');
+							hpmd.data.canvasImages[i].img.src = canvas.toDataURL();
+		
+							hpmd.data.nodes.inv.appendChild(hpmd.data.canvasImages[i].img);
+		
+							loaded++;
+							if (loaded == images.length && !!callback) {
+								hpmd.data.nodes.inv.parentNode.removeChild(hpmd.data.nodes.inv);
+								callback();
+							}
+						};
+						for (var i = 0; i < images.length; i++) {
+							(function(i) {
+								var img = document.createElement('img');
+		
+								img.onload = function() {
+									handler(img, i);
+								}
+								img.onerror = function(err) {
+									var img = document.createElement('img');
+		
+									img.crossOrigin = 'Anonymous';
+		
+									img.onload = function() {
+										handler(img, i);
+									}
+									img.onerror = function(err) {
+										var img = document.createElement('img');
+		
+										img.crossOrigin = 'anonymous';
+		
+										img.onload = function() {
+											handler(img, i);
+										}
+										img.onerror = function(err) {
+											var img = document.createElement('img');
+		
+											img.onload = function() {
+												handler(img, i);
+											}
+											img.onerror = function(err) {
+												handler(img, i);
+												console.log(err)
+											};
+		
+											img.crossOrigin = 'anonymous';
+		
+											img.src = images[i].src;
+										};
+		
+										img.src = images[i].src;
+									};
+		
+									img.src = images[i].src;
+								};
+		
+								img.crossOrigin = 'Anonymous';
+		
+								img.src = images[i].src;
+							})(i);
+						}
+					},
+					isPlaying: false,
+					isFinal: false,
+					initGame: function() {
+						document.body.addEventListener('touchstart', function () { });
+		
+						var canvas = hpmd.data.nodes.canvas;
+						var ctx = canvas.getContext('2d');
+		
+						var cw = canvas.width;
+						var ch = canvas.height;
+						var isStartGame = false;
+		
+						var platformSides = [];
+						var bricksSides = [];
+						var bricks = [];
+						var platform, ball;
+		
+						var isCol = false;
+		
+						var img = hpmd.data.canvasImages[0].img;
+						var img2 = hpmd.data.canvasImages[1].img;
+		
+						var touchState = {
+							start: {x: 0, y: 0},
+							move: {x: 0, y: 0},
+							current: {x: 0, y: 0},
+							width: 0
+						};
+		
+						var isStartSide = true;
+						var disableStartSide = false;
+		
+						var berryNums = normilizeBerrys(shuffle(shuffle([
+							1, 2, 3, 4, 5,
+							5, 1, 2, 3, 4,
+							5, 2, 1, 2, 5
+						])), 5, 3);
+		
+						
+						function collideCircleWithRotatedRectangle( circle, rect ) {
+							var rectCenterX = rect.x;
+							var rectCenterY = rect.y;
+		
+							var rectX = rectCenterX - rect.w / 2;
+							var rectY = rectCenterY - rect.h / 2;
+		
+							var rectReferenceX = rectX;
+							var rectReferenceY = rectY;
+							
+							// Rotate circle's center point back
+							var unrotatedCircleX = Math.cos( 0 ) * ( circle.x - rectCenterX ) - Math.sin( 0 ) * ( circle.y - rectCenterY ) + rectCenterX;
+							var unrotatedCircleY = Math.sin( 0 ) * ( circle.x - rectCenterX ) + Math.cos( 0 ) * ( circle.y - rectCenterY ) + rectCenterY;
+		
+							// Closest point in the rectangle to the center of circle rotated backwards(unrotated)
+							var closestX, closestY;
+		
+							// Find the unrotated closest x point from center of unrotated circle
+							if ( unrotatedCircleX < rectReferenceX ) {
+								closestX = rectReferenceX;
+							} else if ( unrotatedCircleX > rectReferenceX + rect.w ) {
+								closestX = rectReferenceX + rect.w;
+							} else {
+								closestX = unrotatedCircleX;
+							}
+						 
+							// Find the unrotated closest y point from center of unrotated circle
+							if ( unrotatedCircleY < rectReferenceY ) {
+								closestY = rectReferenceY;
+							} else if ( unrotatedCircleY > rectReferenceY + rect.h ) {
+								closestY = rectReferenceY + rect.h;
+							} else {
+								closestY = unrotatedCircleY;
+							}
+						 
+							// Determine collision
+							var collision = false;
+							var distance = getDistance( unrotatedCircleX, unrotatedCircleY, closestX, closestY );
+							
+							if ( distance < circle.w ) {
+								collision = true;
+							}
+							else {
+								collision = false;
+							}
+		
+							return collision;
+						}
+		
+						function getDistance( fromX, fromY, toX, toY ) {
+							var dX = Math.abs( fromX - toX );
+							var dY = Math.abs( fromY - toY );
+		
+							return Math.sqrt( ( dX * dX ) + ( dY * dY ) );
+						}
+		
+						function normilizeBerrys(arr, columns, rows) {
+							var newArr = [];
+							for (var j = 0; j < rows; j++) {
+								newArr[j] = [];
+								for (var i = 0; i < columns; i++) {
+									newArr[j][i] = arr[(j + 1) * i];
+								}
+							}
+							return newArr;
+						}
+		
+						function shuffle(array) {
+							var currentIndex = array.length, temporaryValue, randomIndex;
+		
+							// While there remain elements to shuffle...
+							while (0 !== currentIndex) {
+		
+								// Pick a remaining element...
+								randomIndex = Math.floor(Math.random() * currentIndex);
+								currentIndex -= 1;
+		
+								// And swap it with the current element.
+								temporaryValue = array[currentIndex];
+								array[currentIndex] = array[randomIndex];
+								array[randomIndex] = temporaryValue;
+							}
+		
+							return array;
+						}
+		
+						var isPlatform = true;
+		
+		
+						function checkCollisionSide( firstComponent, component ) {
+		
+							var collision = {
+								active: false,
+								direction: { top: false, right: false, bottom: false, left: false },
+								depth: { top: null, right: null, bottom: null, left: null },								// permet de garder le max à chaque fois
+								components: []																				// permet de tracer la collision
+							};
+							var directions = [];
+		
+							var deltaX = ( firstComponent.x + ( firstComponent.w / 2 ) ) - ( component.x + ( component.w / 2 ) );
+							var deltaY = ( firstComponent.y + ( firstComponent.h / 2 ) ) - ( component.y + ( component.h / 2 ) );
+								
+							var middleCenterDistanceX = ( firstComponent.w / 2 ) + ( component.w / 2 );
+							var middleCenterDistanceY = ( firstComponent.h / 2 ) + ( component.h / 2 );
+							var colDir = null;
+		
+							if( Math.abs( deltaX ) < middleCenterDistanceX && Math.abs( deltaY ) < middleCenterDistanceY ) {
+		
+								if( collision.active === false )
+									collision.active = true;
+		
+								collision.components.push( component );																// return id of component
+		
+								var oX = middleCenterDistanceX - Math.abs( deltaX ),
+									oY = middleCenterDistanceY - Math.abs( deltaY );
+								if( oX >= oY ) {
+									if( deltaY > 0 ) {
+										collision.direction.top = true;
+										directions.push('top');
+		
+										if( collision.depth.top === null || collision.depth.top < oY )
+											collision.depth.top = oY;
+									} else {
+										collision.direction.bottom = true;
+										directions.push('bottom');
+		
+										if( collision.depth.bottom === null || collision.depth.bottom < oY )
+											collision.depth.bottom = oY;
+									}
+								}
+								else {
+									if ( deltaX > 0 ) {
+										collision.direction.left = true;
+										directions.push('left');
+		
+										if( collision.depth.left === null || collision.depth.left < oX )
+											collision.depth.left = oX;
+									}
+									else {
+										collision.direction.right = true;
+										directions.push('right');
+		
+										if( collision.depth.right === null || collision.depth.right < oX )
+											collision.depth.right = oX;
+									}
+								}
+							}
+		
+							return( directions );
+						}
+		
+						function findNeighbor(columns, rows, bricks, id) {
+							if (id % columns === 0) {
+								if (!!bricks[id + 1] && !bricks[id + 1].isDead) {
+									return bricks[id + 1];
+								}
+							} else if (id % columns === columns - 1) {
+								if (!!bricks[id - 1] && !bricks[id - 1].isDead) {
+									return bricks[id - 1];
+								}
+							} else {
+								if (!!bricks[id - 1] && !bricks[id - 1].isDead) {
+									return bricks[id - 1];
+								} else if (!!bricks[id + 1] && !bricks[id + 1].isDead) {
+									return bricks[id + 1];
+								}
+							}
+						}
+		
+						function isCollission(a, b) {
+							return !(
+								((a.y + a.h) < (b.y)) ||
+								(a.y > (b.y + b.h))   ||
+								((a.x + a.w) < b.x)   ||
+								(a.x > (b.x + b.w))
+							);
+						}
+						function normilizeNumber(value) {
+							return Number((value).toFixed(2));
+						}
+		
+						function Ball(x, y, r) {
+							this.x = normilizeNumber(x);
+							this.y = normilizeNumber(y);
+							this.w = normilizeNumber(r);
+							this.h = normilizeNumber(r);
+		
+							this.zX = normilizeNumber(x);
+							this.zY = normilizeNumber(y);
+							this.zW = normilizeNumber(r);
+							this.zH = normilizeNumber(r);
+		
+							this.oldH = normilizeNumber(r);
+		
+							this.cx = normilizeNumber(Math.random() > 0.5 ? 0.01 : -0.01);
+							this.cy = normilizeNumber(-0.01);
+		
+							this.isJumping = false;
+						}
+		
+						Ball.prototype.draw = function(ctx, cw, ch) {
+							if (!this.isJumping) {
+								ctx.beginPath();
+								ctx.drawImage(
+									img, 
+									32, 
+									640, 
+									240, 
+									240, 
+									this.x * cw,
+									this.y * ch,
+									this.w * cw,
+									this.h * ch
+								);
+								ctx.closePath();
+							} else {
+								ctx.beginPath();
+								ctx.drawImage(
+									img, 
+									32, 
+									640, 
+									240, 
+									240, 
+									this.x * cw,
+									this.y * ch - (this.y - this.zY) * ch * easeOutCubic(jumpAnim.getProgress()),
+									this.w * cw,
+									this.h * ch
+								);
+								ctx.closePath();
+							}
+						}
+		
+						Ball.prototype.move = function(platformSides, bricksSides, bricks) {
+							var breakElem = null;
+							var breakLen = 0;
+							var breakIndex = 0;
+		
+							if (this.isJumping) {
+								jumpAnim.update();
+							} else {
+								var self = this;
+		
+								isStartSide = true;
+		
+								if (has(platformSides, 'top')) {
+									this.cy = (Math.abs(this.cy));
+								} 
+								if (has(platformSides, 'bottom')) {
+									this.cy = -(Math.abs(this.cy));
+								}
+								if (has(platformSides, 'left')) {
+									this.cx = (Math.abs(this.cx));
+								} 
+								if (has(platformSides, 'right')) {
+									this.cx = -(Math.abs(this.cx));
+								}
+		
+								if ((this.x + this.w) >= 1 || this.x <= 0) {
+									this.cx = -this.cx;
+								}
+		
+								if (this.y <= 0) {
+									this.cy = -this.cy;
+								}
+		
+								if ((this.y + this.h) >= 1) {
+									ball.isJumping = true;
+									jumpAnim.start();
+								}
+		
+								bricksSides.forEach(function(bricksSide, index) {
+									if (bricksSide.length == 0) return;
+		
+									var colDirs = checkCollisionSide(self, bricks[index]);
+		
+									if (
+										colDirs.length > 0 && 
+										collideCircleWithRotatedRectangle(self, bricks[index])
+									) {
+										if (has(colDirs, 'top')) {
+											self.cy = Math.abs(self.cy);
+										}
+										if (has(colDirs, 'bottom')) {
+											self.cy = -Math.abs(self.cy);
+										}
+										if (has(colDirs, 'left')) {
+											self.cx = Math.abs(self.cx);
+										}
+										if (has(colDirs, 'right')) {
+											self.cx = -Math.abs(self.cx);
+										}
+		
+										if (bricks[index].isStatic) {
+											hpmd.data.isPlaying = false;
+											hpmd.data.isFinal = true;
+											finalAnim.start();
+											
+										} else if (bricks[index].isFrozen && !bricks[index].isStatic) {
+											bricks[index].isFrozen = false;
+											bricks[index].frozenOpacity = 1;
+		
+											breakLen += 1;
+											breakElem = bricks[index];
+											breakIndex = index;
+										} else if (!bricks[index].isStatic) {
+											bricks[index].isDead = true;
+		
+											breakLen += 1;
+											breakElem = bricks[index];
+											breakIndex = index;
+										}
+									}
+								});
+		
+								if (breakLen === 1) {
+									if (isPlatform) {
+										isPlatform = false;
+										var nBrick = findNeighbor(5, 3, bricks, breakIndex);
+		
+										if (!!nBrick && !nBrick.isStatic) {
+											if (nBrick.isFrozen) {
+												bricks[breakIndex].isFrozen = false;
+												bricks[breakIndex].frozenOpacity = 1;
+											} else {
+												nBrick.isDead = true;
+											}
+										}
+									}
+								}
+		
+								this.x = normilizeNumber(this.x + this.cx);
+								this.y = normilizeNumber(this.y + this.cy);
+							}
+							
+						}
+		
+						Ball.prototype.resizeHeight = function(cw, ch) {
+							this.h = normilizeNumber((this.oldH * cw) / ch);
+							this.zH = this.h;
+						}
+		
+						function Platform(x, y, w, h) {
+							this.x = normilizeNumber(x);
+							this.y = normilizeNumber(y);
+							this.w = normilizeNumber(w);
+							this.h = normilizeNumber(h);
+		
+							this.oldH = normilizeNumber(h);
+						}
+		
+						Platform.prototype.draw = function(ctx, cw, ch) {
+							ctx.beginPath();
+							// ctx.fillStyle = '#000';
+							// ctx.fillRect(this.x * cw, this.y * ch, this.w * cw, this.h * ch);
+							ctx.drawImage(
+								img, 
+								303, 
+								650, 
+								602, 
+								115, 
+								this.x * cw, 
+								this.y * ch, 
+								this.w * cw, 
+								this.h * ch
+							);
+							ctx.closePath();
+						}
+		
+						Platform.prototype.move = function(x, y, cw, ch) {
+							if (x >= 0 && x <= 1 - this.w) {
+								this.x = x;
+							}
+						}
+						Platform.prototype.resizeHeight = function(cw, ch) {
+							// this.y = normilizeNumber((this.oldY * cw) / ch);
+		
+							this.h = normilizeNumber((this.w * cw * (115 / 602)) / ch);
+						}
+		
+						function randomInteger(min, max) {
+							var rand = min + Math.random() * (max + 1 - min);
+							rand = Math.floor(rand);
+							return rand;
+						}
+		
+						function drawBerry(ctx, berryNum, coord) {
+							var img = hpmd.data.canvasImages[0].img;
+							switch(berryNum) {
+								case 1:
+									ctx.drawImage(
+										img, 
+										0, 
+										0, 
+										302, 
+										302, 
+										coord.x * canvas.width, 
+										coord.y * canvas.height,
+										coord.w * canvas.width, 
+										coord.h * canvas.height
+									);
+									break;
+								case 2:
+									ctx.drawImage(
+										img, 
+										302, 
+										0, 
+										302, 
+										302, 
+										coord.x * canvas.width, 
+										coord.y * canvas.height,
+										coord.w * canvas.width, 
+										coord.h * canvas.height
+									);
+									break;
+								case 3:
+									ctx.drawImage(
+										img, 
+										604, 
+										0, 
+										302, 
+										302, 
+										coord.x * canvas.width, 
+										coord.y * canvas.height,
+										coord.w * canvas.width, 
+										coord.h * canvas.height
+									);
+									break;
+								case 4:
+									ctx.drawImage(
+										img, 
+										0, 
+										302, 
+										302, 
+										302, 
+										coord.x * canvas.width, 
+										coord.y * canvas.height,
+										coord.w * canvas.width, 
+										coord.h * canvas.height
+									);
+									break;
+								case 5:
+									ctx.drawImage(
+										img, 
+										302, 
+										302, 
+										302, 
+										302, 
+										coord.x * canvas.width, 
+										coord.y * canvas.height,
+										coord.w * canvas.width, 
+										coord.h * canvas.height
+									);
+									break;
+							}
+						}
+		
+						function Brick(x, y, w, h, isFrozen, isStatic, berryNum) {
+							this.x = normilizeNumber(x);
+							this.y = normilizeNumber(y);
+							this.w = normilizeNumber(w);
+							this.h = normilizeNumber(h);
+		
+							this.isFrozen = isFrozen;
+							this.isDead = false;
+		
+							this.frozenOpacity = 0;
+							this.berryNum = berryNum;
+		
+							this.isStatic = isStatic;
+						}
+		
+						Brick.prototype.draw = function(ctx, cw, ch) {
+							if (this.isDead && !this.isStatic) return;
+		
+							if (this.isStatic) {
+								ctx.beginPath();
+								ctx.drawImage(
+									img2, 
+									0, 
+									0, 
+									img2.width, 
+									img2.height, 
+									this.x * canvas.width, 
+									this.y * canvas.height,
+									this.w * canvas.width, 
+									this.h * canvas.height
+								);
+								ctx.closePath();
+							} else {
+								if (this.isFrozen) {
+									ctx.beginPath();
+									drawBerry(ctx, this.berryNum, this);
+									ctx.closePath();
+		
+									ctx.beginPath();
+									ctx.drawImage(
+										img, 
+										604, 
+										302, 
+										302, 
+										302, 
+										this.x * canvas.width, 
+										this.y * canvas.height,
+										this.w * canvas.width, 
+										this.h * canvas.height
+									);
+									ctx.closePath();
+								} else {
+									ctx.beginPath();
+									drawBerry(ctx, this.berryNum, this);
+									ctx.closePath();
+		
+									if (this.frozenOpacity > 0) {
+										ctx.save();
+										ctx.globalAlpha = this.frozenOpacity;
+										ctx.drawImage(
+											img, 
+											604, 
+											302, 
+											302, 
+											302, 
+											this.x * canvas.width, 
+											this.y * canvas.height,
+											this.w * canvas.width, 
+											this.h * canvas.height
+										);
+										this.frozenOpacity -= 0.05;
+										ctx.restore();
+									}
+								}
+		
+							}
+							
+						}
+						Brick.prototype.resizeHeight = function(cw, ch) {
+							this.h = normilizeNumber((this.w * cw) / ch);
+						}
+		
+						function generateGameField(columns, rows, offset, marginHorizontal, marginTop) {
+							var result = [];
+							var width = 1 - marginHorizontal * 2;
+							var itemWidth = 0;
+		
+							var r11 = randomInteger(0, 4);
+							var r12 = randomInteger(0, 4);
+							var r2 = randomInteger(0, 4);
+							var r31 = randomInteger(0, 4);
+		
+		
+							for (var j = 0; j < rows; j++) {
+								for (var i = 0; i < columns; i++) {
+									itemWidth = (width - (offset * (columns - 1))) / columns;
+									result.push(new Brick(
+										offset * i + itemWidth * i + marginHorizontal,
+										itemWidth * j + marginTop,
+										itemWidth,
+										itemWidth,
+										(
+											(j === 0 && (i === r11 || i === r12)) ||
+											(j === 1 && (i === r2)) ||
+											(j === 2 && (i === 1 || i === 3 || i === r31))
+										),
+										(j === 0 && i === 2),
+										berryNums[j][i]
+									));
+								}
+							}
+		
+							return result;
+						}
+		
+						function getNotDeadLength() {
+							return bricks.reduce(function(acc, brick) {
+								return !brick.isDead ?
+									acc + 1 : acc
+							}, 0);
+						}
+		
+						function easeOutCubic(t) { return (--t)*t*t+1 }
+		
+						var jumpAnim = finalAnimation(500, function(progress) {
+						}, function() {
+							// this.x = this.zX;
+							ball.y = ball.zY;
+							ball.w = ball.zW;
+							ball.h = ball.zH;
+							ball.cx = normilizeNumber(Math.random() > 0.5 ? 0.01 : -0.01);
+							ball.cy = normilizeNumber(-0.01);
+		
+							ball.isJumping = false;
+						});
+		
+						var finalAnim = finalAnimation(1500, function(progress) {
+							ctx.beginPath();
+							ctx.drawImage(
+								img2, 
+								0, 
+								0, 
+								img2.width, 
+								img2.height, 
+								bricks[2].x * canvas.width  - ((bricks[2].w * canvas.width * easeOutCubic(progress))), 
+								bricks[2].y * canvas.height + (bricks[2].h * 2 * canvas.height) * easeOutCubic(progress),
+								bricks[2].w * canvas.width  + (bricks[2].w * canvas.width * 2 * easeOutCubic(progress)), 
+								bricks[2].h * canvas.height + (bricks[2].h * canvas.height * 2 * easeOutCubic(progress))
+							);
+							ctx.closePath();
+						});
+		
+						var finalAnim2 = finalAnimation(500, function(progress) {
+							ctx.beginPath();
+							ctx.drawImage(
+								img2, 
+								0, 
+								0, 
+								img2.width, 
+								img2.height, 
+								bricks[2].x * canvas.width  - ((bricks[2].w * canvas.width)), 
+								bricks[2].y * canvas.height + (bricks[2].h * 2 * canvas.height),
+								bricks[2].w * canvas.width  + (bricks[2].w * canvas.width * 2), 
+								bricks[2].h * canvas.height + (bricks[2].h * canvas.height * 2)
+							);
+							ctx.closePath();
+						});
+		
+						function render() {
+							rid = requestAnimationFrame(render);
+							
+							if (hpmd.data.isPlaying) {
+								isPlatform = true;
+								ball.move(platformSides, bricksSides, bricks);
+		
+								platformSides = checkCollisionSide(ball, platform);
+								
+								bricksSides = bricks.map(function(brick) {
+									return brick.isDead ? [] : checkCollisionSide(ball, brick, cw, ch);
+								});
+							}
+		
+							ctx.clearRect(0, 0, canvas.width, canvas.height);
+							if (!hpmd.data.isFinal) {
+								bricks.forEach(function(brick) {
+									brick.draw(ctx, canvas.width, canvas.height);
+								});
+							}
+							
+							if (!hpmd.data.isFinal) platform.draw(ctx, canvas.width, canvas.height);
+							if (!hpmd.data.isFinal) ball.draw(ctx, canvas.width, canvas.height);
+		
+							if (!!hpmd.data.isPlaying && !hpmd.data.isFinal && getNotDeadLength() === 1) {
+								hpmd.data.isPlaying = false;
+								hpmd.data.isFinal = true;
+								finalAnim.start();
+							}
+		
+							
+		
+							if (hpmd.data.isFinal && !finalAnim.isEnded()) {
+								hpmd.data.nodes.bubble4.classList.add('hpmd-active');
+								finalAnim2.start();
+							}
+		
+							if (hpmd.data.isFinal && !finalAnim.isEnded() && !finalAnim2.isEnded()) {
+								hpmd.data.nodes.bubble4.classList.add('hpmd-active');
+								
+							}
+		
+							if (hpmd.data.isFinal && !finalAnim.isEnded()) {
+								finalAnim.update();
+							} else if (hpmd.data.isFinal && finalAnim.isEnded() && !finalAnim2.isEnded()) {
+								finalAnim2.update();
+							}
+		
+							if (
+								hpmd.data.isFinal  && 
+								finalAnim.isEnded() && 
+								finalAnim2.isEnded()
+							) {
+								cancelAnimationFrame(rid);
+								setTimeout(function() {
+									hpmd.data.nodes.bubble4.classList.remove('hpmd-active');
+									canvas.classList.add('hpmd-hide');
+									hpmd.data.nodes.final.classList.remove('hpmd-hide')
+									hpmd.trackEvent('show-final')
+									setTimeout(function() {
+										hpmd.data.nodes.final.classList.remove('hpmd-touch');
+									}, 500);
+								}, 500);
+							}
+						}
+		
+						function finalAnimation(maxTime, fn, endCB) {
+							var startTime = 0, 
+								currentTime = 0,
+								progress = 0,
+								ended = true,
+								endFN = endCB || function() {};
+		
+							return {
+								start: function() {
+									progress = 0;
+									ended = false;
+									startTime = Date.now();
+									currentTime = Date.now();
+								},
+								stop: function() {
+									ended = true;
+								},
+								update: function() {
+									if (ended) return;
+		
+									currentTime = Date.now();
+									progress = (currentTime - startTime) / maxTime;
+									if ((currentTime - startTime) >= maxTime) {
+										fn(1);
+										ended = true;
+										endFN();
+									} else {
+										fn(progress);
+									}
+								},
+								getProgress: function() {
+									return progress;
+								},
+								isEnded: function() {
+									return ended;
+								}
+							}
+						}
+		
+						function has(items, value) {
+							return items.indexOf(value) > -1;
+						}
+		
+						function getPixelRatio() {
+							return window.devicePixelRatio || 1;
+						}
+						
+						hpmd.data.resizeCanvas = function resize() {
+							if (!canvas) return;
+		
+							cw = canvas.width  = window.innerWidth  * getPixelRatio();
+							ch = canvas.height = window.innerHeight * getPixelRatio();
+		
+							if (!!ball && !!bricks.length && !!platform) {
+								ball.resizeHeight(canvas.width, canvas.height);
+								bricks.forEach(function(brick) {
+									brick.resizeHeight(canvas.width, canvas.height);
+								});
+								platform.resizeHeight(canvas.width, canvas.height);
+							}
+							
+						}
+		
+						function init() {
+							hpmd.data.resizeCanvas();
+		
+							function getTouch(event, isStart) {
+								var propName = isStart ? 'touches' : 'changedTouches';
+								return !!event[propName] ? event[propName][0] : event;
+							}
+							function getCoord(touch) {
+								return {
+									x: (touch.pageX) * getPixelRatio(),
+									y: (touch.pageY - window.scrollY) * getPixelRatio()
+								}
+							}
+							function handleStart(event) {
+								event.preventDefault();
+								event.stopPropagation();
+		
+								var touch = getTouch(event, true);
+								var coord = getCoord(touch);
+		
+								var rect1 = {
+									x: platform.x * canvas.width,
+									y: platform.y * canvas.height,
+									w: platform.w * canvas.width,
+									h: platform.h * canvas.height
+								}
+								var rect2 = {
+									x: Math.round(coord.x - canvas.width * .015),
+									y: Math.round(coord.y - canvas.width * .015),
+									w: Math.round(canvas.width * .03),
+									h: Math.round(canvas.width * .03)
+								}
+		
+								margin = rect2.x - rect1.x;
+		
+								isCol = isCollission(rect1, rect2);
+		
+								if (isCol) {
+									if (!hpmd.data.isPlaying && !isStartGame) {
+										isStartGame = true;
+										hpmd.data.nodes['start-screen'].classList.add('hpmd-hide');
+										setTimeout(function() {
+											hpmd.trackEvent('start-game');
+											hpmd.data.isPlaying = true;
+										}, 310);
+									}
+									touchState.start = coord;
+									touchState.width = touchState.start.x - margin;
+								}
+							}
+							function handleMove(event) {
+								event.preventDefault();
+								event.stopPropagation();
+		
+								var touch = getTouch(event, false);
+								var coord = getCoord(touch);
+		
+								if (isCol) {
+									touchState.move = coord;
+									touchState.current = { 
+										x: touchState.move.x - touchState.start.x, 
+										y: touchState.move.y - touchState.start.y 
+									};
+									platform.move(
+										(touchState.current.x + touchState.width) / canvas.width, 
+										touchState.current.y / canvas.height
+									);
+								}
+							}
+							function handleEnd(event) {
+								event.preventDefault();
+								event.stopPropagation();
+		
+								var touch = getTouch(event, false);
+								var coord = getCoord(touch);
+		
+								if (isCol) {
+									touchState.move = coord;
+									touchState.current = { 
+										x: touchState.move.x - touchState.start.x + touchState.width, 
+										y: touchState.move.y - touchState.start.y 
+									};
+		
+									platform.move(
+										touchState.current.x / canvas.width + touchState.width, 
+										touchState.current.y / canvas.height
+									);
+								}
+								isCol = false;
+							}
+		
+							canvas.addEventListener(
+								'touchstart',
+								 handleStart, 
+								 false
+							);
+							canvas.addEventListener(
+								'touchmove', 
+								handleMove, 
+								false
+							);
+							canvas.addEventListener(
+								'touchend', 
+								handleEnd, 
+								false
+							);
+		
+							bricks = generateGameField(5, 3, .045, .08, .13);
+							platform = new Platform(.3275, .846, .345, .345 * (115 / 602));
+							ball = new Ball(0.43, .75, 0.14);
+		
+							// 602, 115, 
+		
+							ball.resizeHeight(canvas.width, canvas.height);
+							bricks.forEach(function(brick) {
+								brick.resizeHeight(canvas.width, canvas.height);
+							});
+							platform.resizeHeight(canvas.width, canvas.height);
+		
+							rid = requestAnimationFrame(render);
+						}
+		
+						init();
+					},
+					viewIID: null,
+					checkViewability: function(prefix, callback) {
+						function checkVisibillity(elem) {
+							return getCoords(20)
+								.reduce(function(acc, coord, index) {
+									var item = isVisible(
+										elem,
+										coord.x + coord.w / 2,
+										coord.y + coord.h / 2
+									);
+		
+									return (!item.visible && item.elem instanceof Element && acc.indexOf(item.elem) === -1) ?
+										acc.concat(item.elem) :
+										acc;
+								}, []);
+						}
+						function getOverlapPersantage(elems) {
+							var elems = checkVisibillity(hpmd.data.nodes.popup);
+		
+							function getSize(rectX, rectW, innerWidth) {
+								return rectX < 0 ? 
+									rectW + rectX : 
+									(rectX + rectW > innerWidth) ? 
+										rectW - (rectX + rectW - innerWidth) :
+										rectW;
+							}
+		
+							return elems.reduce(function(acc, elem) {
+								var rect = elem.getBoundingClientRect();
+								var rectWidth  = getSize(rect.x, elem.offsetWidth, window.innerWidth);
+								var rectHeight = getSize(rect.y, elem.offsetHeight, window.innerHeight);
+								var p1 = rectWidth * rectHeight;
+								var p2 = window.innerWidth * window.innerHeight;
+								var percent = Math.round(p1 / p2 * 100);
+		
+								return acc + percent;
+							}, 0);
+						}
+						function getCoords(num) {
+							var width  = window.innerWidth;
+							var height = window.innerHeight;
+							var coords = [];
+		
+							for (var j = 0; j < num; j++) {
+								for (var i = 0; i < num; i++) {
+									if (hpmd.data.bannerOpened) {
+										coords.push({
+											x: Math.round(width / num * i),
+											y: Math.round(height / num * j),
+											w: Math.round(width / num),
+											h: Math.round(height / num)
+										});
+									} else {
+										coords.push({
+											x: Math.round(width / num * i),
+											y: Math.round((height - width * 0.22) / num * j),
+											w: Math.round(width / num),
+											h: Math.round(width * 0.22 / num)
+										});
+									}
+									
+								}
+							}
+		
+							return coords;
+						}
+						function assign(target) {
+							var slice = Array.prototype.slice;
+							var sources = slice.call(arguments, 1);
+		
+							for (var i = 0; i < sources.length; i++) {
+								for (var key in sources[i]) {
+									if (sources[i].hasOwnProperty(key)) {
+										target[key] = sources[i][key];
+									}
+								}
+							}
+		
+							return target;
+						}
+						function isVisible(elem, x, y) {
+							var returnValue = {
+								visible: false,
+								elem: null
+							}
+							if (!(elem instanceof Element)) return returnValue;
+		
+							var rect = elem.getBoundingClientRect();
+							var htmlElem = document.documentElement;
+							var screenWidth = htmlElem.clientWidth || window.innerWidth;
+							var screenHeight = htmlElem.clientHeight || window.innerHeight;
+							var sizesSum = elem.offsetWidth + elem.offsetHeight + rect.height + rect.width;
+							var elemCenter = {
+								x: x || rect.left + elem.offsetWidth / 2,
+								y: y || rect.top + elem.offsetHeight / 2
+							};
+							var pointContainer = document.elementFromPoint(elemCenter.x, elemCenter.y);
+							var pointContainer2 = pointContainer;
+		
+							var style = getComputedStyle(elem);
+		
+							if (style.display === 'none')
+								return returnValue;
+		
+							if (style.visibility !== 'visible')
+								return returnValue;
+		
+							if (style.opacity < 0.1)
+								return returnValue
+		
+							if (sizesSum === 0)
+								return returnValue
+		
+							if (elemCenter.x < 0)
+								return returnValue
+		
+							if (elemCenter.x > screenWidth)
+								return returnValue
+		
+							if (elemCenter.y < 0)
+								return returnValue
+		
+							if (elemCenter.y > screenHeight)
+								return returnValue
+		
+							do {
+								if (pointContainer === elem) 
+									return assign(
+										returnValue,
+										{ visible: true }
+									);
+							} 
+							while (pointContainer = pointContainer.parentNode);
+		
+							return assign(
+								returnValue,
+								{ 
+									elem:  (
+										pointContainer2.className.indexOf(prefix) === -1 &&
+										pointContainer2.id.indexOf(prefix) === -1
+									) ? pointContainer2 : null
+								}
+							);
+						}
+		
+						hpmd.data.viewIID = setInterval(function() {
+							var percent = getOverlapPersantage(checkVisibillity(hpmd.data.nodes.popup)) || 0;
+		
+							if (percent > 0) {
+								callback(percent);
+							}				
+						}, 1000);
+					},
+					isClosed: false,
+					/**
+					 * Раскрывает расхлоп
+					 */
+					openBanner: function () {
+						if (hpmd.data.bannerOpened || hpmd.data.bannerClosing) {
+							// Баннер уже раскрыт или закрывается. Скорее всего,
+							// этот вызов ― ошибочный. Игнорируем.
+							return;
+						}
+						
+						// Скролл на ноль пикселей скрывает смарт-баннер на iOS.
+						window.scrollBy(0, 0);
+						
+						// Помечаем баннер как открытый.
+						hpmd.data.bannerOpened = true;
+						
+						// Сообщаем системе о раскрытии...
+						hpmd.events.fire("expand");
+						// ...и регистрируем соответствующее событие.
+						hpmd.trackEvent("hpmd.expand");
+						
+						// Сохраняем время раскрытия (для дальнейшего вызова hpmd.time-expanded).
+						hpmd.data.openedAt = new Date();
+						
+						// На случай, если попап оставлен в полуоткрытом состоянии, возвращаем его в состояние.
+						hpmd.data.rollbackPopup();
+						// Скрываем тизер
+						hpmd.data.collapseTeaser();
+						
+						/* TODO: добавьте сюда все, что должно быть сделано
+						 * при выводе фуллскрина и может быть сделано, пока он
+						 * все еще находится в display: none.
+						 * 
+						 * Если HTML-код фуллскрина создается динамически, это
+						 * следует делать здесь.
+						 * 
+						 * Исполнение этого кода гарантированно происходит в контексте события
+						 * пользовательского ввода (click, touch- и pointer-события).
+						 * 
+						 * Действия, которые требуют такого контекста (например,
+						 * инициализация и автозапуск <video>-элемента) следует
+						 * выполнить здесь.
+						 */
+						
+						// Теперь, когда подготовительая работа проведена, нужно
+						// дать возможность браузеру отреагировать на window.scrollBy().
+						// Для этого устанавливаем нулевой таумаут и выходим из функции.
+						setTimeout(function () {
+							/* TODO: добавьте сюда все, что должно быть выполнено
+							 * перед началом анимации раскрытия расхлопа (например, preload
+							 * материалов, динамическое создание кода фуллскрина,
+							 * добавление обработчиков событий и т.п).
+							 */
+							hpmd.data.nodes['popup-contents'].style.display = 'block';
+							
+							// Открываем фуллскрин (добавление этого класса запускает CSS3-анимацию).
+							hpmd.data.nodes.popup.className = 'hpmd-open';
+							
+							// Ждем завершения анимации.
+							// В строгом соответствии нет необходимости, поэтому
+							// проще воспользоваться таймаутом в 600 мс, чем обрабатывать
+							// события transitionEnd со всеми vendor-префиксами, vendor-фичами и 
+							// vendor-багами.
+							setTimeout(function () {
+								// Показываем кнопку закрытия (добавление этого класса запускает CSS3-анимацию).
+								hpmd.data.nodes['popup-close'].className = 'hpmd-show';
+								
+								/**
+								 * TODO: добавьте сюда все, что должно быть выполнено после завершения
+								 * анимации (например, загрузка требовательных к ресурсам материалов,
+								 * таких, как сторонние видеоплейеры, мини-сайты в IFRAME и т.п.).
+								 * 
+								 * Если вам нужно поработать со скроллом или глобальными событиями,
+								 * это также делается здесь.
+								 */
+								hpmd.data.initGame();
+		
+								hpmd.data.checkViewability('hpmd', function(percent) {
+									console.log(percent);
+									hpmd.trackEvent('overlap-percent', {
+										weight: percent
+									});
+									clearTimeout(hpmd.data.viewIID);
+								});
+								// Отключаем скролл на странице.
+								hpmd.data.disableScroll();
+							}, 600);
+						}, 0);
+					},
+				
+					/**
+					 * Закрывает баннер
+					 */
+					minimizeBanner: function () {
+						if (!hpmd.data.bannerOpened || hpmd.data.bannerClosing) {
+							// Баннер уже раскрыт или закрывается. Скорее всего,
+							// этот вызов ― ошибочный. Игнорируем.
+							return;
+						}
+						
+						// Сообщаем системе о закрытии...
+						hpmd.events.fire("collapse");
+						// ...и регистрируем соответствующие события.
+						if (!!hpmd.data.openedAt) {
+							hpmd.trackEvent("hpmd.close");
+							// Время с момента раскрытия баннера в секундах, округленное
+							// по математическим правилам.
+							hpmd.trackEvent("hpmd.time-expanded", { weight: Math.round(((new Date()) - hpmd.data.openedAt) / 1000) });
+						}
+						
+						// Помечаем баннер как закрытый...
+						hpmd.data.bannerOpened = false;
+						// ...и тизер как свернутый.
+						hpmd.data.bannerMinimized = true;
+						
+						/**
+						 * TODO: здесь можно отменить действия, которые были выполнены
+						 * при раскрытии баннера (освободить память, удалить лишние
+						 * обработчики событий).
+						 */
+						
+						// Включаем скролл на странице.
+						hpmd.data.enableScroll();
+						
+						// Скрываем кнопку закрытия (удаление класса запускает CSS3-анимацию).
+						hpmd.data.nodes['popup-close'].className = '';
+						// Сворачиваем фуллскрин (удаление класса запускает CSS3-анимацию).
+						hpmd.data.nodes.popup.className = hpmd.data.nodes.popup.className.replace(/(^|\s+)hpmd-open(\s+|$)/, '');
+						
+						// Помечаем старт анимации...
+						hpmd.data.bannerClosing = true;
+						setTimeout(function() {
+							// ...и ее завершение через 600 мс.
+							hpmd.data.bannerClosing = false;
+							
+							// Полностью убираем баннер со страницы, чтобы скрытые
+							// элементы в дальнейшем не конфликтовали с прочими
+							// элементами страницами и интерфейсом браузера.
+							hpmd.data.destroy();
+						}, 600);
+					},
+				
+					/**
+					 * Сворачивает тизер
+					 */
+					collapseTeaser: function (standalone) {
+						if (!!standalone) {
+							// Событие hpmd.collapse регистрируется только в том случае,
+							// если сворачивание тизера не следует за раскрытием баннера.
+							hpmd.trackEvent("hpmd.collapse");
+						}
+						
+						/**
+						 * TODO: если при сворачивании тизера требуются какие-либо изменения
+						 * (например, скрытие выступающих элементов), добавьте сюда инструкции,
+						 * которые будут выполнять эти изменения.
+						 */
+						
+						// Скрываем сам тизер.
+						hpmd.data.nodes.teaser.className = 'hpmd-close';
+						if (!!standalone) {
+							// Убираем баннер со страницы после завершения анимации.
+							// При сворачивании тизера ждем 300 мс ― длительность анимации тизера.
+							setTimeout(hpmd.data.destroy, 300);
+						}
+						
+						// Помечаем тизер как свернутый.
+						hpmd.data.bannerMinimized = true;
+						// Пересчитываем верстку, чтобы обнулить высоту элемента-растяжки.
+						hpmd.data.onViewportUpdate();
+					},
+				
+					/**
+					 * Полностью убирает все элементы баннера со страницы.
+					 */
+					destroy: function () {
+						/* Отключите здесь любые обработчики событий,
+						 * которые были включены при запуске или в процессе
+						 * работы баннера.
+						 */
+						
+						// На случай, если скролл в данный момент отключен,
+						// пробуем включить его.
+						hpmd.data.enableScroll();
+						
+						// Отключаем слежение за размерами экрана и ориентацией
+						if (!!hpmd.data.watchLayoutInterval) {
+							clearInterval(hpmd.data.watchLayoutInterval);
+						}
+						
+						// Удаляем все HTML-элементы баннера.
+						for (var k in hpmd.data.nodes) {
+							if (hpmd.data.nodes.hasOwnProperty(k)) {
+								try {
+									hpmd.data.nodes[k].parentNode.removeChild(hpmd.data.nodes[k]);
+								} catch (e) {}
+							}
+						}
+					},
+				
+					watchLayoutInterval: null,
+				
+					/**
+					 * Запускает слежение за размерами «окна» браузера
+					 * 
+					 * Результатом выполнения этой функции будет отслеживание               
+					 * изменений в размерах окна браузера и вызов hpmd.data.onViewportUpdate
+					 * при обнаружении изменений.                                           
+					 */
+					watchLayout: function () {
+						// Проверяем размер окна по событию scroll (при скролле может быть показана
+						// или скрыта панель навигации браузера).
+						hpmd.data.attachHandler(window, 'scroll', hpmd.data.checkLayout);
+						// Проверяем размер окна, если браузер был так добр, что сообщил нам об изменениях.
+						hpmd.data.attachHandler(window, 'resize', hpmd.data.checkLayout);
+						// Проверяем размер окна при смене ориентации.
+						hpmd.data.attachHandler(window, 'orientationchange', function () {
+							// iOS сначала меняет ориентацию, а затем обновляет размеры 
+							// панели навигации, поэтому первое вычисление даст неверные
+							// результаты. Проверяем еще раз через 150 мс, когда все    
+							// утрясется.
+							var updated = false;
+							if (!hpmd.data.checkOrientation()) {
+								updated = hpmd.data.checkLayout();
+							} else {
+								updated = true;
+							}
+							if (updated && hpmd.data.isIOs() && !hpmd.data.bannerOpened) {
+								hpmd.data.nodes.wrapper.style.visibility = 'hidden';
+								setTimeout(function() {
+									hpmd.data.nodes.wrapper.style.visibility = '';
+									
+									// window.innerWidth и window.innerHeight остаются старыми в iOS,    
+									// даже если фактически размеры изменились; обновляются они только   
+									// после скролла. Для получения актуальных значений имитируем скролл.
+									// (Это действие сгенерирует событие scroll, в котором пойдет
+									// дальнейшая обработка ситуации.)
+									window.scrollBy(0, 0);
+								}, 150);
+							}
+						});
+						// Проверяем размер окна при завершении прикосновения. Жест зума может
+						// изменять размер окна, не генерируя событий resize и scroll.        
+						hpmd.data.attachHandler(document, 'touchend', hpmd.data.checkLayoutEnd);
+						hpmd.data.attachHandler(document, 'touchcancel', hpmd.data.checkLayoutEnd);
+						// Перепроверяем размер окна по факту загрузки страницы.
+						hpmd.data.attachHandler(window, 'load', hpmd.data.checkLayout);
+						// Перепроверяем размер окна по факту загрузки DOM; в этот момент браузер
+						// уже должен определиться с текущим масштабом страницы.
+						hpmd.data.attachHandler(document, 'DOMContentLoaded', hpmd.data.checkLayout);
+						
+						// В некоторых случаях - например, при «тапе» на панели навигации браузера -   
+						// нам не везет, и никаких событий не вызывается. Проверяем три раза в секунду,
+						// не изменился ли размер окна.                                                .)
+						hpmd.data.watchLayoutInterval = setInterval(hpmd.data.checkLayout, 330);
+						
+						// 500 мс, как правило, достаточно для обработки таблицы стилей площадки
+						// и определения масштаба страницы, так что по истечении этого времени  
+						// попробуем еще раз проверить размер окна.                             
+						setTimeout(hpmd.data.forceCheckLayout, 500);
+					},
+				
+					/**
+					 * Проверяет размеры окна браузера при завершении или отмене касания
+					 */
+					checkLayoutEnd: function (event) {
+						// Делаем проверку, только если все касания завершены;    
+						// в противном случае жест еще не закончен.               
+						// Проверка `!event.touches` для событий на Windows Phone.
+						if (!event.touches || event.touches.length <= 0) {
+							setTimeout(function() {
+								hpmd.data.forceCheckLayout();
+							}, 0);
+						}
+					},
+				
+					/**
+					 * Последние зарегистрированные параметры окна браузера
+					 */
+					lastLayout: {
+						width: null,
+						height: null,
+						orientation: null,
+					},
+				
+					/**
+					 * Проверяет, не изменилась ли ориентация; если изменилась,
+					 * обновляет верстку в соответствии с новыми размерами.
+					 * 
+					 * @return bool True в случае наличия изменений.
+					 */
+					checkOrientation: function () {
+						if (hpmd.data.lastLayout.orientation != window.orientation) {
+							hpmd.data.forceCheckLayout();
+							return true;
+						}
+						return false;
+					},
+				
+					/**
+					 * Проверяет, не изменились ли размеры окна браузера.
+					 * Если изменились, обновляет верстку в соответствии
+					 * с новыми размерами.
+					 * 
+					 * @return bool True в случае наличия изменений.
+					 */
+					checkLayout: function () {
+						if (hpmd.data.lastLayout.width != window.innerWidth || hpmd.data.lastLayout.height != window.innerHeight) {
+							hpmd.data.forceCheckLayout();
+							return true;
+						}
+						return false;
+					},
+				
+					/**
+					 * Сохраняет новые размеры окна браузера и запускает
+					 * процедуру обновления верстки.
+					 */
+					forceCheckLayout: function () {
+						if (!hpmd.data.resourcesLoaded) return;
+		
+						hpmd.data.nodes.wrapper.className = hpmd.data.isPortrait() ? 'hpmd-portrait' : 'hpmd-landscape';
+						hpmd.data.lastLayout = {
+							width: window.innerWidth,
+							height: window.innerHeight,
+							orientation: window.orientation,
+						};
+						hpmd.data.updateLayout();
+					},
+				
+					/**
+					 * Флаг повторного обновления, workaround для бага в iOS 7.
+					 * @var bool
+					 */
+					secondLayoutUpdate: false,
+					/**
+					 * Запускает процедуру обновления верстки.
+					 */
+					updateLayout: function () {
+						// Workaround для бага в iOS 7, см. выше.
+						if (hpmd.data.secondLayoutUpdate || !hpmd.data.isIOs()) {
+							hpmd.data.nodes.wrapper.style.visibility = 'visible';
+						}
+						hpmd.data.secondLayoutUpdate = true;
+						
+						// Запускаем пользовательскую функцию пересчета верстки.
+						hpmd.data.onViewportUpdate();
+						
+						if (hpmd.data.bannerOpened) {
+							// Заставляем браузер перерисовать верстку фуллскрина
+							// и внешний вид панели навигации с изменениями.
+							window.scrollBy(0, 0);
+						}
+					},
+					resourcesLoaded: false,
+					/**
+					 * Инициализирует баннер
+					 */
+					init: function () {
+						// Обрабатываем все HTML-элементы баннера, начиная с корневых.
+						// Таких в баннере два: #hpmd-wrapper и #hpmd-stretch.
+						hpmd.data.processNode(document.getElementById('hpmd-wrapper'));
+						hpmd.data.processNode(document.getElementById('hpmd-stretch'));
+						
+						// Кнопка закрытия обязательно должна находиться в исходном коде,
+						// т.к. в противном случае что-то может не загрузиться и баннер
+						// будет невозможно закрыть.
+						if (!hpmd.data.nodes['popup-close']) {
+							window.console && console.log("[HPMD Framework] There's a problem with your ad layout; it should include #hpmd-popup-close element.");
+						} else {
+							// Обрабатываем закрытие баннера при нажатии на кнопку.
+							hpmd.data.handleSwipe(hpmd.data.nodes['popup-close'], {
+								tap: hpmd.data.minimizeBanner
+							});
+						}
+						
+						// Не позволяем событию touchstart выйти за пределы баннера.
+						hpmd.data.attachHandler(hpmd.data.nodes.wrapper, 'touchstart', function (event) {
+							event.stopPropagation();
+						});
+						
+						// Начинаем наблюдение за размерами окна браузера.
+						// Эта функция вызовет hpmd.data.onViewportUpdate 
+						// через 330 мс.
+						hpmd.data.watchLayout();
+					},
+					
+					/**
+					 * Функция для перестройки верстки под изменившиеся размеры
+					 * окна браузера.
+					 * 
+					 * Эта функция вызывается каждый раз, когда изменяются размеры
+					 * окна браузера в пикселях. Если вам необходимо вычислять размеры
+					 * или расположение каких-либо элементов верстки динамически,
+					 * поместите вычисления в эту функцию.
+					 * 
+					 * Пожалуйста, обратите внимание, что существующий код в этой функции
+					 * необходимо оставить без изменений.
+					 */
+					onViewportUpdate: function () {
+						// Пересчитываем высоту тизера и растяжки
+						if (!hpmd.data.bannerMinimized) {
+							/* Тизер не свернут.
+							 * Высота тизера определяется CSS-стилями.
+							 * Высота растяжки равна полной высоте тизера.
+							 */
+							hpmd.data.nodes.stretch.style.height = hpmd.data.nodes.teaser.clientHeight + 'px';
+						} else {
+							/* Тизер свернут. */
+							hpmd.data.nodes.stretch.style.height = 0;
+						}
+						
+						// Пересчитываем размер заглушки и содержимого попапа:
+						hpmd.data.nodes.splash.style.width = window.innerWidth + 'px';
+						hpmd.data.nodes.splash.style.height = window.innerHeight + 'px';
+						hpmd.data.nodes['popup-contents'].style.width = window.innerWidth + 'px';
+						hpmd.data.nodes['popup-contents'].style.height = window.innerHeight + 'px';
+						
+						/**
+						 * Сюда можно добавить свои правила для пересчета верстки.
+						 * Используйте значения window.innerWidth и window.innerHeight
+						 * в качестве базовых размеров для расчетов.
+						 * Используйте функцию hpmd.data.isPortrait() для определения
+						 * текущей ориентации устройства.
+						 */
+						if (!!hpmd.data.resizeCanvas) hpmd.data.resizeCanvas();
+					},
+				
+				};
+				
+				/* Инициализируем баннер. */
+				hpmd.data.init();
+		
+				var images = [
+					'./banner/img/portrait.jpg',
+					'./banner/img/teaser-portrait.jpg',
+					'./banner/img/handle.png',
+					'./banner/img/handle-arrow.png',
+					'./banner/img/bubble1.png',
+					'./banner/img/bubble2.png',
+					'./banner/img/bubble3.png',
+					'./banner/img/hand.png'
+				]
+		
+				hpmd.data.preloadImages(images, function() {
+					hpmd.data.preloadCanvasImages(hpmd.data.canvasImages, function() {
+						hpmd.data.resourcesLoaded = true;
+						hpmd.data.forceCheckLayout();
+		
+						var images = [
+							'./banner/img/final.jpg',
+							'./banner/img/final-title.png',
+							'./banner/img/final-btn.png'
+						];
+		
+						hpmd.data.preloadImages(images, function() {});
+					});
+				})
+				
+				
+				/* КОД-ПРИМЕР
+				 * 
+				 * Вам может быть необходимо удалить или обновить этот код.
+				 * 
+				 * Открываем кликовую ссылку при нажатии на кнопку (элемент
+				 * .hpmd-button).
+				 */
+				
+				hpmd.data.handleSwipe(document.querySelector('#hpmd-final'), {
+					tap: function () {
+						hpmd.data.minimizeBanner();
+						hpmd.link();
+					},
+				});
+});</script>
+<!-- /JS -->
+<!-- =================================================================================================== -->
+
+</body></html>
