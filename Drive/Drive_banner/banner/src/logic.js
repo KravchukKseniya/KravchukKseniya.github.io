@@ -1,31 +1,781 @@
-var $jscomp={scope:{}};$jscomp.defineProperty="function"==typeof Object.defineProperties?Object.defineProperty:function(a,b,c){if(c.get||c.set)throw new TypeError("ES3 does not support getters and setters.");a!=Array.prototype&&a!=Object.prototype&&(a[b]=c.value)};$jscomp.getGlobal=function(a){return"undefined"!=typeof window&&window===a?a:"undefined"!=typeof global&&null!=global?global:a};$jscomp.global=$jscomp.getGlobal(this);$jscomp.SYMBOL_PREFIX="jscomp_symbol_";
-$jscomp.initSymbol=function(){$jscomp.initSymbol=function(){};$jscomp.global.Symbol||($jscomp.global.Symbol=$jscomp.Symbol)};$jscomp.symbolCounter_=0;$jscomp.Symbol=function(a){return $jscomp.SYMBOL_PREFIX+(a||"")+$jscomp.symbolCounter_++};
-$jscomp.initSymbolIterator=function(){$jscomp.initSymbol();var a=$jscomp.global.Symbol.iterator;a||(a=$jscomp.global.Symbol.iterator=$jscomp.global.Symbol("iterator"));"function"!=typeof Array.prototype[a]&&$jscomp.defineProperty(Array.prototype,a,{configurable:!0,writable:!0,value:function(){return $jscomp.arrayIterator(this)}});$jscomp.initSymbolIterator=function(){}};$jscomp.arrayIterator=function(a){var b=0;return $jscomp.iteratorPrototype(function(){return b<a.length?{done:!1,value:a[b++]}:{done:!0}})};
-$jscomp.iteratorPrototype=function(a){$jscomp.initSymbolIterator();a={next:a};a[$jscomp.global.Symbol.iterator]=function(){return this};return a};$jscomp.array=$jscomp.array||{};$jscomp.iteratorFromArray=function(a,b){$jscomp.initSymbolIterator();a instanceof String&&(a+="");var c=0,d={next:function(){if(c<a.length){var e=c++;return{value:b(e,a[e]),done:!1}}d.next=function(){return{done:!0,value:void 0}};return d.next()}};d[Symbol.iterator]=function(){return d};return d};
-$jscomp.polyfill=function(a,b,c,d){if(b){c=$jscomp.global;a=a.split(".");for(d=0;d<a.length-1;d++){var e=a[d];e in c||(c[e]={});c=c[e]}a=a[a.length-1];d=c[a];b=b(d);b!=d&&null!=b&&$jscomp.defineProperty(c,a,{configurable:!0,writable:!0,value:b})}};$jscomp.polyfill("Array.prototype.keys",function(a){return a?a:function(){return $jscomp.iteratorFromArray(this,function(a){return a})}},"es6-impl","es3");
-var images={drive:0,msg1:0,msg2:0,msg3:0,arrow:0,text_pull:0,arrows:0,car3:0,lights3:0},userMove=1,canvas=document.getElementById("hpmdf-canvas"),ctx=canvas.getContext("2d"),smokeCanvas=document.getElementById("hpmdf-smoke-canvas"),smokeCtx=smokeCanvas.getContext("2d"),arrowsCanvas=document.getElementById("hpmdf-arrows-canvas"),arrowsCtx=arrowsCanvas.getContext("2d"),can={},car={},lights={},arrows={},idTimer=0,idAutoTimeout=0,idAutoTimeoutFinal=0,items={msg1:{},msg2:{},msg3:{},arrow:{},text_pull:{}};
-window.requestAnimationFrame=function(){return window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame}();function load(){for(var a in images)images[a]=new Image,images[a].onload=function(){},images[a].src="../img/${key}.png".replace("${key}",a);loadSmoke()}function sendMessage(a){window.parent.postMessage(JSON.stringify(a),"*")}
-function initAction(){var a=.26*canvas.width,b=.76*canvas.width,c=.9*canvas.width,d=.1*canvas.width,e=.17*canvas.width;arrows={arrow1:{sx:1454,sy:71,sWidth:245,sHeight:637,x:0,y:arrowsCanvas.height/3*2,width:.2*arrowsCanvas.width,height:.52*arrowsCanvas.width,isAlive:!1},arrow2:{sx:676.7,sy:857.4,sWidth:744.3,sHeight:935.6,x:0,y:arrowsCanvas.height/2,width:.55*arrowsCanvas.width,height:.55*arrowsCanvas.width*1.26,isAlive:!1},arrow3:{sx:677,sy:54,sWidth:710,sHeight:775,x:.25*arrowsCanvas.width,y:.37*
-arrowsCanvas.height,width:.55*arrowsCanvas.width,height:.55*arrowsCanvas.width*1.09,isAlive:!1},arrow4:{sx:27,sy:1151.5,sWidth:590,sHeight:490.5,x:.45*arrowsCanvas.width,y:.27*arrowsCanvas.height,width:.55*arrowsCanvas.width,height:.4565*arrowsCanvas.width,isAlive:!1},arrow5:{sx:27,sy:718,sWidth:451.5,sHeight:359,x:.6*arrowsCanvas.width,y:.19*arrowsCanvas.height,width:.47*arrowsCanvas.width,height:.376*arrowsCanvas.width,isAlive:!1},arrow6:{sx:71,sy:358,sWidth:363,sHeight:274,x:.66*arrowsCanvas.width,
-y:.09*arrowsCanvas.height,width:.35*arrowsCanvas.width,height:.35*arrowsCanvas.width*.75,isAlive:!1},arrow7:{sx:69,sy:58,sWidth:301,sHeight:211.5,x:.65*arrowsCanvas.width,y:.01*arrowsCanvas.height,width:.32*arrowsCanvas.width,height:.32*arrowsCanvas.width*.7,isAlive:!1},id:0,currentArrow:0,isAnimate:!0,animate:function(){for(var a=0;7>a;a++)a!==arrows.currentArrow&&(arrows[Object.keys(arrows)[a]].isAlive=!1);arrows[Object.keys(arrows)[arrows.currentArrow]].isAlive=!0;arrows[Object.keys(arrows)[arrows.currentArrow-
-1]]&&(arrows[Object.keys(arrows)[arrows.currentArrow-1]].isAlive=!0);arrows[Object.keys(arrows)[arrows.currentArrow-2]]&&(arrows[Object.keys(arrows)[arrows.currentArrow-2]].isAlive=!0);6===arrows.currentArrow?arrows.currentArrow=0:arrows.currentArrow++},startAnimate:function(){this.id=setInterval(this.animate,180)},finalAnimate:function(){clearInterval(this.id);this.id=setInterval(this.animate,130)},showAllArrows:function(){clearInterval(this.id);for(var a=0;7>a;a++)arrows[Object.keys(arrows)[a]].isAlive=
-!1;this.currentArrow=0;this.id=setInterval(function(){7>arrows.currentArrow?(arrows[Object.keys(arrows)[arrows.currentArrow]].isAlive=!0,arrows.currentArrow++):clearInterval(arrows.id)},130)}};car={x:.15*-arrowsCanvas.width,y:arrowsCanvas.height/7*2,width:1.25*arrowsCanvas.width,height:1.2875*arrowsCanvas.width};lights={x:.15*-arrowsCanvas.width,y:arrowsCanvas.height/7*2,width:1.25*arrowsCanvas.width,height:1.2875*arrowsCanvas.width,isAlive:!1};can={x:.72*canvas.width,y:canvas.height/4*3,width:a,
-height:2.02*a,dx:0,dy:0,speed:canvas.height/200,top_point:canvas.height/4*3-2.02*a,isMove:!1,direction:0,isTouched:!1,initialState:!0,flag:!0,top_point_anim:canvas.height/4*3-2.02*a/5,bottom_point_anim:canvas.height/4*3,initialAnim:!1,move:function(){this.initialAnim&&(this.dy+this.y<this.top_point_anim&&(this.flag=!1),this.dy+this.y>this.bottom_point_anim&&(this.flag=!0),this.dy+this.y>=this.top_point_anim&&this.flag?this.dy-=this.speed/3:this.dy+this.y<=this.bottom_point_anim&&!this.flag&&(this.dy+=
-this.speed/3))},moveToInitialState:function(){!this.initialState&&0>this.dy&&(this.dy+=2*this.speed)}};items.msg1={x:.12*canvas.width,y:canvas.height/5*2,width:b,height:.49*b,minWidth:b,minHeight:.49*b,maxWidth:1.15*b,step:18,dx:0,dy:0,bigSize:!1,isAlive:!1,startAnim:!1,animate:function(){this.startAnim&&this.isAlive&&(this.width>=this.maxWidth&&!this.bigSize&&(this.bigSize=!0),!this.bigSize&&this.width<this.maxWidth?(this.dx-=this.step/2,this.dy-=.49*this.step/2,this.width+=this.step,this.height+=
-.49*this.step):this.bigSize&&this.width>this.minWidth&&(this.dx+=this.step/2,this.dy+=.49*this.step/2,this.width-=this.step,this.height-=.49*this.step))}};items.msg2={x:.05*canvas.width,y:canvas.height,width:c,height:.42*c,speed:canvas.height/50,dx:0,dy:0,isAlive:!1,move:function(){this.isAlive&&this.y+this.dy>canvas.height/5*2&&(this.dy-=this.speed)}};items.msg3={x:.05*canvas.width,y:canvas.height/3,width:c,height:.61*c,dx:0,dy:0,isAlive:!1};items.arrow={x:.6*canvas.width,y:.8*canvas.height,dx:0,
-dy:0,width:d,height:2.07*d,isAlive:!1,speed:canvas.width/350,flag:!0,top_point:.8*canvas.height-2.07*d/2,bottom_point:.8*canvas.height,move:function(){this.dy+this.y<this.top_point&&(this.flag=!1);this.dy+this.y>this.bottom_point&&(this.flag=!0);this.dy+this.y>=this.top_point&&this.flag?this.dy-=this.speed:this.dy+this.y<=this.bottom_point&&!this.flag&&(this.dy+=this.speed)}};items.text_pull={x:.56*canvas.width,y:.93*canvas.height,width:e,height:.49*e,dx:0,dy:0,isAlive:!1};initSmoke();arrows.isAnimate&&
-arrows.startAnimate();setTimeout(function(){items.msg1.isAlive=!0;items.arrow.isAlive=!0;items.text_pull.isAlive=!0;can.isMove=!0;can.initialAnim=!0;idAutoTimeout=setTimeout(function(){can.initialAnim=!1;items.msg1.isAlive=!1;items.text_pull.isAlive=!1;items.arrow.isAlive=!1;smoke.isSmoked=!0;arrows.finalAnimate();lights.isAlive=!0;arrows.isAnimate=!1;sendMessage({name:"hpmd",action:"auto-start"});idAutoTimeoutFinal=setTimeout(showFinalScreen,2500)},3500);canvas.addEventListener("touchstart",function(a){a.preventDefault();
-a.stopPropagation();if(getX(a)>can.x&&getX(a)<can.x+can.width&&getY(a)>can.y&&getY(a)<can.y+can.height){getX(a);var b=getY(a);canvas.addEventListener("touchend",function(){idTimer=setTimeout(showFinalScreen,1500);0!==can.dy&&(can.initialState=!1);smoke.stop=!0});canvas.addEventListener("touchmove",function(a){a.preventDefault();a.stopPropagation();items.msg1.isAlive=!1;items.text_pull.isAlive=!1;can.initialAnim=!1;clearTimeout(idTimer);clearTimeout(idAutoTimeout);clearTimeout(idAutoTimeoutFinal);
-smoke.stop=!1;lights.isAlive=!0;1===userMove&&(sendMessage({name:"hpmd",action:"user-play"}),arrows.finalAnimate(),userMove++);can.isTouched=!0;can.isMove&&(0<getY(a)-b?(can.direction="down",can.y+can.dy<can.y&&(can.dy+=can.speed)):0>getY(a)-b?(can.direction="up",can.y+can.dy>can.top_point&&(can.dy-=can.speed)):0===getY(a)-b&&(can.direction="hold"),b=getY(a));smoke.isSmoked=!0})}})},1500)}
-function showFinalScreen(){items.arrow.isAlive=!1;items.msg2.isAlive=!0;arrows.showAllArrows();can.isMove=!1;setTimeout(function(){document.querySelector("#hpmdf-shadow").style.opacity=".5";items.msg2.isAlive=!1;items.msg3.isAlive=!0;can.isTouched?sendMessage({name:"hpmd",action:"user-open-KV"}):sendMessage({name:"hpmd",action:"auto-open-KV"});sendMessage({name:"hpmd",action:"show-KV"})},2500)}
-function getX(a){return a.changedTouches[0].target.width/a.changedTouches[0].target.clientWidth*a.changedTouches[0].clientX}function getY(a){return a.changedTouches[0].target.height/a.changedTouches[0].target.clientHeight*a.changedTouches[0].clientY}
-function update(){if(smoke.isSmoked)if(smoke.particles.forEach(function(a){a.update()}),can.isTouched)if(smoke.stop)0<smoke.currentParticleCount&&(smoke.currentParticleCount-=smoke.stepParticleCount);else if("down"===can.direction&&smoke.currentParticleCount>smoke.minParticleCount)smoke.currentParticleCount-=smoke.stepParticleCount;else{if("up"===can.direction&&smoke.currentParticleCount<smoke.maxParticleCount||"hold"===can.direction&&smoke.currentParticleCount<smoke.maxParticleCount)smoke.currentParticleCount+=
-smoke.stepParticleCount,smoke.currentParticleCount>smoke.maxParticleCount&&(smoke.currentParticleCount=smoke.maxParticleCount)}else smoke.currentParticleCount<smoke.maxParticleCount&&smoke.flag?smoke.currentParticleCount+=smoke.stepParticleCount:smoke.flag=!1,smoke.currentParticleCount>smoke.maxParticleCount&&(smoke.currentParticleCount=smoke.maxParticleCount),!smoke.flag&&0<smoke.currentParticleCount&&(smoke.currentParticleCount-=smoke.stepParticleCount);items.arrow.isAlive&&items.arrow.move();items.msg1.isAlive&&
-items.msg1.animate();items.msg2.isAlive&&items.msg2.move();can.initialAnim&&can.move();can.moveToInitialState()}
-function render(){ctx.clearRect(0,0,canvas.width,canvas.height);smokeCtx.clearRect(0,0,smokeCanvas.width,smokeCanvas.height);arrowsCtx.clearRect(0,0,arrowsCanvas.width,arrowsCanvas.height);for(var a=0;a<Object.keys(arrows).length;a++)arrows[Object.keys(arrows)[a]].isAlive&&arrowsCtx.drawImage(images.arrows,arrows[Object.keys(arrows)[a]].sx,arrows[Object.keys(arrows)[a]].sy,arrows[Object.keys(arrows)[a]].sWidth,arrows[Object.keys(arrows)[a]].sHeight,arrows[Object.keys(arrows)[a]].x,arrows[Object.keys(arrows)[a]].y,
-arrows[Object.keys(arrows)[a]].width,arrows[Object.keys(arrows)[a]].height);arrowsCtx.drawImage(images.car3,car.x,car.y,car.width,car.height);if(smoke.isSmoked)for(a=0;a<smoke.currentParticleCount;a++)smoke.particles[a].draw();lights.isAlive&&ctx.drawImage(images.lights3,lights.x,lights.y,lights.width,lights.height);for(a=0;a<Object.keys(items).length;a++)items[Object.keys(items)[a]].isAlive&&ctx.drawImage(images[Object.keys(items)[a]],items[Object.keys(items)[a]].x+items[Object.keys(items)[a]].dx,
-items[Object.keys(items)[a]].y+items[Object.keys(items)[a]].dy,items[Object.keys(items)[a]].width,items[Object.keys(items)[a]].height);ctx.drawImage(images.drive,can.x,can.y+can.dy,can.width,can.height)}function run(){update();render();requestAnimationFrame(run)}smokeWidth=.35*smokeCanvas.width;var smoke={particles:[],width:smokeWidth,height:.79*smokeWidth,maxParticleCount:170,minParticleCount:9,currentParticleCount:10,stepParticleCount:3,maxVelocity:2,isSmoked:!1,flag:!0,stop:!1};
-function loadSmoke(){var a=new Image;a.onload=function(){smoke.particles.forEach(function(b){b.setImage(a)})};a.src="../img/smoke3.png"}
-function Particle(a){this.yVelocity=this.xVelocity=this.y=this.x=0;this.radius=5;this.context=a;this.draw=function(){this.image&&this.context.drawImage(this.image,this.x-208,this.y-128,smoke.width,smoke.height)};this.update=function(){this.x+=this.xVelocity;this.y+=this.yVelocity;this.x>=smokeCanvas.width?(this.xVelocity=-this.xVelocity,this.x=smokeCanvas.width):0>=this.x&&(this.xVelocity=-this.xVelocity,this.x=0);this.y>=smokeCanvas.height?(this.yVelocity=-this.yVelocity,this.y=smokeCanvas.height):
-this.y<=smokeCanvas.height/2&&(this.yVelocity=-this.yVelocity,this.y=smokeCanvas.height)};this.setPosition=function(a,c){this.x=a;this.y=c};this.setVelocity=function(a,c){this.xVelocity=a;this.yVelocity=c};this.setImage=function(a){this.image=a}}function generateRandom(a,b){return Math.random()*(b-a)+a}
-function initSmoke(){for(var a=0;a<smoke.maxParticleCount;++a){var b=new Particle(smokeCtx);b.setPosition(generateRandom(0,smokeCanvas.width),generateRandom(smokeCanvas.height/3*2,smokeCanvas.height));b.setVelocity(generateRandom(-smoke.maxVelocity,smoke.maxVelocity),generateRandom(-smoke.maxVelocity,smoke.maxVelocity));smoke.particles.push(b)}};
+var images = {
+        drive: 0,
+        msg1: 0,
+        msg2: 0,
+        msg3: 0,
+        arrow: 0,
+        text_pull: 0,
+        arrows: 0,
+        car3: 0,
+        lights3: 0
+    },
+    userMove = 1,
+    canvas = document.getElementById("hpmdf-canvas"),
+    ctx = canvas.getContext("2d"),
+    smokeCanvas = document.getElementById("hpmdf-smoke-canvas"),
+    smokeCtx = smokeCanvas.getContext("2d"),
+    arrowsCanvas = document.getElementById("hpmdf-arrows-canvas"),
+    arrowsCtx = arrowsCanvas.getContext("2d"),
+    can = {},
+    car = {},
+    lights = {},
+    arrows = {},
+    idTimer = 0,
+    idAutoTimeout = 0,
+    idAutoTimeoutFinal = 0,
+    items = {
+        msg1: {},
+        msg2: {},
+        msg3: {},
+        arrow: {},
+        text_pull: {}
+    }
+
+
+
+window.requestAnimationFrame = (function(){
+    return  window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame    ||
+        window.oRequestAnimationFrame      ||
+        window.msRequestAnimationFrame
+})();
+
+function load() {
+    for (var i in images) {
+        images[i] = new Image;
+        images[i].onload = function () {};
+        images[i].src = "../img/${key}.png".replace("${key}", i);
+    }
+
+    loadSmoke();
+}
+
+function sendMessage(msg) {
+    window.parent.postMessage(JSON.stringify(msg), "*")
+}
+
+function initAction() {
+    var canWidth = canvas.width * 0.26;
+    var msgWidth = canvas.width * .76;
+    var msgWidth2 = canvas.width * .90;
+    var arrowWidth = canvas.width * .1;
+    var pullWidth = canvas.width * .17;
+    var closeWidth = canvas.width * .1;
+    arrows = {
+        arrow1: {
+           sx: 1454,
+           sy: 71,
+           sWidth: 245,
+           sHeight: 637,
+           x: 0,
+           y: arrowsCanvas.height / 3 * 2,
+           width: arrowsCanvas.width * .2,
+           height: arrowsCanvas.width * .2 * 2.6,
+           isAlive: false
+        },
+        arrow2: {
+            sx: 676.7,
+            sy: 857.4,
+            sWidth: 744.3,
+            sHeight: 935.6,
+            x: 0,
+            y: arrowsCanvas.height / 2,
+            width: arrowsCanvas.width * .55,
+            height: arrowsCanvas.width * .55 * 1.26,
+            isAlive: false
+        },
+        arrow3: {
+            sx: 677,
+            sy: 54,
+            sWidth: 710,
+            sHeight: 775,
+            x: arrowsCanvas.width * .25,
+            y: arrowsCanvas.height * .37,
+            width: arrowsCanvas.width * .55,
+            height: arrowsCanvas.width * .55 * 1.09,
+            isAlive: false
+        },
+        arrow4: {
+            sx: 27,
+            sy: 1151.5,
+            sWidth: 590,
+            sHeight: 490.5,
+            x: arrowsCanvas.width * .45,
+            y: arrowsCanvas.height * .27,
+            width: arrowsCanvas.width * .55,
+            height: arrowsCanvas.width * .55 * .83,
+            isAlive: false
+        },
+        arrow5: {
+            sx: 27,
+            sy: 718,
+            sWidth: 451.5,
+            sHeight: 359,
+            x: arrowsCanvas.width * .60,
+            y: arrowsCanvas.height * .19,
+            width: arrowsCanvas.width * .47,
+            height: arrowsCanvas.width * .47 * .80,
+            isAlive: false
+        },
+        arrow6: {
+            sx: 71,
+            sy: 358,
+            sWidth: 363,
+            sHeight: 274,
+            x: arrowsCanvas.width * .66,
+            y: arrowsCanvas.height * .09,
+            width: arrowsCanvas.width * .35,
+            height: arrowsCanvas.width * .35 * .75,
+            isAlive: false
+        },
+        arrow7: {
+            sx: 69,
+            sy: 58,
+            sWidth: 301,
+            sHeight: 211.5,
+            x: arrowsCanvas.width * .65,
+            y: arrowsCanvas.height * .01,
+            width: arrowsCanvas.width * .32,
+            height: arrowsCanvas.width * .32 * .70,
+            isAlive: false
+        },
+        id: 0,
+        currentArrow: 0,
+        isAnimate: true,
+        animate: function(){
+            for (var i = 0; i < 7; i++) {
+                if (i !== arrows.currentArrow) {
+                    arrows[Object.keys(arrows)[i]].isAlive = false
+                }
+            }
+
+            arrows[Object.keys(arrows)[arrows.currentArrow]].isAlive = true;
+            if (arrows[Object.keys(arrows)[arrows.currentArrow - 1]]) {
+                arrows[Object.keys(arrows)[arrows.currentArrow - 1]].isAlive = true;
+            }
+            if (arrows[Object.keys(arrows)[arrows.currentArrow - 2]]) {
+                arrows[Object.keys(arrows)[arrows.currentArrow - 2]].isAlive = true;
+            }
+
+            (arrows.currentArrow === 6) ? arrows.currentArrow = 0 : arrows.currentArrow++;
+        },
+        startAnimate: function() {
+            this.id = setInterval(this.animate, 180);
+        },
+        finalAnimate: function() {
+            clearInterval(this.id);
+            this.id = setInterval(this.animate, 130);
+        },
+        showAllArrows: function() {
+            clearInterval(this.id);
+            for (var i = 0; i < 7; i++) {
+                arrows[Object.keys(arrows)[i]].isAlive = false
+            }
+            this.currentArrow = 0;
+            this.id = setInterval(function(){
+                if (arrows.currentArrow < 7) {
+                    arrows[Object.keys(arrows)[arrows.currentArrow]].isAlive = true;
+                    arrows.currentArrow++
+                } else {
+                    clearInterval(arrows.id)
+                }
+
+            }, 130)
+        }
+    };
+    car = {
+        x: -arrowsCanvas.width * 0.15,
+        y: arrowsCanvas.height / 7 * 2,
+        width: arrowsCanvas.width * 1.25,
+        height: arrowsCanvas.width * 1.25 * 1.03,
+    }
+    lights = {
+        x: -arrowsCanvas.width * 0.15,
+        y: arrowsCanvas.height / 7 * 2,
+        width: arrowsCanvas.width * 1.25,
+        height: arrowsCanvas.width * 1.25 * 1.03,
+        isAlive: false
+    }
+    can = {
+        x: canvas.width * .72,
+        y: canvas.height / 4 * 3,
+        width: canWidth,
+        height: canWidth * 2.02,
+        dx: 0,
+        dy: 0,
+        speed: canvas.height / 200, //скорость с которой движется банка (и пользователем, и в initial state)
+        top_point: canvas.height / 4 * 3 - canWidth * 2.02,
+        isMove: false,
+        direction: 0,
+        isTouched: false,
+        initialState: true,
+        flag: true,
+        top_point_anim: canvas.height / 4 * 3 - canWidth * 2.02 / 5,
+        bottom_point_anim: canvas.height / 4 * 3,
+        initialAnim: false,
+        move: function() {
+
+            if (this.initialAnim) {
+                if (this.dy + this.y < this.top_point_anim) {
+                    this.flag = false;
+                }
+
+                if (this.dy + this.y > this.bottom_point_anim) {
+                    this.flag = true;
+                }
+
+                if (this.dy + this.y >= this.top_point_anim && this.flag) {
+                    this.dy -= this.speed / 3;
+
+                } else if (this.dy + this.y <= this.bottom_point_anim && !this.flag) {
+                    this.dy += this.speed / 3;
+                }
+            }
+        },
+        moveToInitialState: function(){
+            if (!this.initialState && this.dy < 0) {
+                this.dy += this.speed * 2;
+            }
+        }
+    };
+    items.msg1 = {
+        x: canvas.width * .12,
+        y: canvas.height / 5 * 2,
+        width: msgWidth,
+        height: msgWidth * .49,
+        minWidth: msgWidth,
+        minHeight: msgWidth * .49,
+        maxWidth: msgWidth * 1.15,
+        step: 18,
+        dx: 0,
+        dy: 0,
+        bigSize: false,
+        isAlive: false,
+        startAnim: false,
+        animate: function() {
+            if (this.startAnim) {
+                if (this.isAlive) {
+                    if (this.width >= this.maxWidth && !this.bigSize) {
+                        this.bigSize = true;
+                    }
+                    if (!this.bigSize && this.width < this.maxWidth) {
+                        this.dx -= this.step / 2;
+                        this.dy -= (this.step * .49) / 2;
+                        this.width += this.step;
+                        this.height += this.step * .49;
+                    } else if (this.bigSize && this.width > this.minWidth) {
+                        this.dx += this.step / 2;
+                        this.dy += (this.step * .49) / 2;
+                        this.width -= this.step;
+                        this.height -= this.step * .49;
+                    }
+                }
+            }
+        }
+    };
+    items.msg2 = {
+        x: canvas.width * .05,
+        y: canvas.height,
+        width: msgWidth2,
+        height: msgWidth2 * .42,
+        speed: canvas.height / 50,
+        dx: 0,
+        dy: 0,
+        isAlive: false,
+        move: function () {
+            if (this.isAlive && (this.y + this.dy) > canvas.height / 5 * 2) {
+                this.dy -= this.speed;
+            }
+        }
+    };
+    items.msg3 = {
+        x: canvas.width * .05,
+        y: canvas.height / 3,
+        width: msgWidth2,
+        height: msgWidth2 * .61,
+        dx: 0,
+        dy: 0,
+        isAlive: false
+    };
+    items.arrow = {
+        x: canvas.width * .6,
+        y: canvas.height * .80,
+        dx: 0,
+        dy: 0,
+        width: arrowWidth,
+        height: arrowWidth * 2.07,
+        isAlive: false,
+        speed: canvas.width / 350,
+        flag: true,
+        top_point: canvas.height * .80 - arrowWidth * 2.07 / 2,
+        bottom_point: canvas.height * .80,
+        move: function() {
+
+            if (this.dy + this.y < this.top_point) {
+                this.flag = false;
+            }
+
+            if (this.dy + this.y > this.bottom_point) {
+                this.flag = true;
+            }
+
+            if (this.dy + this.y >= this.top_point && this.flag) {
+                this.dy -= this.speed
+
+            } else if (this.dy + this.y <= this.bottom_point && !this.flag) {
+                this.dy += this.speed
+            }
+
+        }
+    };
+    items.text_pull = {
+        x: canvas.width * .56,
+        y: canvas.height * .93,
+        width: pullWidth,
+        height: pullWidth * 0.49,
+        dx: 0,
+        dy: 0,
+        isAlive: false
+    }
+
+    initSmoke();
+
+    arrows.isAnimate && arrows.startAnimate();
+
+    setTimeout(function(){
+        items.msg1.isAlive = true;
+        items.arrow.isAlive = true;
+        items.text_pull.isAlive = true;
+        can.isMove = true;
+        can.initialAnim = true;
+
+        // setTimeout(function(){
+        //     items.msg1.startAnim = true;
+        // }, 500)
+
+        idAutoTimeout = setTimeout(function(){
+            can.initialAnim = false;
+            items.msg1.isAlive = false;
+            items.text_pull.isAlive = false;
+            items.arrow.isAlive = false;
+            smoke.isSmoked = true;
+            arrows.finalAnimate();
+            lights.isAlive = true;
+
+            arrows.isAnimate = false;
+
+            sendMessage({name: "hpmd", action: "auto-start"})
+            idAutoTimeoutFinal = setTimeout(showFinalScreen, 2500);
+        }, 3500)
+
+        canvas.addEventListener("touchstart", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+
+
+            if (getX(e) > can.x && getX(e) < can.x + can.width && getY(e) > can.y && getY(e) < can.y + can.height) {
+
+
+                var coords = {
+                    x: getX(e),
+                    y: getY(e)
+                }
+
+                canvas.addEventListener("touchend", function(){
+                    idTimer = setTimeout(showFinalScreen, 1500);
+                    if (can.dy !== 0) {
+                        can.initialState = false;
+                    }
+                    smoke.stop = true;
+                })
+
+                canvas.addEventListener("touchmove", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    items.msg1.isAlive = false;
+                    items.text_pull.isAlive = false;
+                    can.initialAnim = false;
+
+                    clearTimeout(idTimer);
+                    clearTimeout(idAutoTimeout);
+                    clearTimeout(idAutoTimeoutFinal);
+                    smoke.stop = false;
+
+                    lights.isAlive = true;
+
+                    if (userMove === 1) {
+                        sendMessage({name: "hpmd", action: "user-play"});
+                        arrows.finalAnimate();
+                        userMove++;
+                    }
+
+                    can.isTouched = true;
+
+                    if (can.isMove) {
+                        if (getY(e) - coords.y > 0) {
+                            can.direction = 'down';
+                            if (can.y + can.dy < can.y) {
+                                can.dy += can.speed;
+                            }
+                        } else if (getY(e) - coords.y < 0) {
+                            can.direction = 'up';
+                            if (can.y + can.dy > can.top_point) {
+                                can.dy -= can.speed;
+                            }
+                        } else if (getY(e) - coords.y === 0) {
+                            can.direction = 'hold';
+                        }
+                        coords.y = getY(e);
+                    }
+
+                    smoke.isSmoked = true;
+
+
+                })
+            }
+        })
+
+        canvas.addEventListener("mousedown", function(e){
+            e.preventDefault();
+            e.stopPropagation();
+
+
+            // if (getClickX(e) > can.x && getClickX(e) < can.x + can.width && getClickY(e) > can.y && getClickY(e) < can.y + can.height) {
+
+
+                var coords = {
+                    x: getClickX(e),
+                    y: getClickY(e)
+                }
+
+                canvas.addEventListener("mouseup", function(){
+                    console.log('mouseup')
+                    idTimer = setTimeout(showFinalScreen, 1500);
+                    if (can.dy !== 0) {
+                        can.initialState = false;
+                    }
+                    smoke.stop = true;
+
+                    canvas.removeEventListener("mousemove", mouseMoveFunction, event);
+                })
+
+                function mouseMoveFunction(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    items.msg1.isAlive = false;
+                    items.text_pull.isAlive = false;
+                    can.initialAnim = false;
+
+                    clearTimeout(idTimer);
+                    clearTimeout(idAutoTimeout);
+                    clearTimeout(idAutoTimeoutFinal);
+                    smoke.stop = false;
+
+                    lights.isAlive = true;
+
+                    if (userMove === 1) {
+                        sendMessage({name: "hpmd", action: "user-play"});
+                        arrows.finalAnimate();
+                        userMove++;
+                    }
+
+                    can.isTouched = true;
+
+                    if (can.isMove) {
+                        if (getClickY(e) - coords.y > 0) {
+                            can.direction = 'down';
+                            if (can.y + can.dy < can.y) {
+                                can.dy += can.speed;
+                            }
+                        } else if (getClickY(e) - coords.y < 0) {
+                            can.direction = 'up';
+                            if (can.y + can.dy > can.top_point) {
+                                can.dy -= can.speed;
+                            }
+                        } else if (getClickY(e) - coords.y === 0) {
+                            can.direction = 'hold';
+                        }
+                        coords.y = getClickY(e);
+                    }
+
+                    smoke.isSmoked = true;
+
+
+                }
+
+                canvas.addEventListener("mousemove", mouseMoveFunction, event);
+            // }
+        })
+    }, 1500)
+
+
+}
+
+function showFinalScreen(){
+    items.arrow.isAlive = false;
+    items.msg2.isAlive = true;
+    arrows.showAllArrows();
+    can.isMove = false;
+    (can.isTouched) ? sendMessage({name: "hpmd", action: "user-open-KV"}) : sendMessage({name: "hpmd", action: "auto-open-KV"});
+
+
+
+    setTimeout(function(){
+        items.msg2.isAlive = false;
+        document.querySelector('#hpmdf-shadow').style.opacity = '.5';
+        items.msg3.isAlive = true;
+        sendMessage({name: "hpmd", action: "show-KV"});
+    }, 2500)
+}
+
+function getX (e) {
+    return (e.changedTouches[0].target.width / e.changedTouches[0].target.clientWidth) * e.changedTouches[0].clientX;
+}
+
+function getY (e) {
+    return (e.changedTouches[0].target.height / e.changedTouches[0].target.clientHeight) * e.changedTouches[0].clientY;
+}
+
+function getClickX (e) {
+    return (e.target.width / e.target.clientWidth) * e.clientX;
+}
+
+function getClickY (e) {
+    return (e.target.height / e.target.clientHeight) * e.clientY;
+}
+
+function update() {
+
+    if (smoke.isSmoked) {
+        smoke.particles.forEach(function (particle) {
+            particle.update();
+        });
+
+        if (can.isTouched) {
+            if (smoke.stop) {
+                if (smoke.currentParticleCount > 0) {
+                    smoke.currentParticleCount -= smoke.stepParticleCount
+                }
+            } else {
+                if (can.direction === 'down' && smoke.currentParticleCount > smoke.minParticleCount) {
+                    smoke.currentParticleCount -= smoke.stepParticleCount
+                } else if ((can.direction === 'up' && smoke.currentParticleCount < smoke.maxParticleCount) || (can.direction === 'hold' && smoke.currentParticleCount < smoke.maxParticleCount)) {
+                    smoke.currentParticleCount += smoke.stepParticleCount
+                    if (smoke.currentParticleCount > smoke.maxParticleCount) {
+                        smoke.currentParticleCount = smoke.maxParticleCount;
+                    }
+                }
+            }
+
+        } else {
+            (smoke.currentParticleCount < smoke.maxParticleCount && smoke.flag) ?
+                smoke.currentParticleCount += smoke.stepParticleCount : smoke.flag = false; // флаг = true означает, что мы ещё не дошли до максимального значения
+            if (smoke.currentParticleCount > smoke.maxParticleCount) {
+                smoke.currentParticleCount = smoke.maxParticleCount;
+            }
+            if (!smoke.flag && smoke.currentParticleCount > 0) {
+                smoke.currentParticleCount -= smoke.stepParticleCount
+            }
+        }
+    }
+    items.arrow.isAlive && items.arrow.move();
+    items.msg1.isAlive && items.msg1.animate();
+    items.msg2.isAlive && items.msg2.move();
+    can.initialAnim && can.move();
+
+    can.moveToInitialState();
+}
+
+function render() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    smokeCtx.clearRect(0, 0, smokeCanvas.width, smokeCanvas.height);
+    arrowsCtx.clearRect(0, 0, arrowsCanvas.width, arrowsCanvas.height);
+
+    //стрелки
+    for (var k = 0; k < Object.keys(arrows).length; k++) {
+        if (arrows[Object.keys(arrows)[k]].isAlive) {
+            arrowsCtx.drawImage(
+                images.arrows,
+                arrows[Object.keys(arrows)[k]].sx,
+                arrows[Object.keys(arrows)[k]].sy,
+                arrows[Object.keys(arrows)[k]].sWidth,
+                arrows[Object.keys(arrows)[k]].sHeight,
+                arrows[Object.keys(arrows)[k]].x,
+                arrows[Object.keys(arrows)[k]].y,
+                arrows[Object.keys(arrows)[k]].width,
+                arrows[Object.keys(arrows)[k]].height
+            )
+        }
+
+    }
+
+    arrowsCtx.drawImage(images.car3, car.x, car.y, car.width, car.height);
+
+    if (smoke.isSmoked) {
+        for (var j = 0; j < smoke.currentParticleCount; j++) {
+            smoke.particles[j].draw()
+        }
+    }
+
+    lights.isAlive && ctx.drawImage(images.lights3, lights.x, lights.y, lights.width, lights.height);
+
+    for (var i = 0; i < Object.keys(items).length; i++) {
+
+        if (items[Object.keys(items)[i]].isAlive) {
+
+            ctx.drawImage(images[Object.keys(items)[i]],
+                items[Object.keys(items)[i]].x + items[Object.keys(items)[i]].dx,
+                items[Object.keys(items)[i]].y + items[Object.keys(items)[i]].dy,
+                items[Object.keys(items)[i]].width,
+                items[Object.keys(items)[i]].height);
+
+        }
+    }
+
+    ctx.drawImage(images.drive, can.x, can.y + can.dy, can.width, can.height);
+}
+
+function run() {
+    update();
+    render();
+
+    requestAnimationFrame(run)
+}
+
+smokeWidth = smokeCanvas.width * .35;
+var smoke = {
+    // массив для хранения дымков
+    particles: [],
+    width: smokeWidth,
+    height: smokeWidth * 0.79,
+    // количество дымков
+    maxParticleCount: 170,
+    minParticleCount: 9,
+    currentParticleCount: 10,
+    stepParticleCount: 3,
+    // max скорость движения дымков
+    maxVelocity: 2,
+    isSmoked: false,
+    flag: true,
+    stop: false
+}
+
+function loadSmoke() {
+    var imageObj = new Image();
+    imageObj.onload = function() {
+        smoke.particles.forEach(function(particle) {
+            particle.setImage(imageObj);
+        });
+    };
+    imageObj.src = "../img/smoke3.png";
+}
+
+function Particle(context) {
+
+    // Set the initial x and y positions
+    this.x = 0;
+    this.y = 0;
+
+    // Set the initial velocity
+    this.xVelocity = 0;
+    this.yVelocity = 0;
+
+    // Set the radius
+    this.radius = 5;
+
+    // Store the context which will be used to draw the particle
+    this.context = context;
+
+    // The function to draw the particle on the canvas.
+    this.draw = function() {
+
+        // If an image is set draw it
+        if(this.image){
+            this.context.drawImage(this.image, this.x-208, this.y-128, smoke.width, smoke.height);
+            // If the image is being rendered do not draw the circle so break out of the draw function
+            return;
+        }
+    };
+
+    // Update the particle.
+    this.update = function() {
+        // Update the position of the particle with the addition of the velocity.
+        this.x += this.xVelocity;
+        this.y += this.yVelocity;
+
+        // Check if has crossed the right edge
+        if (this.x >= smokeCanvas.width) {
+            this.xVelocity = -this.xVelocity;
+            this.x = smokeCanvas.width;
+        }
+        // Check if has crossed the left edge
+        else if (this.x <= 0) {
+            this.xVelocity = -this.xVelocity;
+            this.x = 0;
+        }
+
+        // Check if has crossed the bottom edge
+        if (this.y >= smokeCanvas.height) {
+            this.yVelocity = -this.yVelocity;
+            this.y = smokeCanvas.height;
+        }
+
+        // Check if has crossed the top edge
+        else if (this.y <= smokeCanvas.height / 2) {
+            this.yVelocity = -this.yVelocity;
+            this.y = smokeCanvas.height;
+        }
+    };
+
+    // A function to set the position of the particle.
+    this.setPosition = function(x, y) {
+        this.x = x;
+        this.y = y;
+    };
+
+    // Function to set the velocity.
+    this.setVelocity = function(x, y) {
+        this.xVelocity = x;
+        this.yVelocity = y;
+    };
+
+    this.setImage = function(image){
+        this.image = image;
+    }
+}
+
+function generateRandom(min, max){
+    return Math.random() * (max - min) + min;
+}
+
+function initSmoke() {
+    // Create the particles and set their initial positions and velocities
+    for(var i=0; i < smoke.maxParticleCount; ++i){
+        var particle = new Particle(smokeCtx);
+
+        // Set the position to be inside the canvas bounds
+        particle.setPosition(
+            generateRandom(0, smokeCanvas.width),
+            generateRandom(smokeCanvas.height / 3 * 2, smokeCanvas.height)
+        );
+
+        // Set the initial velocity to be either random and either negative or positive
+        particle.setVelocity(
+            generateRandom(-smoke.maxVelocity, smoke.maxVelocity),
+            generateRandom(-smoke.maxVelocity, smoke.maxVelocity)
+        );
+
+        smoke.particles.push(particle);
+    }
+}
+
+
+
+
+
+
+
+
