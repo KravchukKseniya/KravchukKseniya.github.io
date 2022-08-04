@@ -44,6 +44,11 @@ body {
     background-size: cover;
 }
 
+.drive {
+    background: url('Drive.png') 50% 33% no-repeat;
+    background-size: cover;
+}
+
 .kapika {
     background: url('Kapika.png') 50% 100% no-repeat;
     background-size: cover;
